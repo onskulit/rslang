@@ -1,4 +1,4 @@
-export function Statistics() {
+function Statistics() {
   return (
     <div>
       Statistics

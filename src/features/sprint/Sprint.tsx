@@ -1,4 +1,4 @@
-export function Sprint() {
+function Sprint() {
   return (
     <div>
       Sprint
