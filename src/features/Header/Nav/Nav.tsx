@@ -1,12 +1,14 @@
 import styles from './Nav.module.css';
+import { NavLink } from 'react-router-dom';
 
 export function Nav() {
   return (
     <nav className={styles.nav}>
-      <span>nav</span>
-      <span>nav</span>
-      <span>nav</span>
-      <span>nav</span>
+      <NavLink to="/">Main Page</NavLink>
+      <NavLink to="/textbook">Textbook</NavLink>
+      <NavLink to="/sprint">Sprint</NavLink>
+      <NavLink to="/audiocall">Audiocall</NavLink>
+      <NavLink to="/statistics">Statistics</NavLink>
     </nav>
   );
 }
