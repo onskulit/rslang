@@ -29,19 +29,20 @@ function Audiocall(): JSX.Element {
     isSuccess,
     isError,
     error,
-  } = useGetWordsQuery(5);
+  } = useGetWordsQuery({ group: 5, page: 0 });
 
   const { data: word } = useGetWordQuery('5e9f5ee35eb9e72bc21af4a0');
 
   let content;
+  let oneWord;
 
   if (isLoading) {
-    // content = <Spinner text="Loading..." />;
     content = 'Loading...';
   } else if (isSuccess) {
     console.log('Одно слово по id "5e9f5ee35eb9e72bc21af4a0"', word);
     console.log(words);
     content = words.map((word: Word) => <p key={word.word}>{word.word}</p>);
+    oneWord = word.word;
   } else if (isError) {
     content = <div>{error.toString()}</div>;
   }
@@ -49,6 +50,14 @@ function Audiocall(): JSX.Element {
   return (
     <>
       <h2>Audiocall</h2>
+      <>
+        <p>Одно слово по id &quot;5e9f5ee35eb9e72bc21af4a0&quot;:</p>
+        <p>{oneWord}</p>
+        <p>____________________</p>
+      </>
+      <>
+        <p>Слова группы сложности 5 по на странице 0:</p>
+      </>
       {content}
     </>
   );
