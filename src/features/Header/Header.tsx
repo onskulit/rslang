@@ -1,13 +1,14 @@
 import Nav from './nav/Nav';
-import styles from './Header.module.css';
+import { PageHeader } from 'antd';
 
-function Header() {
+function _Header() {
   return (
-    <header className={styles.header}>
-      <div>Logo</div>
-      <Nav />
-    </header>
+    <PageHeader
+      className="site-page-header"
+      title="RSLang Team 43" 
+      extra={<Nav />}
+    />
   );
 }
 
-export default Header;
+export default _Header;

@@ -7,19 +7,24 @@ import Textbook from './features/textbook/Textbook';
 import Sprint from './features/sprint/Sprint';
 import Audiocall from './features/audiocall/Audiocall';
 import Statistics from './features/statistics/Statistics';
+import { Layout } from 'antd';
+
+const { Content } = Layout;
 
 function App() {
   return (
-    <div>
+    <Layout>
       <Header />
-      <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/textbook" element={<Textbook />} />
-        <Route path="/sprint" element={<Sprint />} />
-        <Route path="/audiocall" element={<Audiocall />} />
-        <Route path="/statistics" element={<Statistics />} />
-      </Routes>
-    </div>
+      <Content style={{ padding: '0 25px' }}>
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/textbook" element={<Textbook />} />
+          <Route path="/sprint" element={<Sprint />} />
+          <Route path="/audiocall" element={<Audiocall />} />
+          <Route path="/statistics" element={<Statistics />} />
+        </Routes>
+      </Content>
+    </Layout>
   );
 }
 

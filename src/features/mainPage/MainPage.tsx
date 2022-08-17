@@ -1,6 +1,6 @@
 function MainPage() {
   return (
-    <div>
+    <div className="site-layout-content">
       MainPage
     </div>
   );
