@@ -1,5 +1,3 @@
-/* import { Counter } from './features/counter/Counter'; */
-
 import Header from './features/header/Header';
 import { Routes, Route } from 'react-router-dom';
 import MainPage from './features/mainPage/MainPage';
