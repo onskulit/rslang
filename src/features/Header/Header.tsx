@@ -1,7 +1,7 @@
-import Nav from './Nav/Nav';
+import Nav from './nav/Nav';
 import styles from './Header.module.css';
 
-export function Header() {
+function Header() {
   return (
     <header className={styles.header}>
       <div>Logo</div>

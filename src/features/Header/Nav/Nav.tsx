@@ -1,7 +1,7 @@
 import styles from './Nav.module.css';
 import { NavLink } from 'react-router-dom';
 
-export function Nav() {
+function Nav() {
   return (
     <nav className={styles.nav}>
       <NavLink to="/">Main Page</NavLink>
