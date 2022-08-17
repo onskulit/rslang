@@ -1,7 +1,7 @@
 import { useGetWordsQuery, useGetWordQuery } from '../api/apiSlice';
 
 export interface Word {
-  _id: Id;
+  id: string;
   group: number;
   page: number;
   word: string;
@@ -16,10 +16,6 @@ export interface Word {
   textExampleTranslate: string;
   textMeaningTranslate: string;
   wordTranslate: string;
-}
-
-export interface Id {
-  $oid: string;
 }
 
 function Audiocall(): JSX.Element {
@@ -41,7 +37,7 @@ function Audiocall(): JSX.Element {
   } else if (isSuccess) {
     console.log('Одно слово по id "5e9f5ee35eb9e72bc21af4a0"', word);
     console.log(words);
-    content = words.map((word: Word) => <p key={word.word}>{word.word}</p>);
+    content = words.map((word: Word) => <p key={word.id}>{word.word}</p>);
     oneWord = word.word;
   } else if (isError) {
     content = <div>{error.toString()}</div>;
