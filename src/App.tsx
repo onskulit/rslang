@@ -1,6 +1,6 @@
-import Header from './features/header/Header';
+import Header from './pages/header/Header';
 import { Routes, Route } from 'react-router-dom';
-import MainPage from './features/mainPage/MainPage';
+import MainPage from './pages/mainPage/MainPage';
 import Textbook from './features/textbook/Textbook';
 import Sprint from './features/sprint/Sprint';
 import Audiocall from './features/audiocall/Audiocall';
