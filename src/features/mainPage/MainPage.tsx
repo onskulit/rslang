@@ -1,4 +1,4 @@
-export function MainPage() {
+function MainPage() {
   return (
     <div>
       MainPage

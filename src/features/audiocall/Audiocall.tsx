@@ -1,4 +1,4 @@
-export function Audiocall() {
+function Audiocall() {
   return (
     <div>
       Audiocall

@@ -1,4 +1,4 @@
-export function Textbook() {
+function Textbook() {
   return (
     <div>
       Textbook
