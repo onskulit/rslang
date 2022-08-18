@@ -1,4 +1,8 @@
-import { useGetWordsQuery, useGetWordQuery } from '../api/apiSlice';
+import {
+  useGetWordsQuery,
+  useGetWordQuery,
+  DifficultyLevel,
+} from '../api/apiSlice';
 
 export interface Word {
   id: string;
@@ -25,7 +29,7 @@ function Audiocall(): JSX.Element {
     isSuccess,
     isError,
     error,
-  } = useGetWordsQuery({ group: 5, page: 0 });
+  } = useGetWordsQuery({ group: DifficultyLevel.LEVEL_1, page: 0 });
 
   const { data: word } = useGetWordQuery('5e9f5ee35eb9e72bc21af4a0');
 
