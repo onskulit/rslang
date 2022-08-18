@@ -1,9 +1,5 @@
 function Audiocall() {
-  return (
-    <div>
-      Audiocall
-    </div>
-  );
+  return <div>Audiocall</div>;
 }
 
 export default Audiocall;
