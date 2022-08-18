@@ -1,4 +1,4 @@
-import Nav from './Nav/Nav';
+import Nav from './nav/Nav';
 import { PageHeader } from 'antd';
 
 function Header() {

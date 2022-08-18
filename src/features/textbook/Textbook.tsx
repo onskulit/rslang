@@ -1,9 +1,5 @@
 function Textbook() {
-  return (
-    <div>
-      Textbook
-    </div>
-  );
+  return <div>Textbook</div>;
 }
 
 export default Textbook;
