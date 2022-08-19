@@ -27,7 +27,7 @@ function Sprint() {
     <div>
       {words.map((word) => (
         <div key={word[0]}>
-          {word[0]}, {word[1]}
+          {word[0]}, {word[1]}, {word[2].toString()}
         </div>
       ))}
       <div>
