@@ -1,3 +1,4 @@
+import { Word } from './../../common/types/interfaces';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { DifficultyLevel } from '../../common/types/enums';
 import { WordsQuery } from '../../common/types/interfaces';
@@ -17,11 +18,11 @@ export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
-    getWords: builder.query({
-      query: ({ group = 0, page = 0 }: WordsQuery) =>
+    getWords: builder.query<Word[], WordsQuery>({
+      query: ({ group = DifficultyLevel.LEVEL_0, page = 0 }) =>
         `/words?group=${groupChecker(group)}&page=${page}`,
     }),
-    getWord: builder.query({
+    getWord: builder.query<Word, string>({
       query: (wordId: string) => `/words/${wordId}`,
     }),
   }),
