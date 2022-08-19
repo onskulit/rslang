@@ -11,10 +11,13 @@ interface SprintState {
   isFinished: boolean;
 }
 
+const minPoints = 10;
+const maxPoints = minPoints * 2 ** 3;
+
 const initialState: SprintState = {
   words: [],
   currentWord: 0,
-  pointsForCorrectAnswer: 20,
+  pointsForCorrectAnswer: minPoints,
   totalScore: 0,
   streak: 0,
   isFinished: false,
@@ -27,7 +30,7 @@ export const sprintSlice = createSlice({
     resetGame(state) {
       state.words = [];
       state.currentWord = 0;
-      state.pointsForCorrectAnswer = 20;
+      state.pointsForCorrectAnswer = minPoints;
       state.totalScore = 0;
       state.streak = 0;
       state.isFinished = false;
@@ -53,8 +56,11 @@ export const sprintSlice = createSlice({
       if (action.payload === state.words[state.currentWord][2]) {
         state.totalScore += state.pointsForCorrectAnswer;
         state.streak++;
+        if (state.streak % 3 === 0 && state.pointsForCorrectAnswer < maxPoints)
+          state.pointsForCorrectAnswer *= 2;
       } else {
         state.streak = 0;
+        state.pointsForCorrectAnswer = minPoints;
       }
       if (state.words.length - 1 === state.currentWord) {
         state.isFinished = true;

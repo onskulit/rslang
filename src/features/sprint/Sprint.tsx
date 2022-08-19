@@ -11,9 +11,14 @@ function Sprint() {
     page: 0,
   });
   const { resetGame, createPares, checkAnswer } = sprintSlice.actions;
-  const { words, currentWord, totalScore, streak, isFinished } = useAppSelector(
-    (state: RootState) => state.sprint
-  );
+  const {
+    words,
+    currentWord,
+    totalScore,
+    streak,
+    isFinished,
+    pointsForCorrectAnswer,
+  } = useAppSelector((state: RootState) => state.sprint);
   const dispatch = useAppDispatch();
 
   const startGame = async () => {
@@ -35,7 +40,8 @@ function Sprint() {
       {words.length > 0 && (
         <>
           <div>{`Total Score: ${totalScore}`}</div>
-          <div>{`Steak: ${streak}`}</div>
+          <div>{`Streak: ${streak}`}</div>
+          <div>{`Points for correct answer: +${pointsForCorrectAnswer}`}</div>
           <div>{`${words[currentWord][0]} | ${words[currentWord][1]}`}</div>
         </>
       )}
