@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { DifficultyLevel } from '../../common/types/enums';
 import { WordsQuery } from '../../common/types/interfaces';
 
-const BASE_URL = 'https://rs-lang-en.herokuapp.com'; // http://localhost:9011 | https://rs-lang-en.herokuapp.com
+const BASE_URL = 'http://localhost:9011'; // http://localhost:9011 | https://rs-lang-en.herokuapp.com
 
 function groupChecker(group: DifficultyLevel) {
   if (group < 0) {

@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import MainPage from './pages/mainPage/MainPage';
 import Textbook from './features/textbook/Textbook';
 import Sprint from './features/sprint/Sprint';
-import AudioCall from './features/audiocall/AudioСall';
+import Audition from './pages/audition/Audition';
 import Statistics from './features/statistics/Statistics';
 import { Layout } from 'antd';
 
@@ -18,7 +18,8 @@ function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="/textbook" element={<Textbook />} />
           <Route path="/sprint" element={<Sprint />} />
-          <Route path="/audiocall" element={<AudioCall />} />
+          <Route path="/audiocall" element={<Audition />} />
+          {/* <Route exact path="/users/:userId" component={UserPage} /> */}
           <Route path="/statistics" element={<Statistics />} />
         </Routes>
       </Content>
