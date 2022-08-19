@@ -18,7 +18,7 @@ function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="/textbook" element={<Textbook />} />
           <Route path="/sprint" element={<Sprint />} />
-          <Route path="/audiocall" element={<Audition />} />
+          <Route path="/audition" element={<Audition />} />
           {/* <Route exact path="/users/:userId" component={UserPage} /> */}
           <Route path="/statistics" element={<Statistics />} />
         </Routes>

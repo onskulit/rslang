@@ -7,7 +7,7 @@ function Nav() {
       <NavLink to="/">Main Page</NavLink>
       <NavLink to="/textbook">Textbook</NavLink>
       <NavLink to="/sprint">Sprint</NavLink>
-      <NavLink to="/audiocall">Audiocall</NavLink>
+      <NavLink to="/audition">Audiocall</NavLink>
       <NavLink to="/statistics">Statistics</NavLink>
     </nav>
   );
