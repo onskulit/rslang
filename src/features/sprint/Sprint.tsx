@@ -10,19 +10,22 @@ function Sprint() {
     group: DifficultyLevel.LEVEL_0,
     page: 0,
   });
-  const { createPares, checkAnswer } = sprintSlice.actions;
-  const { words, currentWord, totalScore, streak } = useAppSelector(
+  const { resetGame, createPares, checkAnswer } = sprintSlice.actions;
+  const { words, currentWord, totalScore, streak, isFinished } = useAppSelector(
     (state: RootState) => state.sprint
   );
   const dispatch = useAppDispatch();
 
-  const updateWords = async () => {
+  const startGame = async () => {
     await data;
-    if (data) dispatch(createPares(data));
+    dispatch(resetGame());
+    if (data) {
+      dispatch(createPares(data));
+    }
   };
 
   useEffect(() => {
-    updateWords();
+    startGame();
   }, []);
 
   return (
@@ -36,10 +39,14 @@ function Sprint() {
           <div>{`${words[currentWord][0]} | ${words[currentWord][1]}`}</div>
         </>
       )}
-      <div>
-        <button onClick={() => dispatch(checkAnswer(true))}>Верно</button>
-        <button onClick={() => dispatch(checkAnswer(false))}>Неверно</button>
-      </div>
+      {isFinished ? (
+        <div>Game is Finished</div>
+      ) : (
+        <div>
+          <button onClick={() => dispatch(checkAnswer(true))}>Верно</button>
+          <button onClick={() => dispatch(checkAnswer(false))}>Неверно</button>
+        </div>
+      )}
     </div>
   );
 }

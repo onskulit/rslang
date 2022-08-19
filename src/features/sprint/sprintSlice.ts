@@ -4,29 +4,36 @@ import shuffleFisherYates from '../../common/utils/shuffleFisherYates';
 
 interface SprintState {
   words: [string, string, boolean][];
-  isLoading: boolean;
-  error: string;
   currentWord: number;
-  scoreForCorrectAnswer: number;
+  pointsForCorrectAnswer: number;
   totalScore: number;
   streak: number;
+  isFinished: boolean;
 }
 
 const initialState: SprintState = {
   words: [],
-  isLoading: false,
-  error: '',
   currentWord: 0,
-  scoreForCorrectAnswer: 20,
+  pointsForCorrectAnswer: 20,
   totalScore: 0,
   streak: 0,
+  isFinished: false,
 };
 
 export const sprintSlice = createSlice({
   name: 'sprint',
   initialState,
   reducers: {
+    resetGame(state) {
+      state.words = [];
+      state.currentWord = 0;
+      state.pointsForCorrectAnswer = 20;
+      state.totalScore = 0;
+      state.streak = 0;
+      state.isFinished = false;
+    },
     createPares(state, action: PayloadAction<Word[]>) {
+      state.words = [];
       const words: string[] = [];
       const wordsTranslation: string[] = [];
       action.payload.forEach((word) => {
@@ -44,13 +51,13 @@ export const sprintSlice = createSlice({
     },
     checkAnswer(state, action: PayloadAction<boolean>) {
       if (action.payload === state.words[state.currentWord][2]) {
-        state.totalScore += state.scoreForCorrectAnswer;
+        state.totalScore += state.pointsForCorrectAnswer;
         state.streak++;
       } else {
         state.streak = 0;
       }
       if (state.words.length - 1 === state.currentWord) {
-        return;
+        state.isFinished = true;
       } else {
         state.currentWord++;
       }
