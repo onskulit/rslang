@@ -6,12 +6,14 @@ import { DifficultyLevel } from '../../common/types/enums';
 import { useEffect } from 'react';
 
 function Sprint() {
-  const { data } = apiSlice.useGetWordsQuery({
+  const { data, isFetching, isSuccess } = apiSlice.useGetWordsQuery({
     group: DifficultyLevel.LEVEL_0,
     page: 0,
   });
-  const { createPares } = sprintSlice.actions;
-  const { words } = useAppSelector((state: RootState) => state.sprint);
+  const { createPares, checkAnswer } = sprintSlice.actions;
+  const { words, currentWord, totalScore, streak } = useAppSelector(
+    (state: RootState) => state.sprint
+  );
   const dispatch = useAppDispatch();
 
   const updateWords = async () => {
@@ -25,14 +27,18 @@ function Sprint() {
 
   return (
     <div>
-      {words.map((word) => (
-        <div key={word[0]}>
-          {word[0]}, {word[1]}, {word[2].toString()}
-        </div>
-      ))}
+      {isFetching && <div>Загрузка...</div>}
+      {isSuccess && !words.length && <div>Слова не загрузились</div>}
+      {words.length > 0 && (
+        <>
+          <div>{`Total Score: ${totalScore}`}</div>
+          <div>{`Steak: ${streak}`}</div>
+          <div>{`${words[currentWord][0]} | ${words[currentWord][1]}`}</div>
+        </>
+      )}
       <div>
-        <button>Верно</button>
-        <button>Неверно</button>
+        <button onClick={() => dispatch(checkAnswer(true))}>Верно</button>
+        <button onClick={() => dispatch(checkAnswer(false))}>Неверно</button>
       </div>
     </div>
   );

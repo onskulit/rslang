@@ -6,12 +6,20 @@ interface SprintState {
   words: [string, string, boolean][];
   isLoading: boolean;
   error: string;
+  currentWord: number;
+  scoreForCorrectAnswer: number;
+  totalScore: number;
+  streak: number;
 }
 
 const initialState: SprintState = {
   words: [],
   isLoading: false,
   error: '',
+  currentWord: 0,
+  scoreForCorrectAnswer: 20,
+  totalScore: 0,
+  streak: 0,
 };
 
 export const sprintSlice = createSlice({
@@ -32,6 +40,19 @@ export const sprintSlice = createSlice({
           shuffledTranslation[i],
           shuffledTranslation[i] === wordsTranslation[i],
         ]);
+      }
+    },
+    checkAnswer(state, action: PayloadAction<boolean>) {
+      if (action.payload === state.words[state.currentWord][2]) {
+        state.totalScore += state.scoreForCorrectAnswer;
+        state.streak++;
+      } else {
+        state.streak = 0;
+      }
+      if (state.words.length - 1 === state.currentWord) {
+        return;
+      } else {
+        state.currentWord++;
       }
     },
   },
