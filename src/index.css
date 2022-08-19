@@ -1,13 +1,21 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  --main-bg-color: #fefdfe;
+  --main-text-color: #131313;
+  --button-text-color: #fff;
+  --primary-button-color: #506cf0;
+  --primary-button-hover-color: #6881f9;
+  --default-button-color: #a7c0cd;
+  --decoration-color: #fe7860;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap");
+@import url("./styles/antButtons.css");
+
+body {
+  margin: 0;
+  font-family: "Cairo", sans-serif;
+  font-weight: 400;
+  color: var(--main-text-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
