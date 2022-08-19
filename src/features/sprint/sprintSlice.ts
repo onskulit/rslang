@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Word } from '../../common/types/interfaces';
 
 interface SprintState {
-  words: string[];
+  words: [string, string][];
   isLoading: boolean;
   error: string;
 }
@@ -16,8 +17,10 @@ export const sprintSlice = createSlice({
   name: 'sprint',
   initialState,
   reducers: {
-    addWord(state, action: PayloadAction<string>) {
-      state.words.push(action.payload);
+    createPares(state, action: PayloadAction<Word[]>) {
+      action.payload.forEach((word) => {
+        state.words.push([word.word, word.wordTranslate]);
+      });
     },
   },
 });
