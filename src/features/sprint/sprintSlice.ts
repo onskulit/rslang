@@ -8,7 +8,9 @@ interface SprintState {
   pointsForCorrectAnswer: number;
   totalScore: number;
   streak: number;
+  secondsLeft: number;
   isFinished: boolean;
+  isStarted: boolean;
 }
 
 const minPoints = 10;
@@ -16,6 +18,7 @@ const pointsMultiplier = 2;
 const multiplicationSteps = 3;
 const streakForMultiplication = 3;
 const maxPoints = minPoints * pointsMultiplier ** multiplicationSteps;
+const roundDuration = 60;
 
 const initialState: SprintState = {
   words: [],
@@ -23,15 +26,27 @@ const initialState: SprintState = {
   pointsForCorrectAnswer: minPoints,
   totalScore: 0,
   streak: 0,
+  secondsLeft: roundDuration,
   isFinished: false,
+  isStarted: false,
 };
 
 export const sprintSlice = createSlice({
   name: 'sprint',
   initialState,
   reducers: {
-    resetGame(state) {
+    resetGame() {
       return initialState;
+    },
+    startGame(state) {
+      state.isStarted = true;
+    },
+    decreaseTimer(state) {
+      state.secondsLeft--;
+      if (state.secondsLeft === 0) {
+        state.isFinished = true;
+        state.isStarted = false;
+      }
     },
     createPares(state, action: PayloadAction<Word[]>) {
       state.words = [];
@@ -65,6 +80,7 @@ export const sprintSlice = createSlice({
       }
       if (state.words.length - 1 === state.currentWord) {
         state.isFinished = true;
+        state.isStarted = false;
       } else {
         state.currentWord++;
       }

@@ -12,27 +12,41 @@ function Sprint() {
     group: DifficultyLevel.LEVEL_0,
     page: 29,
   });
-  const { resetGame, createPares, checkAnswer } = sprintSlice.actions;
+  const { resetGame, createPares, checkAnswer, decreaseTimer, startGame } =
+    sprintSlice.actions;
   const {
     words,
     currentWord,
     totalScore,
     streak,
+    secondsLeft,
     isFinished,
+    isStarted,
     pointsForCorrectAnswer,
   } = useAppSelector((state: RootState) => state.sprint);
   const dispatch = useAppDispatch();
 
-  const startGame = () => {
+  const setGame = () => {
     dispatch(resetGame());
     if (data) {
       dispatch(createPares(data));
     }
+    dispatch(startGame());
   };
 
   useEffect(() => {
-    startGame();
+    if (data) {
+      setGame();
+    }
   }, [data]);
+
+  useEffect(() => {
+    if (isStarted) {
+      setTimeout(() => {
+        dispatch(decreaseTimer());
+      }, 1000);
+    }
+  }, [isStarted, secondsLeft]);
 
   return (
     <div>
@@ -40,6 +54,7 @@ function Sprint() {
       {isError && <ErrorMessage error="Что-то пошло не так" />}
       {words.length > 0 && (
         <>
+          <div>{`Seconds left: ${secondsLeft}`}</div>
           <div>{`Total Score: ${totalScore}`}</div>
           <div>{`Streak: ${streak}`}</div>
           <div>{`+${pointsForCorrectAnswer} for correct answer`}</div>
