@@ -8,10 +8,18 @@ import Loader from '../../common/components/Loader';
 import ErrorMessage from '../../common/components/ErrorMessage';
 import GameResult from '../../common/components/games/GameResult';
 
-function Sprint() {
+interface SprintProps {
+  maxPage?: number;
+  group?: DifficultyLevel;
+}
+
+function Sprint({
+  maxPage = 29,
+  group = DifficultyLevel.LEVEL_0,
+}: SprintProps) {
   const { data, isFetching, isError } = apiSlice.useGetWordsForGroupQuery({
-    group: DifficultyLevel.LEVEL_0,
-    page: 29,
+    group,
+    page: maxPage,
   });
   const { resetGame, createPares, checkAnswer, decreaseTimer, startGame } =
     sprintSlice.actions;
