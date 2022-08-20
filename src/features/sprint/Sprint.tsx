@@ -4,9 +4,11 @@ import { apiSlice } from '../api/apiSlice';
 import { sprintSlice } from './sprintSlice';
 import { DifficultyLevel } from '../../common/types/enums';
 import { useEffect } from 'react';
+import Loader from '../../common/components/Loader';
+import ErrorMessage from '../../common/components/ErrorMessage';
 
 function Sprint() {
-  const { data, isFetching, error } = apiSlice.useGetWordsForGroupQuery({
+  const { data, isFetching, isError } = apiSlice.useGetWordsForGroupQuery({
     group: DifficultyLevel.LEVEL_0,
     page: 29,
   });
@@ -34,8 +36,8 @@ function Sprint() {
 
   return (
     <div>
-      {isFetching && <div>Загрузка...</div>}
-      {error && <div>Ошибка</div>}
+      {isFetching && <Loader />}
+      {isError && <ErrorMessage error="Что-то пошло не так" />}
       {words.length > 0 && (
         <>
           <div>{`Total Score: ${totalScore}`}</div>
