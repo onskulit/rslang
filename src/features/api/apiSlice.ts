@@ -46,7 +46,7 @@ export const apiSlice = createApi({
         const results = await Promise.all(
           pages.map(async (page) => {
             const result = await fetchWithBQ(
-              `/wor?group=${groupChecker(group)}&page=${page}`
+              `/words?group=${groupChecker(group)}&page=${page}`
             );
             return result.data
               ? { data: result.data as IWord[] }
