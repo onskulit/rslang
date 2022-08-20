@@ -12,7 +12,10 @@ interface SprintState {
 }
 
 const minPoints = 10;
-const maxPoints = minPoints * 2 ** 3;
+const pointsMultiplier = 2;
+const multiplicationSteps = 3;
+const streakForMultiplication = 3;
+const maxPoints = minPoints * pointsMultiplier ** multiplicationSteps;
 
 const initialState: SprintState = {
   words: [],
@@ -28,12 +31,7 @@ export const sprintSlice = createSlice({
   initialState,
   reducers: {
     resetGame(state) {
-      state.words = [];
-      state.currentWord = 0;
-      state.pointsForCorrectAnswer = minPoints;
-      state.totalScore = 0;
-      state.streak = 0;
-      state.isFinished = false;
+      return initialState;
     },
     createPares(state, action: PayloadAction<Word[]>) {
       state.words = [];
@@ -56,8 +54,11 @@ export const sprintSlice = createSlice({
       if (action.payload === state.words[state.currentWord][2]) {
         state.totalScore += state.pointsForCorrectAnswer;
         state.streak++;
-        if (state.streak % 3 === 0 && state.pointsForCorrectAnswer < maxPoints)
-          state.pointsForCorrectAnswer *= 2;
+        if (
+          state.pointsForCorrectAnswer < maxPoints &&
+          state.streak % streakForMultiplication === 0
+        )
+          state.pointsForCorrectAnswer *= pointsMultiplier;
       } else {
         state.streak = 0;
         state.pointsForCorrectAnswer = minPoints;
