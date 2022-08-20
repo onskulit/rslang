@@ -6,7 +6,7 @@ import { DifficultyLevel } from '../../common/types/enums';
 import { useEffect } from 'react';
 
 function Sprint() {
-  const { data, isFetching, isSuccess } = apiSlice.useGetWordsForGroupQuery({
+  const { data, isFetching, error } = apiSlice.useGetWordsForGroupQuery({
     group: DifficultyLevel.LEVEL_0,
     page: 29,
   });
@@ -21,9 +21,7 @@ function Sprint() {
   } = useAppSelector((state: RootState) => state.sprint);
   const dispatch = useAppDispatch();
 
-  const startGame = async () => {
-    await data;
-    console.log(data);
+  const startGame = () => {
     dispatch(resetGame());
     if (data) {
       dispatch(createPares(data));
@@ -32,12 +30,12 @@ function Sprint() {
 
   useEffect(() => {
     startGame();
-  }, []);
+  }, [data]);
 
   return (
     <div>
       {isFetching && <div>Загрузка...</div>}
-      {isSuccess && !words.length && <div>Слова не загрузились</div>}
+      {error && <div>Ошибка</div>}
       {words.length > 0 && (
         <>
           <div>{`Total Score: ${totalScore}`}</div>
