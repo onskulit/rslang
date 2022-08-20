@@ -1,3 +1,5 @@
+export const INITIAL_VALUE = 0;
+
 export enum DifficultyLevel {
   LEVEL_0,
   LEVEL_1,
