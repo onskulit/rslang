@@ -1,4 +1,4 @@
-import { DifficultyLevel } from './enums';
+import { DifficultyLevel } from '../constants/numbers';
 
 export interface Word {
   id: string;
