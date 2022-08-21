@@ -3,9 +3,10 @@ import { Routes, Route } from 'react-router-dom';
 import MainPage from './pages/mainPage/MainPage';
 import Textbook from './features/textbook/Textbook';
 import Sprint from './features/sprint/Sprint';
-import Audition from './pages/audition/Audition';
+import Audition from './features/audition/Audition';
 import Statistics from './features/statistics/Statistics';
 import { Layout } from 'antd';
+import AuditionGame from './features/audition/AuditionGame';
 
 const { Content } = Layout;
 
@@ -19,7 +20,7 @@ function App() {
           <Route path="/textbook" element={<Textbook />} />
           <Route path="/sprint" element={<Sprint />} />
           <Route path="/audition" element={<Audition />} />
-          {/* <Route exact path="/users/:userId" component={UserPage} /> */}
+          <Route path="/audition-game/:difficulty" element={<AuditionGame />} />
           <Route path="/statistics" element={<Statistics />} />
         </Routes>
       </Content>
