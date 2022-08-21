@@ -1,13 +1,32 @@
 import styles from './Audition.module.css';
 import { Col, Row, Typography, Space, Radio, Button } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { difficultyChanged } from '../difficulty/difficultySlice';
 
 const { Title, Paragraph, Text } = Typography;
 
+interface DifficultyState {
+  difficulty: {
+    value: number;
+  };
+}
+
 function Audition(): JSX.Element {
-  const [difficultyLevel, setDifficultyLevel] = useState(0);
-  console.log(difficultyLevel);
+  const dispatch = useDispatch();
+  const difficulty = useSelector(
+    (state: DifficultyState) => state.difficulty.value
+  );
+
+  const onDifficultyChanged = (value: number) => {
+    console.log(value);
+    dispatch(difficultyChanged(value));
+  };
+
+  useEffect(() => {
+    console.log(difficulty);
+  }, [difficulty]);
 
   return (
     <div className={styles.container}>
@@ -34,9 +53,9 @@ function Audition(): JSX.Element {
         </Row>
         <Row justify="center" gutter={18}>
           <Radio.Group
-            defaultValue="0"
+            defaultValue={String(difficulty)}
             size="large"
-            onChange={(event) => setDifficultyLevel(event.target.value)}
+            onChange={(event) => onDifficultyChanged(event.target.value)}
           >
             <Radio.Button value="0">0</Radio.Button>
             <Radio.Button value="1">1</Radio.Button>
@@ -48,9 +67,7 @@ function Audition(): JSX.Element {
         </Row>
         <Row justify="center">
           <Button type="primary" shape="round" size={'large'}>
-            <NavLink to={`/audition-game/${difficultyLevel}`}>
-              Начать игру
-            </NavLink>
+            <NavLink to={`/audition-game/${difficulty}`}>Начать игру</NavLink>
           </Button>
         </Row>
       </Space>
