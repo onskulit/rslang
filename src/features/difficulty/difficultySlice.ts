@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { DifficultyLevel } from '../../common/types/enums';
+import { DifficultyLevel } from '../../common/constants/numbers';
 
 const initialState = {
   value: DifficultyLevel.LEVEL_0,
