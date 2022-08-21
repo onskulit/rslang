@@ -2,8 +2,8 @@ import styles from './Audition.module.css';
 import { Col, Row, Typography, Space, Radio, Button } from 'antd';
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { difficultyChanged } from '../difficulty/difficultySlice';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -14,8 +14,8 @@ interface DifficultyState {
 }
 
 function Audition(): JSX.Element {
-  const dispatch = useDispatch();
-  const difficulty = useSelector(
+  const dispatch = useAppDispatch();
+  const difficulty = useAppSelector(
     (state: DifficultyState) => state.difficulty.value
   );
 
