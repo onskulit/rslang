@@ -1,0 +1,71 @@
+.footer {
+  padding: 5px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.footer div:not(:last-child) {
+  margin-right: 30px;
+}
+
+.infoLinks {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.infoLink {
+  font-size: 22px;
+}
+
+.linkLogo {
+  position: relative;
+  width: 100px;
+  height: 60px;
+}
+
+.shoolLogo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.developers {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.developersLinks {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.developersLink {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--decoration-color);
+}
+
+.developersLink:hover {
+  color: var(--decoration-color);
+  text-decoration: underline;
+}
+
+.creationYear {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+}
+
+@media (max-width: 374.98px) {
+  .footer {
+    justify-content: center;
+  }
+}
