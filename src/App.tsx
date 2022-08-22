@@ -6,6 +6,7 @@ import Sprint from './features/sprint/Sprint';
 import AudioCall from './features/audiocall/AudioСall';
 import Statistics from './features/statistics/Statistics';
 import { Layout } from 'antd';
+import AppFooter from './pages/footer/Footer';
 
 const { Content } = Layout;
 
@@ -22,6 +23,7 @@ function App() {
           <Route path="/statistics" element={<Statistics />} />
         </Routes>
       </Content>
+      <AppFooter />
     </Layout>
   );
 }
