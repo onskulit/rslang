@@ -1,0 +1,6 @@
+.wordsGroup {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 200px);
+  grid-auto-rows: min-content;
+  gap: 0.9375rem;
+}

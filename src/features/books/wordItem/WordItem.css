@@ -1,0 +1,35 @@
+.word-item {
+  padding: 20px 60px 70px 20px;
+  display: flex;
+  flex-direction: column;
+  background-color: #f3f4f8;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.word-item:hover {
+  background-color: #ecf4fb;
+}
+
+.word-item.active {
+  background-color: #0b65b3;
+}
+
+.word-item span:not(:last-child) {
+  margin-bottom: 5px;
+}
+
+.word {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  line-height: 1;
+  color: var(--main-text-color);
+}
+
+.wordTranslate {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1;
+}
