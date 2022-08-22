@@ -1,6 +1,6 @@
 import { DifficultyLevel } from '../constants/numbers';
 
-export interface Word {
+export interface IWord {
   id: string;
   group: number;
   page: number;
@@ -17,7 +17,7 @@ export interface Word {
   wordTranslate: string;
 }
 
-export interface WordsQuery {
+export interface IWordsQuery {
   group: DifficultyLevel;
   page: number;
 }
