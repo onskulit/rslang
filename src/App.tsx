@@ -5,6 +5,7 @@ import Textbook from './features/textbook/Textbook';
 import Statistics from './features/statistics/Statistics';
 import { Layout } from 'antd';
 import AppFooter from './pages/footer/Footer';
+import Books from './features/books/Books';
 import GameMenu from './common/components/games/GameMenu';
 import { GamesType } from './common/types/enums';
 import Sprint from './features/sprint/Sprint';
@@ -65,7 +66,7 @@ function App() {
           <Content>
             <Routes>
               <Route path="/" element={<MainPage />} />
-              <Route path="/textbook" element={<Textbook />} />
+              <Route path="/books" element={<Books />} />
               <Route
                 path="/sprint"
                 element={<GameMenu game={GamesType.sprint} />}
