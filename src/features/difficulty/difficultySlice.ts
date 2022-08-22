@@ -1,15 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DifficultyLevel } from '../../common/constants/numbers';
+import { SLICE_NAMES } from '../../common/constants/sliceNames';
 
 const initialState = {
   value: DifficultyLevel.LEVEL_0,
 };
 
 const difficultySlice = createSlice({
-  name: 'difficulty',
+  name: SLICE_NAMES.difficulty,
   initialState,
   reducers: {
-    difficultyChanged: (state, action) => {
+    difficultyChanged: (state, action: PayloadAction<number>) => {
       state.value = Number(action.payload);
     },
   },
