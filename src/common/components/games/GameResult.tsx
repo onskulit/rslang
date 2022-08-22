@@ -1,3 +1,4 @@
+import { Row } from 'antd';
 import { GamesType } from '../../types/enums';
 
 interface GameResultProps {
@@ -8,10 +9,10 @@ interface GameResultProps {
 function GameResult({ result, game }: GameResultProps) {
   return (
     <>
-      <div>Игра окончена!</div>
-      <div>
+      <Row justify="center">Игра окончена!</Row>
+      <Row justify="center">
         Ваш результат в игре {game}: {result}
-      </div>
+      </Row>
     </>
   );
 }

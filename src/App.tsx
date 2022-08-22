@@ -7,6 +7,8 @@ import { Layout } from 'antd';
 import AppFooter from './pages/footer/Footer';
 import GameMenu from './common/components/games/GameMenu';
 import { GamesType } from './common/types/enums';
+import Sprint from './features/sprint/Sprint';
+import AudioСall from './features/audiocall/AudioСall';
 
 const { Content } = Layout;
 
@@ -20,11 +22,19 @@ function App() {
           <Route path="/textbook" element={<Textbook />} />
           <Route
             path="/sprint"
-            element={<GameMenu game={GamesType.sprint} />}
+            element={
+              <GameMenu game={GamesType.sprint}>
+                <Sprint />
+              </GameMenu>
+            }
           />
           <Route
             path="/audiocall"
-            element={<GameMenu game={GamesType.audiocall} />}
+            element={
+              <GameMenu game={GamesType.audiocall}>
+                <AudioСall />
+              </GameMenu>
+            }
           />
           <Route path="/statistics" element={<Statistics />} />
         </Routes>

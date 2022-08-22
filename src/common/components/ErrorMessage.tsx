@@ -1,9 +1,11 @@
+import { Row } from 'antd';
+
 interface ErrorMessageProps {
   error: string;
 }
 
 function ErrorMessage({ error }: ErrorMessageProps) {
-  return <div>Возникла ошибка! {error}</div>;
+  return <Row justify="center">Возникла ошибка! {error}</Row>;
 }
 
 export default ErrorMessage;

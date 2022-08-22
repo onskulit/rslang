@@ -1,14 +1,13 @@
 import { Button, Radio, Row } from 'antd';
-import { useEffect, useState } from 'react';
-import Sprint from '../../../features/sprint/Sprint';
-import AudioCall from '../../../features/audiocall/AudioСall';
+import React, { useEffect, useState } from 'react';
 import { GamesType } from '../../types/enums';
 
 interface GameMenuProps {
   game: GamesType;
+  children: React.ReactNode;
 }
 
-function GameMenu({ game }: GameMenuProps) {
+function GameMenu({ game, children }: GameMenuProps) {
   const [difficulty, setDifficulty] = useState(0);
   const [isReady, setIsReady] = useState(false);
 
@@ -41,8 +40,7 @@ function GameMenu({ game }: GameMenuProps) {
           </Row>
         </>
       )}
-      {isReady && game === GamesType.sprint && <Sprint />}
-      {isReady && game === GamesType.audiocall && <AudioCall />}
+      {isReady && <>{children}</>}
     </>
   );
 }
