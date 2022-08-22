@@ -57,13 +57,21 @@ export const sprintSlice = createSlice({
         wordsTranslation.push(word.wordTranslate);
       });
       const shuffledTranslation = shuffleFisherYates(wordsTranslation);
+      const finalTranslation: string[] = [];
+      for (let i = 0; i < wordsTranslation.length; i++) {
+        finalTranslation.push(
+          Math.random() < 0.5 ? wordsTranslation[i] : shuffledTranslation[i]
+        );
+      }
+      const finalWords: [string, string, boolean][] = [];
       for (let i = 0; i < words.length; i++) {
-        state.words.push([
+        finalWords.push([
           words[i],
-          shuffledTranslation[i],
-          shuffledTranslation[i] === wordsTranslation[i],
+          finalTranslation[i],
+          finalTranslation[i] === wordsTranslation[i],
         ]);
       }
+      state.words = shuffleFisherYates(finalWords);
     },
     checkAnswer(state, action: PayloadAction<boolean>) {
       if (action.payload === state.words[state.currentWord][2]) {
