@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import Loader from '../../common/components/Loader';
 import ErrorMessage from '../../common/components/ErrorMessage';
 import GameResult from '../../common/components/games/GameResult';
+import { Button, Row } from 'antd';
 
 interface SprintProps {
   maxPage?: number;
@@ -63,17 +64,17 @@ function Sprint({
       {isError && <ErrorMessage error="Что-то пошло не так" />}
       {isStarted && (
         <>
-          <div>{`Seconds left: ${secondsLeft}`}</div>
-          <div>{`Total Score: ${totalScore}`}</div>
-          <div>{`Streak: ${streak}`}</div>
-          <div>{`+${pointsForCorrectAnswer} for correct answer`}</div>
-          <div>{`${words[currentWord][0]} | ${words[currentWord][1]}`}</div>
-          <div>
-            <button onClick={() => dispatch(checkAnswer(true))}>Верно</button>
-            <button onClick={() => dispatch(checkAnswer(false))}>
+          <Row justify="center">{`Осталось ${secondsLeft} секунд`}</Row>
+          <Row justify="center">{`Всего очков: ${totalScore}`}</Row>
+          <Row justify="center">{`Streak: ${streak}`}</Row>
+          <Row justify="center">{`+${pointsForCorrectAnswer} за правильный ответ`}</Row>
+          <Row justify="center">{`${words[currentWord][0]} | ${words[currentWord][1]}`}</Row>
+          <Row justify="center">
+            <Button onClick={() => dispatch(checkAnswer(true))}>Верно</Button>
+            <Button onClick={() => dispatch(checkAnswer(false))}>
               Неверно
-            </button>
-          </div>
+            </Button>
+          </Row>
         </>
       )}
       {isFinished && <GameResult game={GamesType.sprint} result={totalScore} />}
