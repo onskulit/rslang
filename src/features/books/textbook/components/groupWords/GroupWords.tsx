@@ -6,7 +6,7 @@ import WordItem from '../../../wordItem/wordItem';
 import styles from './GroupWords.module.css';
 
 interface IGroupWordsProps {
-  activeWord: string | IWord;
+  activeWord: IWord | string;
   words: IWord[] | undefined;
   isLoading: boolean;
   error: FetchBaseQueryError | SerializedError | undefined;

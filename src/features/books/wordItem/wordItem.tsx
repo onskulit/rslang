@@ -3,7 +3,7 @@ import { IWord } from '../../../common/types/interfaces';
 import './WordItem.css';
 
 interface IWordItemProps {
-  activeWord: string | IWord;
+  activeWord: IWord | string;
   index: number;
   word: IWord;
   words: IWord[] | undefined;

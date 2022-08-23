@@ -8,6 +8,7 @@ export enum Numbers {
   ONE,
   TWO,
 }
+export const PAGINATION_MAX_PAGE = 300;
 
 export enum DifficultyLevel {
   LEVEL_0,

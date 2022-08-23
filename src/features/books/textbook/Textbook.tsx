@@ -1,6 +1,9 @@
 import { Pagination } from 'antd';
 import React, { FC, useEffect, useMemo, useState } from 'react';
-import { INITIAL_VALUE } from '../../../common/constants/numbers';
+import {
+  INITIAL_VALUE,
+  PAGINATION_MAX_PAGE,
+} from '../../../common/constants/numbers';
 import { IWord } from '../../../common/types/interfaces';
 import { apiSlice } from '../../api/apiSlice';
 
@@ -14,7 +17,6 @@ interface ITextbook {
 
 const Textbook: FC<ITextbook> = ({ activeGroup }) => {
   const [activePage, setActivePage] = useState(INITIAL_VALUE);
-  const pageСount = 300;
   const {
     data: words,
     isLoading,
@@ -24,12 +26,24 @@ const Textbook: FC<ITextbook> = ({ activeGroup }) => {
     page: activePage,
   });
 
+  // console.log(dsfgdg);
+
   // TODO первое отображение, воспроизведение звука
-  const [activeWord, setActiveWord] = useState(words ? words[1] : '');
+  const [activeWord, setActiveWord] = useState(
+    words ? words[INITIAL_VALUE] : ''
+  );
+
+  useEffect(() => {
+    if (words) {
+      setActiveWord(words[0]);
+    }
+  }, [words]);
 
   const toggleActiveWord = (index: number): void => {
     setActiveWord((words as IWord[])[index]);
   };
+
+  // console.log(words);
 
   const groupWordsData = {
     activeWord: activeWord,
@@ -47,7 +61,7 @@ const Textbook: FC<ITextbook> = ({ activeGroup }) => {
         showSizeChanger={false}
         showLessItems={true}
         defaultCurrent={activePage + 1}
-        total={pageСount}
+        total={PAGINATION_MAX_PAGE}
         current={activePage + 1}
         onChange={(page, PageSize) => {
           setActivePage(page - 1);

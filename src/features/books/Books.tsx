@@ -7,14 +7,17 @@ import Dictionary from './dictionary/Dictionary';
 import { Radio, Space, Typography } from 'antd';
 const { Title, Text } = Typography;
 import './Book.css';
+import { difficultyChanged } from '../difficulty/difficultySlice';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 
 function Books() {
-  const [activeGroup, setActiveGroup] = useState(DifficultyLevel.LEVEL_0);
+  const { value: difficulty } = useAppSelector((state) => state.difficulty);
+  const dispatch = useAppDispatch();
   const [activeBook, setActiveBook] = useState('Textbook');
 
   const displayActiveBook = (book: string): JSX.Element => {
     return book === 'Textbook' ? (
-      <Textbook activeGroup={activeGroup} />
+      <Textbook activeGroup={difficulty} />
     ) : (
       <Dictionary />
     );
@@ -23,7 +26,7 @@ function Books() {
   return (
     <div>
       <header>
-        <div>
+        <Space>
           <nav>
             <button onClick={() => setActiveBook('Textbook')}>Учебник</button>
             <button onClick={() => setActiveBook('Dictionary')}>Словарь</button>
@@ -31,14 +34,14 @@ function Books() {
           <button>
             <SettingOutlined />
           </button>
-        </div>
+        </Space>
         <p>Уровни сложности слов</p>
       </header>
       <Radio.Group
-        defaultValue={0}
+        defaultValue={DifficultyLevel.LEVEL_0}
         size="large"
         onChange={(event) => {
-          console.log(event.target);
+          dispatch(difficultyChanged(event.target.value));
         }}
         className={'levels'}
       >
