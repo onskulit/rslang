@@ -14,6 +14,7 @@ import { IWord, IWordWithAnswer } from '../../common/types/interfaces';
 import AuditionOptions from '../../common/components/auditionOptions/AuditionOptions';
 import { ArrowRightOutlined } from '@ant-design/icons';
 import AudioButton from '../../common/components/audioButton/AudioButton';
+import AuditionResults from '../../common/components/auditionResults/AuditionResults';
 
 const { Title } = Typography;
 
@@ -25,6 +26,7 @@ function AuditionGame(): JSX.Element {
   const [shuffledWords, setShuffledWords] = useState<IWord[]>([]);
   const [help, setHelp] = useState<boolean>(false);
   const [end, setEnd] = useState<boolean>(false);
+  const [results, setResults] = useState<boolean>(false);
   const [correctAnswers, setCorrectAnswers] = useState<IWordWithAnswer[]>([]);
   const [wrongAnswers, setWrongAnswers] = useState<IWord[]>([]);
 
@@ -54,8 +56,7 @@ function AuditionGame(): JSX.Element {
   }
 
   function onResultClick() {
-    console.log('Correct answers: ', correctAnswers);
-    console.log('Wrong answers: ', wrongAnswers);
+    setResults(true);
   }
 
   function onNextClick() {
@@ -147,28 +148,36 @@ function AuditionGame(): JSX.Element {
                 />
               )}
             </Row>
-            <Row justify="center">
-              {end ? (
-                <Button
-                  type="primary"
-                  shape="round"
-                  size={'large'}
-                  onClick={onResultClick}
-                >
-                  Результаты
-                </Button>
-              ) : (
-                <Button
-                  type="primary"
-                  shape="round"
-                  size={'large'}
-                  onClick={answer ? onNextClick : onAnswerClick}
-                >
-                  {answer ? <ArrowRightOutlined /> : 'Не знаю'}
-                </Button>
-              )}
-            </Row>
+            {!results && (
+              <Row justify="center">
+                {end ? (
+                  <Button
+                    type="primary"
+                    shape="round"
+                    size={'large'}
+                    onClick={onResultClick}
+                  >
+                    Результаты
+                  </Button>
+                ) : (
+                  <Button
+                    type="primary"
+                    shape="round"
+                    size={'large'}
+                    onClick={answer ? onNextClick : onAnswerClick}
+                  >
+                    {answer ? <ArrowRightOutlined /> : 'Не знаю'}
+                  </Button>
+                )}
+              </Row>
+            )}
           </>
+        )}
+        {results && (
+          <AuditionResults
+            correctWords={correctAnswers}
+            wrongWords={wrongAnswers}
+          />
         )}
       </Space>
     </>

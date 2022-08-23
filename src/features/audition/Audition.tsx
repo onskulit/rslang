@@ -1,12 +1,11 @@
 import styles from './Audition.module.css';
-import { Col, Row, Typography, Space, Radio, Button } from 'antd';
-import { useEffect, useState } from 'react';
+import { Row, Typography, Space, Radio, Button } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { difficultyChanged } from '../difficulty/difficultySlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 // import { useAddNewUserMutation, useGetUserQuery } from '../api/apiSlice';
 
-const { Title, Paragraph, Text } = Typography;
+const { Title, Text } = Typography;
 
 interface DifficultyState {
   difficulty: {
@@ -23,11 +22,11 @@ function Audition(): JSX.Element {
   // const [addNewUser, { isLoading }] = useAddNewUserMutation();
   // const [getUser, { isLoading }] = useGetUserQuery();
 
-  const newUser = {
-    name: 'John',
-    email: 'dwddd@ssas.ru',
-    password: '12345689',
-  };
+  // const newUser = {
+  //   name: 'John',
+  //   email: 'dwddd@ssas.ru',
+  //   password: '12345689',
+  // };
 
   // id = '63033a26d48d9200162e0ce4'
 
