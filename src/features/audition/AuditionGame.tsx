@@ -11,8 +11,9 @@ import {
 } from '../../common/constants/numbers';
 import shuffle from '../../common/utils/shuffle';
 import { IWord, IWordWithAnswer } from '../../common/types/interfaces';
-import AuditionOptions from './AuditionOptions';
+import AuditionOptions from '../../common/components/auditionOptions/AuditionOptions';
 import { ArrowRightOutlined } from '@ant-design/icons';
+import AudioButton from '../../common/components/audioButton/AudioButton';
 
 const { Title } = Typography;
 
@@ -71,21 +72,21 @@ function AuditionGame(): JSX.Element {
     setShuffledWords(shuffledWordsTemp);
 
     if (answer?.correct === true) {
-      setCorrectAnswers((prev) => [...prev, answer]);
+      const answerCopy = { ...answer };
+      delete answerCopy.correct;
+      setCorrectAnswers((prev) => [...prev, answerCopy]);
     } else if (answer) {
       setWrongAnswers((prev) => [...prev, answer]);
     }
 
     setAnswer(null);
     setHelp(false);
-    // console.log('words left: ', currentWords);
     endCheck();
   }
 
   useEffect(() => {
     if (isSuccess) {
       const shuffledWordsTemp = shuffle(words);
-
       const wordsForGame = shuffledWordsTemp.splice(
         INITIAL_VALUE,
         WORDS_FOR_GAME + 1
@@ -132,28 +133,22 @@ function AuditionGame(): JSX.Element {
         {isSuccess && (
           <>
             <Row justify="center">
-              <p>{currentWord && currentWord?.wordTranslate}</p>
-              {currentWords?.length >= 0 && (
+              {currentWord && !end && (
+                <AudioButton audioFile={currentWord?.audio} />
+              )}
+            </Row>
+            <Row justify="center">
+              {currentWords?.length >= 0 && !end && (
                 <AuditionOptions
                   options={currentOptions}
                   correctOption={currentWord}
                   setAnswer={setAnswer}
                   help={help}
-                ></AuditionOptions>
+                />
               )}
             </Row>
             <Row justify="center">
-              {!end && (
-                <Button
-                  type="primary"
-                  shape="round"
-                  size={'large'}
-                  onClick={answer ? onNextClick : onAnswerClick}
-                >
-                  {answer ? <ArrowRightOutlined /> : 'Не знаю'}
-                </Button>
-              )}
-              {end && (
+              {end ? (
                 <Button
                   type="primary"
                   shape="round"
@@ -161,6 +156,15 @@ function AuditionGame(): JSX.Element {
                   onClick={onResultClick}
                 >
                   Результаты
+                </Button>
+              ) : (
+                <Button
+                  type="primary"
+                  shape="round"
+                  size={'large'}
+                  onClick={answer ? onNextClick : onAnswerClick}
+                >
+                  {answer ? <ArrowRightOutlined /> : 'Не знаю'}
                 </Button>
               )}
             </Row>

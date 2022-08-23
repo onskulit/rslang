@@ -32,13 +32,8 @@ function Audition(): JSX.Element {
   // id = '63033a26d48d9200162e0ce4'
 
   const onDifficultyChanged = (value: number) => {
-    console.log(value);
     dispatch(difficultyChanged(value));
   };
-
-  useEffect(() => {
-    console.log(difficulty);
-  }, [difficulty]);
 
   return (
     <div className={styles.container}>

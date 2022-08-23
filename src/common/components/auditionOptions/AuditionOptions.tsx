@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { Radio, Row, RadioChangeEvent, Space } from 'antd';
 
 import styles from './AuditionOptions.module.css';
-import { IWordWithAnswer } from '../../common/types/interfaces';
+import { IWordWithAnswer } from '../../types/interfaces';
 
 interface IOptionsProps {
   options: IWordWithAnswer[];
