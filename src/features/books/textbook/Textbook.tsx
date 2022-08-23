@@ -28,16 +28,11 @@ const Textbook: FC<ITextbook> = ({ activeGroup }) => {
 
   // console.log(dsfgdg);
 
-  // TODO первое отображение, воспроизведение звука
   const [activeWord, setActiveWord] = useState(
     words ? words[INITIAL_VALUE] : ''
   );
 
-  useEffect(() => {
-    if (words) {
-      setActiveWord(words[0]);
-    }
-  }, [words]);
+  console.log(words, isLoading, error, activePage, activeGroup);
 
   const toggleActiveWord = (index: number): void => {
     setActiveWord((words as IWord[])[index]);
@@ -56,17 +51,21 @@ const Textbook: FC<ITextbook> = ({ activeGroup }) => {
   return (
     <section className={styles.words}>
       <GroupWords data={groupWordsData} />
-      <CurrentWord word={activeWord as IWord} />
-      <Pagination
-        showSizeChanger={false}
-        showLessItems={true}
-        defaultCurrent={activePage + 1}
-        total={PAGINATION_MAX_PAGE}
-        current={activePage + 1}
-        onChange={(page, PageSize) => {
-          setActivePage(page - 1);
-        }}
-      />
+      {!isLoading && (
+        <>
+          <CurrentWord word={(activeWord || (words as IWord[])[0]) as IWord} />
+          <Pagination
+            showSizeChanger={false}
+            showLessItems={true}
+            defaultCurrent={activePage + 1}
+            total={PAGINATION_MAX_PAGE}
+            current={activePage + 1}
+            onChange={(page, PageSize) => {
+              setActivePage(page - 1);
+            }}
+          />
+        </>
+      )}
     </section>
   );
 };
