@@ -1,7 +1,7 @@
 import styles from './AuditionGame.module.css';
-import { Row, Typography, Radio, Button, Space, Spin } from 'antd';
-import { useEffect, useLayoutEffect, useMemo, useState } from 'react';
-import { NavLink, useMatch } from 'react-router-dom';
+import { Row, Typography, Button, Space, Spin } from 'antd';
+import { useEffect, useState } from 'react';
+import { useMatch } from 'react-router-dom';
 import { useGetWordsForGroupQuery } from '../api/apiSlice';
 import {
   INITIAL_VALUE,
@@ -14,7 +14,7 @@ import { IWord, IWordWithAnswer } from '../../common/types/interfaces';
 import AuditionOptions from './AuditionOptions';
 import { ArrowRightOutlined } from '@ant-design/icons';
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 function AuditionGame(): JSX.Element {
   const [currentWord, setCurrentWord] = useState<IWord | null>(null);
@@ -22,14 +22,16 @@ function AuditionGame(): JSX.Element {
   const [answer, setAnswer] = useState<IWordWithAnswer | null>(null);
   const [currentOptions, setCurrentOptions] = useState<IWord[]>([]);
   const [shuffledWords, setShuffledWords] = useState<IWord[]>([]);
+  const [help, setHelp] = useState<boolean>(false);
+  const [end, setEnd] = useState<boolean>(false);
+  const [correctAnswers, setCorrectAnswers] = useState<IWordWithAnswer[]>([]);
+  const [wrongAnswers, setWrongAnswers] = useState<IWord[]>([]);
 
   const match = useMatch({
     path: '/audition-game/:difficulty',
   });
 
   const difficulty = match?.params.difficulty;
-  const correctAnswers = [];
-  const wrongAnswers = [];
 
   const {
     data: words = [],
@@ -39,7 +41,21 @@ function AuditionGame(): JSX.Element {
     error,
   } = useGetWordsForGroupQuery({ group: Number(difficulty), page: MAX_PAGE });
 
-  // function onAnswerClick() {}
+  function endCheck() {
+    if (currentWords.length === INITIAL_VALUE) {
+      setEnd(true);
+    }
+  }
+
+  function onAnswerClick() {
+    setHelp(true);
+    endCheck();
+  }
+
+  function onResultClick() {
+    console.log('Correct answers: ', correctAnswers);
+    console.log('Wrong answers: ', wrongAnswers);
+  }
 
   function onNextClick() {
     const shuffledWordsTemp = shuffledWords.slice();
@@ -54,22 +70,16 @@ function AuditionGame(): JSX.Element {
     setCurrentOptions(currentOptions);
     setShuffledWords(shuffledWordsTemp);
 
-    // console.log('answer is: ', answer);
     if (answer?.correct === true) {
-      correctAnswers.push(answer);
-    } else {
-      wrongAnswers.push(answer);
+      setCorrectAnswers((prev) => [...prev, answer]);
+    } else if (answer) {
+      setWrongAnswers((prev) => [...prev, answer]);
     }
 
-    // if (currentWords.length > INITIAL_VALUE) {
-    //   setCurrentOptions(currentOptions);
-    // } else {
-    //   console.log('options reset');
-    //   setCurrentOptions([]);
-    // }
-
     setAnswer(null);
-    console.log(currentWords);
+    setHelp(false);
+    // console.log('words left: ', currentWords);
+    endCheck();
   }
 
   useEffect(() => {
@@ -78,7 +88,7 @@ function AuditionGame(): JSX.Element {
 
       const wordsForGame = shuffledWordsTemp.splice(
         INITIAL_VALUE,
-        WORDS_FOR_GAME
+        WORDS_FOR_GAME + 1
       ) as IWord[];
 
       const currentWord = wordsForGame.shift();
@@ -128,24 +138,34 @@ function AuditionGame(): JSX.Element {
                   options={currentOptions}
                   correctOption={currentWord}
                   setAnswer={setAnswer}
+                  help={help}
                 ></AuditionOptions>
               )}
             </Row>
             <Row justify="center">
-              {currentWords?.length >= 0 && (
+              {!end && (
                 <Button
                   type="primary"
                   shape="round"
                   size={'large'}
-                  onClick={onNextClick}
+                  onClick={answer ? onNextClick : onAnswerClick}
                 >
                   {answer ? <ArrowRightOutlined /> : 'Не знаю'}
+                </Button>
+              )}
+              {end && (
+                <Button
+                  type="primary"
+                  shape="round"
+                  size={'large'}
+                  onClick={onResultClick}
+                >
+                  Результаты
                 </Button>
               )}
             </Row>
           </>
         )}
-        {/* {currentWord.lendth > 0} */}
       </Space>
     </>
   );
