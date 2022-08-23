@@ -17,6 +17,10 @@ export interface IWord {
   wordTranslate: string;
 }
 
+export interface IWordWithAnswer extends IWord {
+  correct?: boolean;
+}
+
 export interface IWordsQuery {
   group: DifficultyLevel;
   page: number;

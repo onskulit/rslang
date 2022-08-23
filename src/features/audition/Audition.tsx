@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { difficultyChanged } from '../difficulty/difficultySlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
+// import { useAddNewUserMutation, useGetUserQuery } from '../api/apiSlice';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -18,6 +19,17 @@ function Audition(): JSX.Element {
   const difficulty = useAppSelector(
     (state: DifficultyState) => state.difficulty.value
   );
+
+  // const [addNewUser, { isLoading }] = useAddNewUserMutation();
+  // const [getUser, { isLoading }] = useGetUserQuery();
+
+  const newUser = {
+    name: 'John',
+    email: 'dwddd@ssas.ru',
+    password: '12345689',
+  };
+
+  // id = '63033a26d48d9200162e0ce4'
 
   const onDifficultyChanged = (value: number) => {
     console.log(value);
@@ -69,6 +81,32 @@ function Audition(): JSX.Element {
           <Button type="primary" shape="round" size={'large'}>
             <NavLink to={`/audition-game/${difficulty}`}>Начать игру</NavLink>
           </Button>
+          {/* <Button
+            type="primary"
+            shape="round"
+            size={'large'}
+            onClick={async () => {
+              console.log(newUser);
+              console.log(JSON.stringify(newUser));
+              const userId = await addNewUser(newUser).unwrap();
+              console.log(userId);
+            }}
+          >
+            Зарегистрироваться
+          </Button>
+          <Button
+            type="primary"
+            shape="round"
+            size={'large'}
+            onClick={async () => {
+              console.log(newUser);
+              console.log(JSON.stringify(newUser));
+              const userId = await addNewUser(newUser).unwrap();
+              console.log(userId);
+            }}
+          >
+            Получить пользователя
+          </Button> */}
         </Row>
       </Space>
     </div>
