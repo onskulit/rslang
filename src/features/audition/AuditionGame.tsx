@@ -16,6 +16,7 @@ import AuditionOptions from '../../common/components/auditionOptions/AuditionOpt
 import { ArrowRightOutlined } from '@ant-design/icons';
 import AudioButton from '../../common/components/audioButton/AudioButton';
 import AuditionResults from '../../common/components/auditionResults/AuditionResults';
+import GameOverMessage from '../../common/components/gameOverMessage/GameOverMessage';
 
 const { Title } = Typography;
 
@@ -25,12 +26,13 @@ function AuditionGame(): JSX.Element {
   const [answer, setAnswer] = useState<IWordWithAnswer | null>(null);
   const [currentOptions, setCurrentOptions] = useState<IWord[]>([]);
   const [shuffledWords, setShuffledWords] = useState<IWord[]>([]);
-  const [help, setHelp] = useState<boolean>(false);
-  const [end, setEnd] = useState<boolean>(false);
-  const [results, setResults] = useState<boolean>(false);
   const [correctAnswers, setCorrectAnswers] = useState<IWordWithAnswer[]>([]);
   const [wrongAnswers, setWrongAnswers] = useState<IWord[]>([]);
   const [progress, setProgress] = useState<number>(0);
+  const [help, setHelp] = useState<boolean>(false);
+  const [end, setEnd] = useState<boolean>(false);
+  const [results, setResults] = useState<boolean>(false);
+  const [gameOver, setGameOver] = useState<boolean>(false);
 
   const match = useMatch({
     path: '/audition-game/:difficulty',
@@ -42,12 +44,18 @@ function AuditionGame(): JSX.Element {
     data: words = [],
     isLoading,
     isSuccess,
-    isError,
-    error,
   } = useGetWordsForGroupQuery({ group: Number(difficulty), page: MAX_PAGE });
 
   function endCheck() {
     if (currentWords.length === INITIAL_VALUE) {
+      setEnd(true);
+    }
+  }
+
+  function gameOverCheck() {
+    if (wrongAnswers.length >= WORDS_FOR_GAME / 2) {
+      setGameOver(true);
+      setResults(true);
       setEnd(true);
     }
   }
@@ -115,31 +123,21 @@ function AuditionGame(): JSX.Element {
     }
   }, [words]);
 
-  // useLayoutEffect(() => {
-  //   if (isSuccess) {
-  //     const shuffledWordsTemp = shuffle(words);
-  //     const wordsForGame = shuffledWordsTemp.splice(
-  //       INITIAL_VALUE,
-  //       WORDS_FOR_GAME + 1
-  //     ) as IWord[];
-  //     const currentWord = wordsForGame.shift();
-  //     if (currentWord) {
-  //       setCurrentWord(currentWord);
-  //     }
-  //     setCurrentWords(wordsForGame);
-  //     const currentOptions = shuffle([
-  //       ...shuffledWordsTemp.splice(INITIAL_VALUE, NUMBER_OF_OPTIONS - 1),
-  //       { ...currentWord, correct: true },
-  //     ]) as IWord[];
-  //     setCurrentOptions(currentOptions);
-  //     setShuffledWords(shuffledWordsTemp);
-  //   }
-  // }, [words]);
+  useLayoutEffect(() => {
+    gameOverCheck();
+  }, [wrongAnswers]);
 
   return (
     <>
       <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-        <Progress percent={progress} showInfo={false} />
+        <Progress
+          percent={progress}
+          showInfo={false}
+          strokeColor={gameOver ? 'red' : ''}
+          className={`${styles.progressBar} ${
+            gameOver && styles.progressBarGameOver
+          }`}
+        />
 
         <Row justify="center">
           <Title
@@ -200,6 +198,7 @@ function AuditionGame(): JSX.Element {
             )}
           </>
         )}
+        {gameOver && <GameOverMessage />}
         {results && (
           <AuditionResults
             correctWords={correctAnswers}

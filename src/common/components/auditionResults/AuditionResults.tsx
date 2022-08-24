@@ -1,7 +1,7 @@
 import React from 'react';
 import { Divider, List } from 'antd';
 
-import styles from './AudioResults.module.css';
+// import styles from './AudioResults.module.css';
 import { IWord } from '../../types/interfaces';
 
 interface IAudioResultsProps {
