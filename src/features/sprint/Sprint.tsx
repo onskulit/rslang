@@ -51,10 +51,13 @@ function Sprint({
   }, [data]);
 
   useEffect(() => {
+    let id: NodeJS.Timeout | undefined;
     if (isStarted) {
-      setTimeout(() => {
+      id = setTimeout(() => {
         dispatch(decreaseTimer());
       }, 1000);
+
+      return () => clearTimeout(id);
     }
   }, [isStarted, secondsLeft]);
 
