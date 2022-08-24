@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import Loader from '../../common/components/Loader';
 import ErrorMessage from '../../common/components/ErrorMessage';
 import GameResult from '../../common/components/games/GameResult';
-import { Button, Row } from 'antd';
+import { Button, Row, Space } from 'antd';
 
 interface SprintProps {
   maxPage?: number;
@@ -28,7 +28,7 @@ function Sprint({
     words,
     currentWord,
     totalScore,
-    streak,
+    streakMultiplicity,
     secondsLeft,
     isFinished,
     isStarted,
@@ -66,10 +66,10 @@ function Sprint({
       {isFetching && <Loader />}
       {isError && <ErrorMessage error="Что-то пошло не так" />}
       {isStarted && (
-        <>
-          <Row justify="center">{`Осталось ${secondsLeft} секунд`}</Row>
+        <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+          <Row justify="center">{secondsLeft}</Row>
           <Row justify="center">{`Всего очков: ${totalScore}`}</Row>
-          <Row justify="center">{`Streak: ${streak}`}</Row>
+          <Row justify="center">{`X${streakMultiplicity}`}</Row>
           <Row justify="center">{`+${pointsForCorrectAnswer} за правильный ответ`}</Row>
           <Row justify="center">{`${words[currentWord][0].word} | ${words[currentWord][1]}`}</Row>
           <Row justify="center">
@@ -78,7 +78,7 @@ function Sprint({
               Неверно
             </Button>
           </Row>
-        </>
+        </Space>
       )}
       {isFinished && <GameResult game={GamesType.sprint} result={totalScore} />}
     </div>

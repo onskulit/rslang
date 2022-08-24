@@ -10,6 +10,7 @@ interface SprintState {
   pointsForCorrectAnswer: number;
   totalScore: number;
   streak: number;
+  streakMultiplicity: number;
   secondsLeft: number;
   isFinished: boolean;
   isStarted: boolean;
@@ -30,6 +31,7 @@ const initialState: SprintState = {
   pointsForCorrectAnswer: minPoints,
   totalScore: 0,
   streak: 0,
+  streakMultiplicity: 1,
   secondsLeft: roundDuration,
   isFinished: false,
   isStarted: false,
@@ -82,10 +84,14 @@ export const sprintSlice = createSlice({
         if (
           state.pointsForCorrectAnswer < maxPoints &&
           state.streak % streakForMultiplication === 0
-        )
+        ) {
+          state.streakMultiplicity =
+            pointsMultiplier ** (state.streak / streakForMultiplication);
           state.pointsForCorrectAnswer *= pointsMultiplier;
+        }
       } else {
         state.streak = 0;
+        state.streakMultiplicity = 1;
         state.pointsForCorrectAnswer = minPoints;
         state.wrongWords.push(state.words[state.currentWord][0]);
       }
