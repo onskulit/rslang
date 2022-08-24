@@ -7,14 +7,19 @@ import { SoundOutlined } from '@ant-design/icons';
 
 interface IAudioButtonProps {
   audioFile: string;
+  mute: boolean;
 }
 
-function AudioButton({ audioFile }: IAudioButtonProps) {
+function AudioButton({ audioFile, mute }: IAudioButtonProps) {
   const audio = new Audio(`${BASE_URL}/${audioFile}`);
 
   useEffect(() => {
-    audio.play();
-  }, [audioFile]);
+    if (!mute) {
+      audio.play();
+    } else {
+      console.log(mute);
+    }
+  }, [audioFile, mute]);
 
   return (
     <Button shape="round" size="large" onClick={() => audio.play()}>

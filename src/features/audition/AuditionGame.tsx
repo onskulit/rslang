@@ -1,6 +1,6 @@
 import styles from './AuditionGame.module.css';
-import { Row, Typography, Button, Space, Spin, Progress } from 'antd';
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { Row, Typography, Button, Space, Spin, Progress, Image } from 'antd';
+import { useEffect, useState } from 'react';
 import { useMatch } from 'react-router-dom';
 import { useGetWordsForGroupQuery } from '../api/apiSlice';
 import {
@@ -17,6 +17,7 @@ import { ArrowRightOutlined } from '@ant-design/icons';
 import AudioButton from '../../common/components/audioButton/AudioButton';
 import AuditionResults from '../../common/components/auditionResults/AuditionResults';
 import GameOverMessage from '../../common/components/gameOverMessage/GameOverMessage';
+import { BASE_URL } from '../../common/constants/api';
 
 const { Title } = Typography;
 
@@ -66,9 +67,21 @@ function AuditionGame(): JSX.Element {
     );
   }
 
-  function onAnswerClick() {
+  function onHelpClick() {
     setHelp(true);
     endCheck();
+  }
+
+  function onAnswerClick(answer: IWordWithAnswer) {
+    setAnswer(answer);
+
+    if (answer?.correct === true) {
+      const answerCopy = { ...answer };
+      delete answerCopy.correct;
+      setCorrectAnswers((prev) => [...prev, answerCopy]);
+    } else if (answer) {
+      setWrongAnswers((prev) => [...prev, answer]);
+    }
   }
 
   function onResultClick() {
@@ -88,18 +101,10 @@ function AuditionGame(): JSX.Element {
     setCurrentOptions(currentOptions);
     setShuffledWords(shuffledWordsTemp);
     setProgress(getProgressInPercent());
-
-    if (answer?.correct === true) {
-      const answerCopy = { ...answer };
-      delete answerCopy.correct;
-      setCorrectAnswers((prev) => [...prev, answerCopy]);
-    } else if (answer) {
-      setWrongAnswers((prev) => [...prev, answer]);
-    }
-
     setAnswer(null);
     setHelp(false);
     endCheck();
+    gameOverCheck();
   }
 
   useEffect(() => {
@@ -122,10 +127,6 @@ function AuditionGame(): JSX.Element {
       setShuffledWords(shuffledWordsTemp);
     }
   }, [words]);
-
-  useLayoutEffect(() => {
-    gameOverCheck();
-  }, [wrongAnswers]);
 
   return (
     <>
@@ -160,7 +161,7 @@ function AuditionGame(): JSX.Element {
           <>
             <Row justify="center">
               {currentWord && !end && (
-                <AudioButton audioFile={currentWord?.audio} />
+                <AudioButton audioFile={currentWord?.audio} mute={gameOver} />
               )}
             </Row>
             <Row justify="center">
@@ -168,7 +169,7 @@ function AuditionGame(): JSX.Element {
                 <AuditionOptions
                   options={currentOptions}
                   correctOption={currentWord}
-                  setAnswer={setAnswer}
+                  setAnswer={onAnswerClick}
                   help={help}
                 />
               )}
@@ -189,13 +190,24 @@ function AuditionGame(): JSX.Element {
                     type="primary"
                     shape="round"
                     size={'large'}
-                    onClick={answer ? onNextClick : onAnswerClick}
+                    onClick={answer ? onNextClick : onHelpClick}
                   >
                     {answer ? <ArrowRightOutlined /> : 'Не знаю'}
                   </Button>
                 )}
               </Row>
             )}
+          </>
+        )}
+        {currentWord && answer && (
+          <>
+            <Row justify="center">
+              <Image
+                preview={false}
+                width={300}
+                src={`${BASE_URL}/${currentWord.image}`}
+              />
+            </Row>
           </>
         )}
         {gameOver && <GameOverMessage />}
