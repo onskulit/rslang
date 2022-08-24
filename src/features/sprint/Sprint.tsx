@@ -71,7 +71,7 @@ function Sprint({
           <Row justify="center">{`Всего очков: ${totalScore}`}</Row>
           <Row justify="center">{`Streak: ${streak}`}</Row>
           <Row justify="center">{`+${pointsForCorrectAnswer} за правильный ответ`}</Row>
-          <Row justify="center">{`${words[currentWord][0]} | ${words[currentWord][1]}`}</Row>
+          <Row justify="center">{`${words[currentWord][0].word} | ${words[currentWord][1]}`}</Row>
           <Row justify="center">
             <Button onClick={() => dispatch(checkAnswer(true))}>Верно</Button>
             <Button onClick={() => dispatch(checkAnswer(false))}>

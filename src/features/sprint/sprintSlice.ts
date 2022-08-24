@@ -3,7 +3,9 @@ import { Word } from '../../common/types/interfaces';
 import shuffleFisherYates from '../../common/utils/shuffleFisherYates';
 
 interface SprintState {
-  words: [string, string, boolean][];
+  words: [Word, string, boolean][];
+  correctWords: Word[];
+  wrongWords: Word[];
   currentWord: number;
   pointsForCorrectAnswer: number;
   totalScore: number;
@@ -22,6 +24,8 @@ const roundDuration = 60;
 
 const initialState: SprintState = {
   words: [],
+  correctWords: [],
+  wrongWords: [],
   currentWord: 0,
   pointsForCorrectAnswer: minPoints,
   totalScore: 0,
@@ -49,11 +53,8 @@ export const sprintSlice = createSlice({
       }
     },
     createPares(state, action: PayloadAction<Word[]>) {
-      state.words = [];
-      const words: string[] = [];
       const wordsTranslation: string[] = [];
       action.payload.forEach((word) => {
-        words.push(word.word);
         wordsTranslation.push(word.wordTranslate);
       });
       const shuffledTranslation = shuffleFisherYates(wordsTranslation);
@@ -63,10 +64,10 @@ export const sprintSlice = createSlice({
           Math.random() < 0.5 ? wordsTranslation[i] : shuffledTranslation[i]
         );
       }
-      const finalWords: [string, string, boolean][] = [];
-      for (let i = 0; i < words.length; i++) {
+      const finalWords: [Word, string, boolean][] = [];
+      for (let i = 0; i < action.payload.length; i++) {
         finalWords.push([
-          words[i],
+          action.payload[i],
           finalTranslation[i],
           finalTranslation[i] === wordsTranslation[i],
         ]);
@@ -77,6 +78,7 @@ export const sprintSlice = createSlice({
       if (action.payload === state.words[state.currentWord][2]) {
         state.totalScore += state.pointsForCorrectAnswer;
         state.streak++;
+        state.correctWords.push(state.words[state.currentWord][0]);
         if (
           state.pointsForCorrectAnswer < maxPoints &&
           state.streak % streakForMultiplication === 0
@@ -85,6 +87,7 @@ export const sprintSlice = createSlice({
       } else {
         state.streak = 0;
         state.pointsForCorrectAnswer = minPoints;
+        state.wrongWords.push(state.words[state.currentWord][0]);
       }
       if (state.words.length - 1 === state.currentWord) {
         state.isFinished = true;
