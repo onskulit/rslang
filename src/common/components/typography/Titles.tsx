@@ -7,10 +7,10 @@ interface TitleProps {
 
 const { Title } = Typography;
 
-export function TitleLevel3({ children }: TitleProps) {
+export function TitleLevel2({ children }: TitleProps) {
   return (
     <Title
-      level={3}
+      level={2}
       style={{
         fontSize: 32,
         textTransform: 'uppercase',
@@ -21,10 +21,10 @@ export function TitleLevel3({ children }: TitleProps) {
   );
 }
 
-export function TitleLevel4({ children }: TitleProps) {
+export function TitleLevel3({ children }: TitleProps) {
   return (
     <Title
-      level={4}
+      level={3}
       style={{
         fontSize: 24,
         textTransform: 'uppercase',

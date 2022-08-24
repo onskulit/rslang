@@ -4,7 +4,7 @@ import { useAppDispatch } from '../../../app/hooks';
 import { difficultyChanged } from '../../../features/difficulty/difficultySlice';
 import { GamesType } from '../../types/enums';
 import { ButtonRounded } from '../buttons/Buttons';
-import { TitleLevel4 } from '../typography/Titles';
+import { TitleLevel3 } from '../typography/Titles';
 
 interface GameMenuProps {
   game: GamesType;
@@ -24,7 +24,7 @@ function GameMenu({ game, children }: GameMenuProps) {
       {!isReady ? (
         <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
           <Row justify="center">
-            <TitleLevel4>Добро пожаловать в игру {game}!</TitleLevel4>
+            <TitleLevel3>Добро пожаловать в игру {game}!</TitleLevel3>
           </Row>
           <Row justify="center">Выберите уровень сложности</Row>
           <Row justify="center">
