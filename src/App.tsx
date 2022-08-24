@@ -10,6 +10,7 @@ import { GamesType } from './common/types/enums';
 import Sprint from './features/sprint/Sprint';
 import Audition from './features/audition/Audition';
 import gamesInfo from './common/constants/gamesInfo';
+import Authorization from './features/authorization/authorization';
 
 const { Content } = Layout;
 
@@ -35,6 +36,7 @@ function App() {
             element={<Audition />}
           />
           <Route path="/statistics" element={<Statistics />} />
+          <Route path="/authorization" element={<Authorization />} />
         </Routes>
       </Content>
       <AppFooter />

@@ -1,14 +1,15 @@
-import { MAX_PAGE } from './../../common/constants/numbers';
-import { IWord } from './../../common/types/interfaces';
+import { IWord, IWordsQuery } from '../../common/types/interfaces';
+import { API, BASE_URL, REDUCER_PATH } from '../../common/constants/api';
 import {
   createApi,
   fetchBaseQuery,
   FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react';
-import { IWordsQuery } from '../../common/types/interfaces';
-import { API, BASE_URL, REDUCER_PATH } from '../../common/constants/api';
-import { INITIAL_VALUE } from '../../common/constants/numbers';
-import { DifficultyLevel } from '../../common/types/enums';
+import {
+  MAX_PAGE,
+  DifficultyLevel,
+  INITIAL_VALUE,
+} from '../../common/constants/numbers';
 
 const groupChecker = (group: DifficultyLevel) => {
   if (group < DifficultyLevel.LEVEL_0) {
