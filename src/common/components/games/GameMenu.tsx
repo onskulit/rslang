@@ -31,7 +31,7 @@ function GameMenu({ game, children }: GameMenuProps) {
             <Radio.Group
               defaultValue="0"
               size="large"
-              onChange={(e) => dispatch(difficultyChanged(e.target.value))}
+              onChange={(e) => dispatch(difficultyChanged(+e.target.value))}
             >
               <Radio.Button value="0">1</Radio.Button>
               <Radio.Button value="1">2</Radio.Button>
