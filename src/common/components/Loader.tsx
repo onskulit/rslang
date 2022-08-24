@@ -1,7 +1,11 @@
-import { Spin } from 'antd';
+import { Row, Spin } from 'antd';
 
 function Loader() {
-  return <Spin tip="Loading..." />;
+  return (
+    <Row justify="center">
+      <Spin tip="Loading..." />
+    </Row>
+  );
 }
 
 export default Loader;

@@ -1,8 +1,9 @@
-import { Button, Radio, Row } from 'antd';
+import { Button, Radio, Row, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../../app/hooks';
 import { difficultyChanged } from '../../../features/difficulty/difficultySlice';
 import { GamesType } from '../../types/enums';
+import Loader from '../Loader';
 
 interface GameMenuProps {
   game: GamesType;
@@ -20,7 +21,7 @@ function GameMenu({ game, children }: GameMenuProps) {
   return (
     <>
       {!isReady ? (
-        <>
+        <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
           <Row justify="center">Добро пожаловать в игру {game}!</Row>
           <Row justify="center">Выберите уровень сложности</Row>
           <Row justify="center">
@@ -40,7 +41,7 @@ function GameMenu({ game, children }: GameMenuProps) {
           <Row justify="center">
             <Button onClick={() => setIsReady(true)}>Начать</Button>
           </Row>
-        </>
+        </Space>
       ) : (
         <>{children}</>
       )}
