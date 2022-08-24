@@ -34,3 +34,16 @@ export function TitleLevel3({ children }: TitleProps) {
     </Title>
   );
 }
+
+export function TitleLevel4({ children }: TitleProps) {
+  return (
+    <Title
+      level={4}
+      style={{
+        fontSize: 18,
+      }}
+    >
+      {children}
+    </Title>
+  );
+}
