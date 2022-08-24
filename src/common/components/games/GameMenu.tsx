@@ -17,7 +17,7 @@ function GameMenu({ game, children }: GameMenuProps) {
 
   return (
     <>
-      {!isReady && (
+      {!isReady ? (
         <>
           <Row justify="center">Добро пожаловать в игру {game}!</Row>
           <Row justify="center">Выберите уровень сложности</Row>
@@ -39,8 +39,9 @@ function GameMenu({ game, children }: GameMenuProps) {
             <Button onClick={() => setIsReady(true)}>Начать</Button>
           </Row>
         </>
+      ) : (
+        <>{children}</>
       )}
-      {isReady && <>{children}</>}
     </>
   );
 }
