@@ -2,10 +2,11 @@ import { Radio, Row, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../../app/hooks';
 import { difficultyChanged } from '../../../features/difficulty/difficultySlice';
+import gamesInfo from '../../constants/gamesInfo';
 import { difficulties, languageLevels } from '../../constants/numbers';
 import { GamesType } from '../../types/enums';
 import { ButtonRounded } from '../buttons/Buttons';
-import { TitleLevel3 } from '../typography/Titles';
+import { TitleLevel3, TitleLevel4 } from '../typography/Titles';
 
 interface GameMenuProps {
   game: GamesType;
@@ -13,6 +14,7 @@ interface GameMenuProps {
 }
 
 function GameMenu({ game, children }: GameMenuProps) {
+  const gameInfo = gamesInfo[game];
   const dispatch = useAppDispatch();
   const [isReady, setIsReady] = useState(false);
 
@@ -25,7 +27,10 @@ function GameMenu({ game, children }: GameMenuProps) {
       {!isReady ? (
         <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
           <Row justify="center">
-            <TitleLevel3>Добро пожаловать в игру {game}!</TitleLevel3>
+            <TitleLevel3>Добро пожаловать в игру {gameInfo.name}!</TitleLevel3>
+          </Row>
+          <Row justify="center">
+            <TitleLevel4>{gameInfo.description}</TitleLevel4>
           </Row>
           <Row justify="center">Выберите уровень сложности</Row>
           <Row justify="center">

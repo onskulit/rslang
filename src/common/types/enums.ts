@@ -8,6 +8,6 @@ export enum DifficultyLevel {
 }
 
 export enum GamesType {
-  sprint = 'Спринт',
-  audiocall = 'Аудиовызов',
+  sprint = 'sprint',
+  audiocall = 'audiocall',
 }
