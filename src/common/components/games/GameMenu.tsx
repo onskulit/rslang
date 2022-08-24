@@ -1,5 +1,7 @@
 import { Button, Radio, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { useAppDispatch } from '../../../app/hooks';
+import { difficultyChanged } from '../../../features/difficulty/difficultySlice';
 import { GamesType } from '../../types/enums';
 
 interface GameMenuProps {
@@ -8,7 +10,7 @@ interface GameMenuProps {
 }
 
 function GameMenu({ game, children }: GameMenuProps) {
-  const [difficulty, setDifficulty] = useState(0);
+  const dispatch = useAppDispatch();
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
@@ -25,7 +27,7 @@ function GameMenu({ game, children }: GameMenuProps) {
             <Radio.Group
               defaultValue="0"
               size="large"
-              onChange={(e) => setDifficulty(e.target.value)}
+              onChange={(e) => dispatch(difficultyChanged(e.target.value))}
             >
               <Radio.Button value="0">1</Radio.Button>
               <Radio.Button value="1">2</Radio.Button>
