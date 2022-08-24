@@ -9,6 +9,7 @@ import GameMenu from './common/components/games/GameMenu';
 import { GamesType } from './common/types/enums';
 import Sprint from './features/sprint/Sprint';
 import AudioСall from './features/audiocall/AudioСall';
+import gamesInfo from './common/constants/gamesInfo';
 
 const { Content } = Layout;
 
@@ -22,19 +23,16 @@ function App() {
           <Route path="/textbook" element={<Textbook />} />
           <Route
             path="/sprint"
-            element={
-              <GameMenu game={GamesType.sprint}>
-                <Sprint />
-              </GameMenu>
-            }
+            element={<GameMenu game={GamesType.sprint} />}
           />
           <Route
             path="/audiocall"
-            element={
-              <GameMenu game={GamesType.audiocall}>
-                <AudioСall />
-              </GameMenu>
-            }
+            element={<GameMenu game={GamesType.audiocall} />}
+          />
+          <Route path={gamesInfo[GamesType.sprint].path} element={<Sprint />} />
+          <Route
+            path={gamesInfo[GamesType.audiocall].path}
+            element={<AudioСall />}
           />
           <Route path="/statistics" element={<Statistics />} />
         </Routes>
