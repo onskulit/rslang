@@ -17,7 +17,7 @@ function GameMenu({ game }: GameMenuProps) {
   const dispatch = useAppDispatch();
 
   return (
-    <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+    <Space direction="vertical" size="small" style={{ display: 'flex' }}>
       <Row justify="center">
         <TitleLevel3>Добро пожаловать в игру {gameInfo.name}!</TitleLevel3>
       </Row>
