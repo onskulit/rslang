@@ -12,26 +12,35 @@ interface IAudioResultsProps {
 function AudioResults({ correctWords, wrongWords }: IAudioResultsProps) {
   return (
     <>
-      <Divider orientation="left">Правильные ответы:</Divider>
-      <List
-        bordered
-        dataSource={correctWords}
-        renderItem={(word) => (
-          <List.Item>
-            {word.word} - {word.wordTranslate}
-          </List.Item>
-        )}
-      />
-      <Divider orientation="left">Неправильные ответы:</Divider>
-      <List
-        bordered
-        dataSource={wrongWords}
-        renderItem={(word) => (
-          <List.Item>
-            {word.word} - {word.wordTranslate}
-          </List.Item>
-        )}
-      />
+      {correctWords.length > 0 && (
+        <>
+          <Divider orientation="left">Правильные ответы:</Divider>
+          <List
+            bordered
+            dataSource={correctWords}
+            renderItem={(word) => (
+              <List.Item>
+                {word.word} - {word.wordTranslate}
+              </List.Item>
+            )}
+          />
+        </>
+      )}
+
+      {wrongWords.length > 0 && (
+        <>
+          <Divider orientation="left">Неправильные ответы:</Divider>
+          <List
+            bordered
+            dataSource={wrongWords}
+            renderItem={(word) => (
+              <List.Item>
+                {word.word} - {word.wordTranslate}
+              </List.Item>
+            )}
+          />
+        </>
+      )}
     </>
   );
 }

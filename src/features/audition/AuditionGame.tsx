@@ -1,6 +1,6 @@
 import styles from './AuditionGame.module.css';
-import { Row, Typography, Button, Space, Spin } from 'antd';
-import { useEffect, useState } from 'react';
+import { Row, Typography, Button, Space, Spin, Progress } from 'antd';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { useMatch } from 'react-router-dom';
 import { useGetWordsForGroupQuery } from '../api/apiSlice';
 import {
@@ -8,6 +8,7 @@ import {
   MAX_PAGE,
   NUMBER_OF_OPTIONS,
   WORDS_FOR_GAME,
+  PERCENT_100,
 } from '../../common/constants/numbers';
 import shuffle from '../../common/utils/shuffle';
 import { IWord, IWordWithAnswer } from '../../common/types/interfaces';
@@ -29,6 +30,7 @@ function AuditionGame(): JSX.Element {
   const [results, setResults] = useState<boolean>(false);
   const [correctAnswers, setCorrectAnswers] = useState<IWordWithAnswer[]>([]);
   const [wrongAnswers, setWrongAnswers] = useState<IWord[]>([]);
+  const [progress, setProgress] = useState<number>(0);
 
   const match = useMatch({
     path: '/audition-game/:difficulty',
@@ -48,6 +50,12 @@ function AuditionGame(): JSX.Element {
     if (currentWords.length === INITIAL_VALUE) {
       setEnd(true);
     }
+  }
+
+  function getProgressInPercent() {
+    return (
+      (PERCENT_100 / WORDS_FOR_GAME) * (WORDS_FOR_GAME - currentWords.length)
+    );
   }
 
   function onAnswerClick() {
@@ -71,6 +79,7 @@ function AuditionGame(): JSX.Element {
     setCurrentWord(currentWord ? currentWord : null);
     setCurrentOptions(currentOptions);
     setShuffledWords(shuffledWordsTemp);
+    setProgress(getProgressInPercent());
 
     if (answer?.correct === true) {
       const answerCopy = { ...answer };
@@ -92,28 +101,46 @@ function AuditionGame(): JSX.Element {
         INITIAL_VALUE,
         WORDS_FOR_GAME + 1
       ) as IWord[];
-
       const currentWord = wordsForGame.shift();
-
       if (currentWord) {
         setCurrentWord(currentWord);
       }
-
       setCurrentWords(wordsForGame);
-
       const currentOptions = shuffle([
         ...shuffledWordsTemp.splice(INITIAL_VALUE, NUMBER_OF_OPTIONS - 1),
         { ...currentWord, correct: true },
       ]) as IWord[];
-
       setCurrentOptions(currentOptions);
       setShuffledWords(shuffledWordsTemp);
     }
   }, [words]);
 
+  // useLayoutEffect(() => {
+  //   if (isSuccess) {
+  //     const shuffledWordsTemp = shuffle(words);
+  //     const wordsForGame = shuffledWordsTemp.splice(
+  //       INITIAL_VALUE,
+  //       WORDS_FOR_GAME + 1
+  //     ) as IWord[];
+  //     const currentWord = wordsForGame.shift();
+  //     if (currentWord) {
+  //       setCurrentWord(currentWord);
+  //     }
+  //     setCurrentWords(wordsForGame);
+  //     const currentOptions = shuffle([
+  //       ...shuffledWordsTemp.splice(INITIAL_VALUE, NUMBER_OF_OPTIONS - 1),
+  //       { ...currentWord, correct: true },
+  //     ]) as IWord[];
+  //     setCurrentOptions(currentOptions);
+  //     setShuffledWords(shuffledWordsTemp);
+  //   }
+  // }, [words]);
+
   return (
     <>
       <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+        <Progress percent={progress} showInfo={false} />
+
         <Row justify="center">
           <Title
             level={3}
