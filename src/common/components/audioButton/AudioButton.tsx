@@ -13,16 +13,29 @@ interface IAudioButtonProps {
 function AudioButton({ audioFile, mute }: IAudioButtonProps) {
   const audio = new Audio(`${BASE_URL}/${audioFile}`);
 
+  function playSound() {
+    audio.play();
+  }
+
+  function onSpaceHandler(e: KeyboardEvent) {
+    if (e.key === ' ') {
+      playSound();
+    }
+  }
+
   useEffect(() => {
     if (!mute) {
-      audio.play();
-    } else {
-      console.log(mute);
+      playSound();
     }
+
+    document.addEventListener('keydown', onSpaceHandler);
+    return () => {
+      document.removeEventListener('keydown', onSpaceHandler);
+    };
   }, [audioFile, mute]);
 
   return (
-    <Button shape="round" size="large" onClick={() => audio.play()}>
+    <Button tabIndex={0} shape="round" size="large" onClick={playSound}>
       <SoundOutlined />
     </Button>
   );

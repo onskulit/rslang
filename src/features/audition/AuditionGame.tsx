@@ -69,18 +69,18 @@ function AuditionGame(): JSX.Element {
 
   function onHelpClick() {
     setHelp(true);
-    endCheck();
   }
 
   function onAnswerClick(answer: IWordWithAnswer) {
     setAnswer(answer);
 
+    const answerCopy = { ...answer };
+    delete answerCopy.correct;
+
     if (answer?.correct === true) {
-      const answerCopy = { ...answer };
-      delete answerCopy.correct;
       setCorrectAnswers((prev) => [...prev, answerCopy]);
-    } else if (answer) {
-      setWrongAnswers((prev) => [...prev, answer]);
+    } else {
+      setWrongAnswers((prev) => [...prev, answerCopy]);
     }
   }
 
@@ -128,6 +128,23 @@ function AuditionGame(): JSX.Element {
     }
   }, [words]);
 
+  function onEnterClick(e: KeyboardEvent) {
+    if (e.key === 'Enter') {
+      if (answer) {
+        onNextClick();
+      } else {
+        onHelpClick();
+      }
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('keydown', onEnterClick);
+    return () => {
+      document.removeEventListener('keydown', onEnterClick);
+    };
+  }, [end, answer]);
+
   return (
     <>
       <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
@@ -165,7 +182,7 @@ function AuditionGame(): JSX.Element {
               )}
             </Row>
             <Row justify="center">
-              {currentWords?.length >= 0 && !end && (
+              {!!currentWords?.length && !end && (
                 <AuditionOptions
                   options={currentOptions}
                   correctOption={currentWord}
@@ -181,6 +198,7 @@ function AuditionGame(): JSX.Element {
                     type="primary"
                     shape="round"
                     size={'large'}
+                    tabIndex={-1}
                     onClick={onResultClick}
                   >
                     Результаты
@@ -190,6 +208,7 @@ function AuditionGame(): JSX.Element {
                     type="primary"
                     shape="round"
                     size={'large'}
+                    tabIndex={-1}
                     onClick={answer ? onNextClick : onHelpClick}
                   >
                     {answer ? <ArrowRightOutlined /> : 'Не знаю'}
@@ -199,7 +218,7 @@ function AuditionGame(): JSX.Element {
             )}
           </>
         )}
-        {currentWord && answer && (
+        {currentWord && answer && !end && (
           <>
             <Row justify="center">
               <Image

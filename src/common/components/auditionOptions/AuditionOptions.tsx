@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { Radio, Row, RadioChangeEvent, Space } from 'antd';
 
 import styles from './AuditionOptions.module.css';
-import { IWordWithAnswer } from '../../types/interfaces';
+import { IWord, IWordWithAnswer } from '../../types/interfaces';
 
 interface IOptionsProps {
   options: IWordWithAnswer[];
@@ -22,6 +22,45 @@ function AuditionOptions({
     null
   );
 
+  function addCorrectFlag(option: IWordWithAnswer) {
+    const answerWithFlag = { ...correctOption };
+    if (option.word === correctOption?.word) {
+      answerWithFlag.correct = true;
+    } else {
+      answerWithFlag.correct = false;
+    }
+    return answerWithFlag;
+  }
+
+  function handleAnswer(option: IWord) {
+    setCurrentAnswer(option);
+    setAnswer(addCorrectFlag(option));
+    setIsAnswered(true);
+  }
+
+  function onKeyPressHandler(e: KeyboardEvent) {
+    switch (e.key) {
+      case '1':
+        handleAnswer(options[0]);
+        break;
+      case '2':
+        handleAnswer(options[1]);
+        break;
+      case '3':
+        handleAnswer(options[2]);
+        break;
+      case '4':
+        handleAnswer(options[3]);
+        break;
+      case '5':
+        handleAnswer(options[4]);
+        break;
+
+      default:
+        break;
+    }
+  }
+
   useEffect(() => {
     if (help) {
       setIsAnswered(true);
@@ -31,6 +70,11 @@ function AuditionOptions({
 
   useLayoutEffect(() => {
     setIsAnswered(false);
+
+    document.addEventListener('keydown', onKeyPressHandler);
+    return () => {
+      document.removeEventListener('keydown', onKeyPressHandler);
+    };
   }, [options]);
 
   return (
@@ -38,17 +82,11 @@ function AuditionOptions({
       size="large"
       disabled={isAnswered}
       onChange={(e: RadioChangeEvent) => {
-        let option = options.find((option) => option.word === e.target.value);
+        const option = options.find((option) => option.word === e.target.value);
+
         if (option) {
-          if (option.word === correctOption?.word) {
-            option = { ...option, correct: true };
-            setCurrentAnswer(option);
-          } else {
-            setCurrentAnswer(option);
-          }
+          handleAnswer(option);
         }
-        setAnswer(option);
-        setIsAnswered(true);
       }}
     >
       <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
@@ -61,6 +99,7 @@ function AuditionOptions({
               <Radio.Button
                 value={option.word}
                 key={option.id}
+                tabIndex={-1}
                 className={`${styles.option} ${
                   isAnswered &&
                   correctOption?.word === option?.word &&
