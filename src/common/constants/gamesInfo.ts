@@ -14,7 +14,7 @@ interface GamesInfo {
 const gamesInfo: GamesInfo = {
   [GamesType.sprint]: {
     name: 'Спринт',
-    description: 'Учит быстро переводить на ваш родной язык.', // Для этой тренировки используются слова из вашего словаря.
+    description: 'Учит быстро переводить на ваш родной язык.',
     path: '/sprint-game',
   },
   [GamesType.audiocall]: {
