@@ -7,11 +7,14 @@ import { useEffect } from 'react';
 import Loader from '../../common/components/Loader';
 import ErrorMessage from '../../common/components/ErrorMessage';
 import GameResult from '../../common/components/games/gameResult/GameResult';
-import { Button, Progress, Row, Space } from 'antd';
+import { Button, Progress, Row, Space, Typography } from 'antd';
+import { TitleLevel4 } from '../../common/components/typography/Titles';
 
 interface SprintProps {
   maxPage?: number;
 }
+
+const { Text } = Typography;
 
 function Sprint({ maxPage = 29 }: SprintProps) {
   const { value: group } = useAppSelector(
@@ -101,7 +104,7 @@ function Sprint({ maxPage = 29 }: SprintProps) {
                 type="circle"
                 percent={progressSec}
                 format={() => secondsLeft}
-                width={60}
+                width={80}
                 status="normal"
                 strokeColor={secondsLeft <= 10 ? 'red' : '#1890ff'}
               />
@@ -109,15 +112,29 @@ function Sprint({ maxPage = 29 }: SprintProps) {
                 type="circle"
                 percent={streakProgress}
                 format={() => `X${streakMultiplicity}`}
-                width={60}
+                width={80}
                 status="normal"
                 strokeColor={updateStreakColor()}
               />
             </Space>
           </Row>
-          <Row justify="center">{`Всего очков: ${totalScore}`}</Row>
-          <Row justify="center">{`+${pointsForCorrectAnswer} за правильный ответ`}</Row>
-          <Row justify="center">{`${words[currentWord][0].word} | ${words[currentWord][1]}`}</Row>
+          <Row justify="center">
+            <TitleLevel4>{`Всего очков: ${totalScore} (+${pointsForCorrectAnswer} за слово)`}</TitleLevel4>
+          </Row>
+          <Row justify="center">
+            <Space
+              direction="vertical"
+              align="center"
+              style={{ display: 'flex' }}
+            >
+              <Text strong style={{ fontSize: 30 }}>
+                {words[currentWord][0].word}
+              </Text>
+              <Text type="secondary" style={{ fontSize: 26 }}>
+                {words[currentWord][1]}
+              </Text>
+            </Space>
+          </Row>
           <Row justify="center">
             <Space>
               <Button onClick={() => dispatch(checkAnswer(true))}>Верно</Button>
