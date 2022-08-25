@@ -63,6 +63,18 @@ function Sprint({
     }
   }, [isStarted, secondsLeft]);
 
+  useEffect(() => {
+    const keyUpHandler = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowLeft') dispatch(checkAnswer(true));
+      if (event.key === 'ArrowRight') dispatch(checkAnswer(false));
+    };
+    if (isStarted) {
+      document.addEventListener('keyup', keyUpHandler);
+    }
+
+    return () => document.removeEventListener('keyup', keyUpHandler);
+  }, [isStarted]);
+
   return (
     <div>
       {isFetching && <Loader />}
