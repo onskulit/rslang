@@ -87,6 +87,7 @@ function Sprint({ maxPage = 29 }: SprintProps) {
               percent={progressSec}
               format={() => secondsLeft}
               width={60}
+              status="normal"
               strokeColor={secondsLeft <= 10 ? 'red' : '#1890ff'}
             />
           </Row>
