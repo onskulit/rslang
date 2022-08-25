@@ -71,7 +71,9 @@ function AuditionOptions({
   useLayoutEffect(() => {
     setIsAnswered(false);
 
-    document.addEventListener('keydown', onKeyPressHandler);
+    document.addEventListener('keydown', onKeyPressHandler, {
+      once: true,
+    });
     return () => {
       document.removeEventListener('keydown', onKeyPressHandler);
     };
