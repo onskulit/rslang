@@ -1,4 +1,4 @@
-import { Divider, List, Row, Space } from 'antd';
+import { Row, Space } from 'antd';
 import gamesInfo from '../../../constants/gamesInfo';
 import { GamesType } from '../../../types/enums';
 import { IWord } from '../../../types/interfaces';
@@ -30,11 +30,11 @@ function GameResult({
         </TitleLevel4>
       </Row>
       <>
-        {correctWords.length && (
+        {correctWords.length > 0 && (
           <GameResultTable title="Правильные ответы:" words={correctWords} />
         )}
 
-        {wrongWords.length && (
+        {wrongWords.length > 0 && (
           <GameResultTable title="Неправильные ответы:" words={wrongWords} />
         )}
       </>
