@@ -17,6 +17,8 @@ const LogInForm: FC<IFormAuthProps> = ({ setAuthType }) => {
 
   useEffect(() => {
     if (typeof userSignInData !== 'undefined') {
+      const jsonData = JSON.stringify(userSignInData);
+      storage.set('userAuthData', jsonData);
       dispatch(changeValidation(true));
     }
   }, [userSignInData]);

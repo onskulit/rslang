@@ -5,11 +5,12 @@ import {
   useCreateUserMutation,
   useSignInMutation,
 } from '../../../../app/services/UserService';
-import { IFormAuthProps, IUserData } from '../../../../common/types/auth';
+import { IFormAuthProps } from '../../../../common/types/auth';
 import { AUTH_TUPE } from '../../../../common/constants/auth';
 import { storage } from '../../../../utils/localStorage';
 import { changeValidation } from '../../../../app/reducers/userSlice';
 import { useAppDispatch } from '../../../../app/hooks';
+import { IUserInputData } from '../../../../common/types/user';
 
 const RegistrationForm: FC<IFormAuthProps> = ({ setAuthType }) => {
   const [createUser, { error: creationError, isLoading: isCreationLoading }] =
@@ -27,7 +28,7 @@ const RegistrationForm: FC<IFormAuthProps> = ({ setAuthType }) => {
     }
   }, [userSignInData]);
 
-  const authorizeUser = async (userInputData: IUserData) => {
+  const authorizeUser = async (userInputData: IUserInputData) => {
     const creationData = await createUser(userInputData);
     if (creationData && !creationError) signIn(userInputData);
   };
@@ -45,7 +46,7 @@ const RegistrationForm: FC<IFormAuthProps> = ({ setAuthType }) => {
           )}
           <Form
             name="register"
-            onFinish={(data: IUserData) => authorizeUser(data)}
+            onFinish={(data: IUserInputData) => authorizeUser(data)}
             initialValues={{ remember: true }}
             scrollToFirstError
           >
