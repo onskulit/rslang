@@ -30,11 +30,11 @@ function GameResult({
         </TitleLevel4>
       </Row>
       <>
-        {correctWords.length > 0 && (
+        {!!correctWords.length && (
           <GameResultTable title="Правильные ответы:" words={correctWords} />
         )}
 
-        {wrongWords.length > 0 && (
+        {!!wrongWords.length && (
           <GameResultTable title="Неправильные ответы:" words={wrongWords} />
         )}
       </>
