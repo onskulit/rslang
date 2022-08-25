@@ -49,7 +49,9 @@ function Nav() {
       {validate ? (
         <Button onClick={handleLogIn}>Выход</Button>
       ) : (
-        <NavLink to="/authorization">Authorization</NavLink>
+        <Button>
+          <NavLink to="/authorization">Вход</NavLink>
+        </Button>
       )}
     </nav>
   );
