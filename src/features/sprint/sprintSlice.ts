@@ -12,6 +12,7 @@ interface SprintState {
   totalScore: number;
   streak: number;
   streakMultiplicity: number;
+  streakProgress: number;
   secondsLeft: number;
   progressSec: number;
   isFinished: boolean;
@@ -22,11 +23,16 @@ const minPoints = 10;
 const pointsMultiplier = 2;
 const multiplicationSteps = 3;
 const streakForMultiplication = 3;
+const maxStreak = streakForMultiplication * multiplicationSteps;
 const maxPoints = minPoints * pointsMultiplier ** multiplicationSteps;
 const roundDuration = 60;
 
 const countProgressSec = (secondsLeft: number) => {
   return (secondsLeft / roundDuration) * 100;
+};
+
+const countStreakProgress = (streak: number) => {
+  return (streak / maxStreak) * 100;
 };
 
 const initialState: SprintState = {
@@ -38,6 +44,7 @@ const initialState: SprintState = {
   totalScore: 0,
   streak: 0,
   streakMultiplicity: 1,
+  streakProgress: 0,
   secondsLeft: roundDuration,
   progressSec: 100,
   isFinished: false,
@@ -87,7 +94,10 @@ export const sprintSlice = createSlice({
     checkAnswer(state, action: PayloadAction<boolean>) {
       if (action.payload === state.words[state.currentWord][2]) {
         state.totalScore += state.pointsForCorrectAnswer;
-        state.streak++;
+        if (state.streak < maxStreak) {
+          state.streak++;
+          state.streakProgress = countStreakProgress(state.streak);
+        }
         state.correctWords.push(state.words[state.currentWord][0]);
         if (
           state.pointsForCorrectAnswer < maxPoints &&
@@ -100,6 +110,7 @@ export const sprintSlice = createSlice({
       } else {
         state.streak = 0;
         state.streakMultiplicity = 1;
+        state.streakProgress = 0;
         state.pointsForCorrectAnswer = minPoints;
         state.wrongWords.push(state.words[state.currentWord][0]);
       }

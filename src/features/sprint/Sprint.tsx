@@ -30,6 +30,7 @@ function Sprint({ maxPage = 29 }: SprintProps) {
     currentWord,
     totalScore,
     streakMultiplicity,
+    streakProgress,
     secondsLeft,
     progressSec,
     isFinished,
@@ -75,6 +76,19 @@ function Sprint({ maxPage = 29 }: SprintProps) {
     return () => document.removeEventListener('keyup', keyUpHandler);
   }, [isStarted]);
 
+  const updateStreakColor = () => {
+    switch (streakMultiplicity) {
+      case 1:
+        return 'grey';
+      case 2:
+        return 'yellow';
+      case 4:
+        return 'green';
+      case 8:
+        return 'purple';
+    }
+  };
+
   return (
     <div>
       {isFetching && <Loader />}
@@ -82,24 +96,35 @@ function Sprint({ maxPage = 29 }: SprintProps) {
       {isStarted && (
         <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
           <Row justify="center">
-            <Progress
-              type="circle"
-              percent={progressSec}
-              format={() => secondsLeft}
-              width={60}
-              status="normal"
-              strokeColor={secondsLeft <= 10 ? 'red' : '#1890ff'}
-            />
+            <Space>
+              <Progress
+                type="circle"
+                percent={progressSec}
+                format={() => secondsLeft}
+                width={60}
+                status="normal"
+                strokeColor={secondsLeft <= 10 ? 'red' : '#1890ff'}
+              />
+              <Progress
+                type="circle"
+                percent={streakProgress}
+                format={() => `X${streakMultiplicity}`}
+                width={60}
+                status="normal"
+                strokeColor={updateStreakColor()}
+              />
+            </Space>
           </Row>
           <Row justify="center">{`Всего очков: ${totalScore}`}</Row>
-          <Row justify="center">{`X${streakMultiplicity}`}</Row>
           <Row justify="center">{`+${pointsForCorrectAnswer} за правильный ответ`}</Row>
           <Row justify="center">{`${words[currentWord][0].word} | ${words[currentWord][1]}`}</Row>
           <Row justify="center">
-            <Button onClick={() => dispatch(checkAnswer(true))}>Верно</Button>
-            <Button onClick={() => dispatch(checkAnswer(false))}>
-              Неверно
-            </Button>
+            <Space>
+              <Button onClick={() => dispatch(checkAnswer(true))}>Верно</Button>
+              <Button onClick={() => dispatch(checkAnswer(false))}>
+                Неверно
+              </Button>
+            </Space>
           </Row>
         </Space>
       )}
