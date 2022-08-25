@@ -13,6 +13,7 @@ interface SprintState {
   streak: number;
   streakMultiplicity: number;
   secondsLeft: number;
+  progressSec: number;
   isFinished: boolean;
   isStarted: boolean;
 }
@@ -24,6 +25,10 @@ const streakForMultiplication = 3;
 const maxPoints = minPoints * pointsMultiplier ** multiplicationSteps;
 const roundDuration = 60;
 
+const countProgressSec = (secondsLeft: number) => {
+  return (secondsLeft / roundDuration) * 100;
+};
+
 const initialState: SprintState = {
   words: [],
   correctWords: [],
@@ -34,6 +39,7 @@ const initialState: SprintState = {
   streak: 0,
   streakMultiplicity: 1,
   secondsLeft: roundDuration,
+  progressSec: 100,
   isFinished: false,
   isStarted: false,
 };
@@ -54,6 +60,7 @@ export const sprintSlice = createSlice({
         state.isFinished = true;
         state.isStarted = false;
       }
+      state.progressSec = countProgressSec(state.secondsLeft);
     },
     createPares(state, action: PayloadAction<IWord[]>) {
       const wordsTranslation: string[] = [];

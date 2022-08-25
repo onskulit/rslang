@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import Loader from '../../common/components/Loader';
 import ErrorMessage from '../../common/components/ErrorMessage';
 import GameResult from '../../common/components/games/gameResult/GameResult';
-import { Button, Row, Space } from 'antd';
+import { Button, Progress, Row, Space } from 'antd';
 
 interface SprintProps {
   maxPage?: number;
@@ -32,6 +32,7 @@ function Sprint({
     totalScore,
     streakMultiplicity,
     secondsLeft,
+    progressSec,
     isFinished,
     isStarted,
     pointsForCorrectAnswer,
@@ -81,7 +82,15 @@ function Sprint({
       {isError && <ErrorMessage error="Что-то пошло не так" />}
       {isStarted && (
         <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-          <Row justify="center">{secondsLeft}</Row>
+          <Row justify="center">
+            <Progress
+              type="circle"
+              percent={progressSec}
+              format={() => secondsLeft}
+              width={60}
+              strokeColor={secondsLeft <= 10 ? 'red' : '#1890ff'}
+            />
+          </Row>
           <Row justify="center">{`Всего очков: ${totalScore}`}</Row>
           <Row justify="center">{`X${streakMultiplicity}`}</Row>
           <Row justify="center">{`+${pointsForCorrectAnswer} за правильный ответ`}</Row>
