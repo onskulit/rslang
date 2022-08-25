@@ -6,7 +6,7 @@ import { DifficultyLevel, GamesType } from '../../common/types/enums';
 import { useEffect } from 'react';
 import Loader from '../../common/components/Loader';
 import ErrorMessage from '../../common/components/ErrorMessage';
-import GameResult from '../../common/components/games/GameResult';
+import GameResult from '../../common/components/games/gameResult/GameResult';
 import { Button, Row, Space } from 'antd';
 
 interface SprintProps {
@@ -26,6 +26,8 @@ function Sprint({
     sprintSlice.actions;
   const {
     words,
+    correctWords,
+    wrongWords,
     currentWord,
     totalScore,
     streakMultiplicity,
@@ -80,7 +82,14 @@ function Sprint({
           </Row>
         </Space>
       )}
-      {isFinished && <GameResult game={GamesType.sprint} result={totalScore} />}
+      {isFinished && (
+        <GameResult
+          game={GamesType.sprint}
+          result={totalScore}
+          correctWords={correctWords}
+          wrongWords={wrongWords}
+        />
+      )}
     </div>
   );
 }

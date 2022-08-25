@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Word } from '../../common/types/interfaces';
+import { IWord } from '../../common/types/interfaces';
 import shuffleFisherYates from '../../common/utils/shuffleFisherYates';
 
 interface SprintState {
-  words: [Word, string, boolean][];
-  correctWords: Word[];
-  wrongWords: Word[];
+  words: [IWord, string, boolean][];
+  correctWords: IWord[];
+  wrongWords: IWord[];
   currentWord: number;
   pointsForCorrectAnswer: number;
   totalScore: number;
@@ -54,7 +54,7 @@ export const sprintSlice = createSlice({
         state.isStarted = false;
       }
     },
-    createPares(state, action: PayloadAction<Word[]>) {
+    createPares(state, action: PayloadAction<IWord[]>) {
       const wordsTranslation: string[] = [];
       action.payload.forEach((word) => {
         wordsTranslation.push(word.wordTranslate);
@@ -66,7 +66,7 @@ export const sprintSlice = createSlice({
           Math.random() < 0.5 ? wordsTranslation[i] : shuffledTranslation[i]
         );
       }
-      const finalWords: [Word, string, boolean][] = [];
+      const finalWords: [IWord, string, boolean][] = [];
       for (let i = 0; i < action.payload.length; i++) {
         finalWords.push([
           action.payload[i],
