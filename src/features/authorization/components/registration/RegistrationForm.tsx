@@ -1,16 +1,23 @@
-import { LockOutlined, UserOutlined, GoogleOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Upload } from 'antd';
 import React, { FC, useEffect } from 'react';
+import { LockOutlined, UserOutlined, GoogleOutlined } from '@ant-design/icons';
+import { Button, Form, Input } from 'antd';
 import {
   useCreateUserMutation,
   useSignInMutation,
 } from '../../../../app/services/UserService';
 import { IFormAuthProps } from '../../../../common/types/auth';
-import { AUTH_TUPE } from '../../../../common/constants/auth';
+import { AUTH_TUPE, DATA_UNDERFINED } from '../../../../common/constants/auth';
 import { storage } from '../../../../utils/localStorage';
 import { changeValidation } from '../../../../app/reducers/userSlice';
 import { useAppDispatch } from '../../../../app/hooks';
 import { IUserInputData } from '../../../../common/types/user';
+import { STORAGE_KEY } from '../../../../common/constants/localStorage';
+import {
+  AUTH_INPUT_PLACEHOLDER,
+  BAD_FORM_MESSAGE,
+  FORM_ITEM_NAMES,
+  MIN_PASSWORD_SYMBOL,
+} from '../../../../common/constants/form';
 
 const RegistrationForm: FC<IFormAuthProps> = ({ setAuthType }) => {
   const [createUser, { error: creationError, isLoading: isCreationLoading }] =
@@ -20,9 +27,9 @@ const RegistrationForm: FC<IFormAuthProps> = ({ setAuthType }) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (typeof userSignInData !== 'undefined') {
+    if (typeof userSignInData !== DATA_UNDERFINED) {
       const jsonData = JSON.stringify(userSignInData);
-      storage.set('userAuthData', jsonData);
+      storage.set(STORAGE_KEY.userAuthData, jsonData);
       dispatch(changeValidation(true));
       console.log(userSignInData);
     }
@@ -45,62 +52,59 @@ const RegistrationForm: FC<IFormAuthProps> = ({ setAuthType }) => {
             </h1>
           )}
           <Form
-            name="register"
             onFinish={(data: IUserInputData) => authorizeUser(data)}
             initialValues={{ remember: true }}
             scrollToFirstError
           >
             <Form.Item
-              name="email"
+              name={FORM_ITEM_NAMES.email}
               rules={[
                 {
                   type: 'email',
-                  message: 'TВы ввели невалидный E-mail!',
+                  message: BAD_FORM_MESSAGE.email.incorrect,
                 },
                 {
                   required: true,
-                  message: 'Введите E-mail!',
+                  message: BAD_FORM_MESSAGE.email.empty,
                 },
               ]}
             >
               <Input
                 prefix={<GoogleOutlined className="site-form-item-icon" />}
-                placeholder="email"
+                placeholder={AUTH_INPUT_PLACEHOLDER.email}
               />
             </Form.Item>
 
             <Form.Item
-              name="name"
+              name={FORM_ITEM_NAMES.name}
               rules={[
                 {
                   required: true,
-                  message: 'Пожалуйста введите ваш nickname!',
+                  message: BAD_FORM_MESSAGE.name.empty,
                   whitespace: true,
                 },
               ]}
             >
               <Input
                 prefix={<UserOutlined className="site-form-item-icon" />}
-                placeholder="nickname"
+                placeholder={AUTH_INPUT_PLACEHOLDER.name}
               />
             </Form.Item>
 
             <Form.Item
-              name="password"
+              name={FORM_ITEM_NAMES.password}
               rules={[
                 {
                   required: true,
-                  message: 'Пожалуйста введите ваш пароль!',
+                  message: BAD_FORM_MESSAGE.password.empty,
                 },
                 () => ({
                   validator(_, value) {
-                    if (value.length >= 8) {
+                    if (value.length >= MIN_PASSWORD_SYMBOL) {
                       return Promise.resolve();
                     }
                     return Promise.reject(
-                      new Error(
-                        'Пароль должен составлять 8 символов и больше ;)'
-                      )
+                      new Error(BAD_FORM_MESSAGE.password.incorrect)
                     );
                   },
                 }),
@@ -109,26 +113,29 @@ const RegistrationForm: FC<IFormAuthProps> = ({ setAuthType }) => {
             >
               <Input.Password
                 prefix={<LockOutlined className="site-form-item-icon" />}
-                placeholder="пароль"
+                placeholder={AUTH_INPUT_PLACEHOLDER.password}
               />
             </Form.Item>
 
             <Form.Item
-              name="confirm"
-              dependencies={['password']}
+              name={FORM_ITEM_NAMES.confirmPassword}
+              dependencies={[FORM_ITEM_NAMES.password]}
               hasFeedback
               rules={[
                 {
                   required: true,
-                  message: 'Пожалуйста подтвердите пароль!',
+                  message: BAD_FORM_MESSAGE.confirmPassword.empty,
                 },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
-                    if (!value || getFieldValue('password') === value) {
+                    if (
+                      !value ||
+                      getFieldValue(FORM_ITEM_NAMES.password) === value
+                    ) {
                       return Promise.resolve();
                     }
                     return Promise.reject(
-                      new Error('Пароль не соответствует!')
+                      new Error(BAD_FORM_MESSAGE.confirmPassword.incorrect)
                     );
                   },
                 }),
@@ -136,7 +143,7 @@ const RegistrationForm: FC<IFormAuthProps> = ({ setAuthType }) => {
             >
               <Input.Password
                 prefix={<LockOutlined className="site-form-item-icon" />}
-                placeholder="подтвердите пароль"
+                placeholder={AUTH_INPUT_PLACEHOLDER.confirmPassword}
               />
             </Form.Item>
 

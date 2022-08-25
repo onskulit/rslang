@@ -13,7 +13,7 @@ function Nav() {
   const dispatch = useAppDispatch();
 
   const handleLogIn = () => {
-    const response = dispatch(changeValidation(false));
+    dispatch(changeValidation(false));
   };
 
   const dropdownMenuClickHandler = useMemo(

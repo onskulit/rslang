@@ -1,24 +1,30 @@
+import React, { FC, useEffect, useState } from 'react';
 import { LockOutlined, GoogleOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
-import React, { FC, useEffect, useState } from 'react';
 import { useAppDispatch } from '../../../../app/hooks';
 import { changeValidation } from '../../../../app/reducers/userSlice';
 import { useSignInMutation } from '../../../../app/services/UserService';
-import { AUTH_TUPE } from '../../../../common/constants/auth';
+import { AUTH_TUPE, DATA_UNDERFINED } from '../../../../common/constants/auth';
+import {
+  AUTH_INPUT_PLACEHOLDER,
+  BAD_FORM_MESSAGE,
+  FORM_ITEM_NAMES,
+} from '../../../../common/constants/form';
+import { STORAGE_KEY } from '../../../../common/constants/localStorage';
 import { IFormAuthProps } from '../../../../common/types/auth';
 import { storage } from '../../../../utils/localStorage';
 
 const LogInForm: FC<IFormAuthProps> = ({ setAuthType }) => {
-  const userAuthData = storage.get('userAuthData');
+  const userAuthData = storage.get(STORAGE_KEY.userAuthData);
   const [signIn, { data: userSignInData, error, isLoading }] =
     useSignInMutation();
   const dispatch = useAppDispatch();
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    if (typeof userSignInData !== 'undefined') {
+    if (typeof userSignInData !== DATA_UNDERFINED) {
       const jsonData = JSON.stringify(userSignInData);
-      storage.set('userAuthData', jsonData);
+      storage.set(STORAGE_KEY.userAuthData, jsonData);
       dispatch(changeValidation(true));
     }
   }, [userSignInData]);
@@ -30,27 +36,26 @@ const LogInForm: FC<IFormAuthProps> = ({ setAuthType }) => {
         <h1>Loading....</h1>
       ) : (
         <Form
-          name="normal_login"
           className="login-form"
           initialValues={{ remember: true }}
           onFinish={(data) => signIn(data)}
         >
           <Form.Item
-            name="email"
-            rules={[{ required: true, message: 'Введите ваш email' }]}
+            name={FORM_ITEM_NAMES.email}
+            rules={[{ required: true, message: BAD_FORM_MESSAGE.email.empty }]}
           >
             <Input
               prefix={<GoogleOutlined className="site-form-item-icon" />}
-              placeholder="email"
+              placeholder={AUTH_INPUT_PLACEHOLDER.email}
             />
           </Form.Item>
 
           <Form.Item
-            name="password"
+            name={FORM_ITEM_NAMES.password}
             rules={[
               {
                 required: true,
-                message: 'Введите ваш пароль',
+                message: BAD_FORM_MESSAGE.password.empty,
               },
               () => ({
                 validator(_, value) {
@@ -58,7 +63,7 @@ const LogInForm: FC<IFormAuthProps> = ({ setAuthType }) => {
                     return Promise.resolve();
                   }
                   return Promise.reject(
-                    new Error('Пароль должен составлять 8 символов и больше ;)')
+                    new Error(BAD_FORM_MESSAGE.password.incorrect)
                   );
                 },
               }),
@@ -67,7 +72,7 @@ const LogInForm: FC<IFormAuthProps> = ({ setAuthType }) => {
           >
             <Input.Password
               prefix={<LockOutlined className="site-form-item-icon" />}
-              placeholder="пароль"
+              placeholder={AUTH_INPUT_PLACEHOLDER.password}
             />
           </Form.Item>
 

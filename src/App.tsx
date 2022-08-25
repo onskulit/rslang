@@ -20,6 +20,7 @@ import {
 } from './app/services/UserService';
 import { IUserAuthData } from './common/types/user';
 import { changeValidation } from './app/reducers/userSlice';
+import { STORAGE_KEY } from './common/constants/localStorage';
 
 const { Content } = Layout;
 
@@ -32,7 +33,7 @@ const refreshToken = (userData: IUserAuthData) => {
   if (isSuccess) {
     userData.token = data.token;
     userData.refreshToken = data.refreshToken;
-    storage.set('userAuthData', JSON.stringify(userData));
+    storage.set(STORAGE_KEY.userAuthData, JSON.stringify(userData));
   }
 };
 
@@ -50,13 +51,14 @@ const checkToken = (userData: IUserAuthData) => {
 };
 
 const checkAuth = (isTokenRefreshed = false) => {
-  const userData: IUserAuthData = JSON.parse(storage.get('userAuthData'));
+  const userData: IUserAuthData = JSON.parse(
+    storage.get(STORAGE_KEY.userAuthData)
+  );
   if (userData) {
     const response = checkToken(userData);
     console.log(555);
 
     if (!response.isSuccess && !response.isFetching && !isTokenRefreshed) {
-      console.log('refresh');
       refreshToken(userData);
       checkAuth(true);
     }

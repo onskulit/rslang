@@ -15,10 +15,6 @@ const Authorization = () => {
   const [authType, setAuthType] = useState(AUTH_TUPE.logIn);
   const { validate } = useAppSelector((state) => state.user);
 
-  // useEffect(() => {
-  //   console.log(55);
-  // }, [authType]);
-
   return validate ? (
     <Navigate to="/" replace={true} />
   ) : (
