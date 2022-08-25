@@ -1,7 +1,6 @@
 import styles from './Audition.module.css';
-import { Row, Typography, Button, Space, Spin, Progress, Image } from 'antd';
+import { Row, Space, Spin, Progress, Image } from 'antd';
 import { useEffect, useState } from 'react';
-import { useMatch } from 'react-router-dom';
 import { useGetWordsForGroupQuery } from '../api/apiSlice';
 import {
   INITIAL_VALUE,
@@ -19,12 +18,12 @@ import {
 import AuditionOptions from '../../common/components/auditionOptions/AuditionOptions';
 import { ArrowRightOutlined } from '@ant-design/icons';
 import AudioButton from '../../common/components/audioButton/AudioButton';
-import AuditionResults from '../../common/components/auditionResults/AuditionResults';
-import GameOverMessage from '../../common/components/gameOverMessage/GameOverMessage';
 import { BASE_URL } from '../../common/constants/api';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useAppSelector } from '../../app/hooks';
+import { ButtonRounded } from '../../common/components/buttons/Buttons';
 
-const { Title } = Typography;
+import GameResult from '../../common/components/games/gameResult/GameResult';
+import { GamesType } from '../../common/types/enums';
 
 function Audition(): JSX.Element {
   const [currentWord, setCurrentWord] = useState<IWord | null>(null);
@@ -40,13 +39,6 @@ function Audition(): JSX.Element {
   const [results, setResults] = useState<boolean>(false);
   const [gameOver, setGameOver] = useState<boolean>(false);
 
-  // const match = useMatch({
-  //   path: '/audition-game/:difficulty',
-  // });
-
-  // const difficulty = match?.params.difficulty;
-
-  // const dispatch = useAppDispatch();
   const difficulty = useAppSelector(
     (state: DifficultyState) => state.difficulty.value
   );
@@ -60,6 +52,7 @@ function Audition(): JSX.Element {
   function endCheck() {
     if (currentWords.length === INITIAL_VALUE) {
       setEnd(true);
+      setResults(true);
     }
   }
 
@@ -92,10 +85,6 @@ function Audition(): JSX.Element {
     } else {
       setWrongAnswers((prev) => [...prev, answerCopy]);
     }
-  }
-
-  function onResultClick() {
-    setResults(true);
   }
 
   function onNextClick() {
@@ -153,7 +142,7 @@ function Audition(): JSX.Element {
     return () => {
       document.removeEventListener('keydown', onEnterClick);
     };
-  }, [end, answer]);
+  }, [answer]);
 
   return (
     <>
@@ -166,19 +155,6 @@ function Audition(): JSX.Element {
             gameOver && styles.progressBarGameOver
           }`}
         />
-
-        <Row justify="center">
-          <Title
-            level={3}
-            style={{
-              fontSize: 32,
-              marginBottom: 10,
-              textTransform: 'uppercase',
-            }}
-          >
-            Уровень сложности {difficulty}
-          </Title>
-        </Row>
         {isLoading && (
           <Row justify="center">
             <Spin />
@@ -192,7 +168,7 @@ function Audition(): JSX.Element {
               )}
             </Row>
             <Row justify="center">
-              {!!currentWords?.length && !end && (
+              {!!currentWords.length && !end && (
                 <AuditionOptions
                   options={currentOptions}
                   correctOption={currentWord}
@@ -203,27 +179,12 @@ function Audition(): JSX.Element {
             </Row>
             {!results && (
               <Row justify="center">
-                {end ? (
-                  <Button
-                    type="primary"
-                    shape="round"
-                    size={'large'}
-                    tabIndex={-1}
-                    onClick={onResultClick}
-                  >
-                    Результаты
-                  </Button>
-                ) : (
-                  <Button
-                    type="primary"
-                    shape="round"
-                    size={'large'}
-                    tabIndex={-1}
-                    onClick={answer ? onNextClick : onHelpClick}
-                  >
-                    {answer ? <ArrowRightOutlined /> : 'Не знаю'}
-                  </Button>
-                )}
+                <ButtonRounded
+                  tabIndex={-1}
+                  onClick={answer ? onNextClick : onHelpClick}
+                >
+                  {answer ? <ArrowRightOutlined /> : 'Не знаю'}
+                </ButtonRounded>
               </Row>
             )}
           </>
@@ -239,9 +200,9 @@ function Audition(): JSX.Element {
             </Row>
           </>
         )}
-        {gameOver && <GameOverMessage />}
         {results && (
-          <AuditionResults
+          <GameResult
+            game={GamesType.audition}
             correctWords={correctAnswers}
             wrongWords={wrongAnswers}
           />
