@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { DifficultyLevel } from '../../common/constants/numbers';
+import { DifficultyLevel } from '../../common/types/enums';
 import { SLICE_NAMES } from '../../common/constants/sliceNames';
 
 const initialState = {

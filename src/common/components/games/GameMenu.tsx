@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useAppDispatch } from '../../../app/hooks';
 import { difficultyChanged } from '../../../features/difficulty/difficultySlice';
 import gamesInfo from '../../constants/gamesInfo';
-import { difficulties, languageLevels } from '../../constants/numbers';
+import { difficulties, languageLevels } from '../../constants/getEnums';
 import { GamesType } from '../../types/enums';
 import { ButtonRounded } from '../buttons/Buttons';
 import { TitleLevel3, TitleLevel4 } from '../typography/Titles';
