@@ -1,3 +1,4 @@
+import { SLICE_NAMES } from './../../common/constants/sliceNames';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IWord } from '../../common/types/interfaces';
 import shuffleFisherYates from '../../common/utils/shuffleFisherYates';
@@ -38,7 +39,7 @@ const initialState: SprintState = {
 };
 
 export const sprintSlice = createSlice({
-  name: 'sprint',
+  name: SLICE_NAMES.sprint,
   initialState,
   reducers: {
     resetGame() {
