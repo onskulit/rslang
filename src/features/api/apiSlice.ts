@@ -7,7 +7,8 @@ import {
 } from '@reduxjs/toolkit/query/react';
 import { IWordsQuery } from '../../common/types/interfaces';
 import { API, BASE_URL, REDUCER_PATH } from '../../common/constants/api';
-import { DifficultyLevel, INITIAL_VALUE } from '../../common/constants/numbers';
+import { INITIAL_VALUE } from '../../common/constants/numbers';
+import { DifficultyLevel } from '../../common/types/enums';
 
 const groupChecker = (group: DifficultyLevel) => {
   if (group < DifficultyLevel.LEVEL_0) {

@@ -1,4 +1,4 @@
-import { DifficultyLevel } from '../constants/numbers';
+import { DifficultyLevel } from '../types/enums';
 
 export interface IWord {
   id: string;
