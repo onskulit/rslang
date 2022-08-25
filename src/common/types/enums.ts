@@ -1,6 +1,6 @@
 export enum GamesType {
   sprint = 'sprint',
-  audiocall = 'audiocall',
+  audition = 'audition',
 }
 
 export enum LanguageLevels {

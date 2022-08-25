@@ -25,3 +25,9 @@ export interface IWordsQuery {
   group: DifficultyLevel;
   page: number;
 }
+
+export interface DifficultyState {
+  difficulty: {
+    value: number;
+  };
+}

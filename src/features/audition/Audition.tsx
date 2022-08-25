@@ -1,109 +1,253 @@
 import styles from './Audition.module.css';
-import { Row, Typography, Space, Radio, Button } from 'antd';
-import { NavLink } from 'react-router-dom';
-import { difficultyChanged } from '../difficulty/difficultySlice';
+import { Row, Typography, Button, Space, Spin, Progress, Image } from 'antd';
+import { useEffect, useState } from 'react';
+import { useMatch } from 'react-router-dom';
+import { useGetWordsForGroupQuery } from '../api/apiSlice';
+import {
+  INITIAL_VALUE,
+  MAX_PAGE,
+  NUMBER_OF_OPTIONS,
+  WORDS_FOR_GAME,
+  PERCENT_100,
+} from '../../common/constants/numbers';
+import shuffle from '../../common/utils/shuffle';
+import {
+  IWord,
+  IWordWithAnswer,
+  DifficultyState,
+} from '../../common/types/interfaces';
+import AuditionOptions from '../../common/components/auditionOptions/AuditionOptions';
+import { ArrowRightOutlined } from '@ant-design/icons';
+import AudioButton from '../../common/components/audioButton/AudioButton';
+import AuditionResults from '../../common/components/auditionResults/AuditionResults';
+import GameOverMessage from '../../common/components/gameOverMessage/GameOverMessage';
+import { BASE_URL } from '../../common/constants/api';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-// import { useAddNewUserMutation, useGetUserQuery } from '../api/apiSlice';
 
-const { Title, Text } = Typography;
-
-interface DifficultyState {
-  difficulty: {
-    value: number;
-  };
-}
+const { Title } = Typography;
 
 function Audition(): JSX.Element {
-  const dispatch = useAppDispatch();
+  const [currentWord, setCurrentWord] = useState<IWord | null>(null);
+  const [currentWords, setCurrentWords] = useState<IWord[]>([]);
+  const [answer, setAnswer] = useState<IWordWithAnswer | null>(null);
+  const [currentOptions, setCurrentOptions] = useState<IWord[]>([]);
+  const [shuffledWords, setShuffledWords] = useState<IWord[]>([]);
+  const [correctAnswers, setCorrectAnswers] = useState<IWordWithAnswer[]>([]);
+  const [wrongAnswers, setWrongAnswers] = useState<IWord[]>([]);
+  const [progress, setProgress] = useState<number>(0);
+  const [help, setHelp] = useState<boolean>(false);
+  const [end, setEnd] = useState<boolean>(false);
+  const [results, setResults] = useState<boolean>(false);
+  const [gameOver, setGameOver] = useState<boolean>(false);
+
+  // const match = useMatch({
+  //   path: '/audition-game/:difficulty',
+  // });
+
+  // const difficulty = match?.params.difficulty;
+
+  // const dispatch = useAppDispatch();
   const difficulty = useAppSelector(
     (state: DifficultyState) => state.difficulty.value
   );
 
-  // const [addNewUser, { isLoading }] = useAddNewUserMutation();
-  // const [getUser, { isLoading }] = useGetUserQuery();
+  const {
+    data: words = [],
+    isLoading,
+    isSuccess,
+  } = useGetWordsForGroupQuery({ group: Number(difficulty), page: MAX_PAGE });
 
-  // const newUser = {
-  //   name: 'John',
-  //   email: 'dwddd@ssas.ru',
-  //   password: '12345689',
-  // };
+  function endCheck() {
+    if (currentWords.length === INITIAL_VALUE) {
+      setEnd(true);
+    }
+  }
 
-  // id = '63033a26d48d9200162e0ce4'
+  function gameOverCheck() {
+    if (wrongAnswers.length >= WORDS_FOR_GAME / 2) {
+      setGameOver(true);
+      setResults(true);
+      setEnd(true);
+    }
+  }
 
-  const onDifficultyChanged = (value: number) => {
-    dispatch(difficultyChanged(value));
-  };
+  function getProgressInPercent() {
+    return (
+      (PERCENT_100 / WORDS_FOR_GAME) * (WORDS_FOR_GAME - currentWords.length)
+    );
+  }
+
+  function onHelpClick() {
+    setHelp(true);
+  }
+
+  function onAnswerClick(answer: IWordWithAnswer) {
+    setAnswer(answer);
+
+    const answerCopy = { ...answer };
+    delete answerCopy.correct;
+
+    if (answer?.correct === true) {
+      setCorrectAnswers((prev) => [...prev, answerCopy]);
+    } else {
+      setWrongAnswers((prev) => [...prev, answerCopy]);
+    }
+  }
+
+  function onResultClick() {
+    setResults(true);
+  }
+
+  function onNextClick() {
+    const shuffledWordsTemp = shuffledWords.slice();
+    const currentWord = currentWords.shift();
+    const currentOptions = shuffle([
+      ...shuffledWordsTemp.splice(INITIAL_VALUE, NUMBER_OF_OPTIONS - 1),
+      currentWord,
+    ]) as IWord[];
+
+    setCurrentWords(currentWords);
+    setCurrentWord(currentWord ? currentWord : null);
+    setCurrentOptions(currentOptions);
+    setShuffledWords(shuffledWordsTemp);
+    setProgress(getProgressInPercent());
+    setAnswer(null);
+    setHelp(false);
+    endCheck();
+    gameOverCheck();
+  }
+
+  useEffect(() => {
+    if (isSuccess) {
+      const shuffledWordsTemp = shuffle(words);
+      const wordsForGame = shuffledWordsTemp.splice(
+        INITIAL_VALUE,
+        WORDS_FOR_GAME + 1
+      ) as IWord[];
+      const currentWord = wordsForGame.shift();
+      if (currentWord) {
+        setCurrentWord(currentWord);
+      }
+      setCurrentWords(wordsForGame);
+      const currentOptions = shuffle([
+        ...shuffledWordsTemp.splice(INITIAL_VALUE, NUMBER_OF_OPTIONS - 1),
+        { ...currentWord, correct: true },
+      ]) as IWord[];
+      setCurrentOptions(currentOptions);
+      setShuffledWords(shuffledWordsTemp);
+    }
+  }, [words]);
+
+  function onEnterClick(e: KeyboardEvent) {
+    if (e.key === 'Enter') {
+      if (answer) {
+        onNextClick();
+      } else {
+        onHelpClick();
+      }
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('keydown', onEnterClick);
+    return () => {
+      document.removeEventListener('keydown', onEnterClick);
+    };
+  }, [end, answer]);
 
   return (
-    <div className={styles.container}>
+    <>
       <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+        <Progress
+          percent={progress}
+          showInfo={false}
+          strokeColor={gameOver ? 'red' : ''}
+          className={`${styles.progressBar} ${
+            gameOver && styles.progressBarGameOver
+          }`}
+        />
+
         <Row justify="center">
           <Title
-            level={2}
+            level={3}
             style={{
-              fontSize: 48,
+              fontSize: 32,
+              marginBottom: 10,
               textTransform: 'uppercase',
             }}
           >
-            Аудиовызов
+            Уровень сложности {difficulty}
           </Title>
         </Row>
-        <Row justify="center">
-          <Text style={{ fontSize: 18 }}>
-            Тренировка улучшает восприятие речи на слух.
-          </Text>
-        </Row>
-
-        <Row justify="center">
-          <Title level={3}>Выберите уровень сложности</Title>
-        </Row>
-        <Row justify="center" gutter={18}>
-          <Radio.Group
-            defaultValue={String(difficulty)}
-            size="large"
-            onChange={(event) => onDifficultyChanged(event.target.value)}
-          >
-            <Radio.Button value="0">0</Radio.Button>
-            <Radio.Button value="1">1</Radio.Button>
-            <Radio.Button value="2">2</Radio.Button>
-            <Radio.Button value="3">3</Radio.Button>
-            <Radio.Button value="4">4</Radio.Button>
-            <Radio.Button value="5">5</Radio.Button>
-          </Radio.Group>
-        </Row>
-        <Row justify="center">
-          <Button type="primary" shape="round" size={'large'}>
-            <NavLink to={`/audition-game/${difficulty}`}>Начать игру</NavLink>
-          </Button>
-          {/* <Button
-            type="primary"
-            shape="round"
-            size={'large'}
-            onClick={async () => {
-              console.log(newUser);
-              console.log(JSON.stringify(newUser));
-              const userId = await addNewUser(newUser).unwrap();
-              console.log(userId);
-            }}
-          >
-            Зарегистрироваться
-          </Button>
-          <Button
-            type="primary"
-            shape="round"
-            size={'large'}
-            onClick={async () => {
-              console.log(newUser);
-              console.log(JSON.stringify(newUser));
-              const userId = await addNewUser(newUser).unwrap();
-              console.log(userId);
-            }}
-          >
-            Получить пользователя
-          </Button> */}
-        </Row>
+        {isLoading && (
+          <Row justify="center">
+            <Spin />
+          </Row>
+        )}
+        {isSuccess && (
+          <>
+            <Row justify="center">
+              {currentWord && !end && (
+                <AudioButton audioFile={currentWord?.audio} mute={gameOver} />
+              )}
+            </Row>
+            <Row justify="center">
+              {!!currentWords?.length && !end && (
+                <AuditionOptions
+                  options={currentOptions}
+                  correctOption={currentWord}
+                  setAnswer={onAnswerClick}
+                  help={help}
+                />
+              )}
+            </Row>
+            {!results && (
+              <Row justify="center">
+                {end ? (
+                  <Button
+                    type="primary"
+                    shape="round"
+                    size={'large'}
+                    tabIndex={-1}
+                    onClick={onResultClick}
+                  >
+                    Результаты
+                  </Button>
+                ) : (
+                  <Button
+                    type="primary"
+                    shape="round"
+                    size={'large'}
+                    tabIndex={-1}
+                    onClick={answer ? onNextClick : onHelpClick}
+                  >
+                    {answer ? <ArrowRightOutlined /> : 'Не знаю'}
+                  </Button>
+                )}
+              </Row>
+            )}
+          </>
+        )}
+        {currentWord && answer && !end && (
+          <>
+            <Row justify="center">
+              <Image
+                preview={false}
+                width={300}
+                src={`${BASE_URL}/${currentWord.image}`}
+              />
+            </Row>
+          </>
+        )}
+        {gameOver && <GameOverMessage />}
+        {results && (
+          <AuditionResults
+            correctWords={correctAnswers}
+            wrongWords={wrongAnswers}
+          />
+        )}
       </Space>
-    </div>
+    </>
   );
 }
 

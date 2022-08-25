@@ -8,7 +8,7 @@ interface GameInfo {
 
 interface GamesInfo {
   [GamesType.sprint]: GameInfo;
-  [GamesType.audiocall]: GameInfo;
+  [GamesType.audition]: GameInfo;
 }
 
 const gamesInfo: GamesInfo = {
@@ -17,10 +17,10 @@ const gamesInfo: GamesInfo = {
     description: 'Учит быстро переводить на ваш родной язык.',
     path: '/sprint-game',
   },
-  [GamesType.audiocall]: {
+  [GamesType.audition]: {
     name: 'Аудиовызов',
     description: 'Улучшает восприятие речи на слух.',
-    path: '/audiocall-game',
+    path: '/audition-game',
   },
 };
 
