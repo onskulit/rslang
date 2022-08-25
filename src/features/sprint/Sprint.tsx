@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { RootState } from '../../app/store';
 import { apiSlice } from '../api/apiSlice';
 import { sprintSlice } from './sprintSlice';
-import { DifficultyLevel, GamesType } from '../../common/types/enums';
+import { GamesType } from '../../common/types/enums';
 import { useEffect } from 'react';
 import Loader from '../../common/components/Loader';
 import ErrorMessage from '../../common/components/ErrorMessage';
@@ -11,13 +11,12 @@ import { Button, Progress, Row, Space } from 'antd';
 
 interface SprintProps {
   maxPage?: number;
-  group?: DifficultyLevel;
 }
 
-function Sprint({
-  maxPage = 29,
-  group = DifficultyLevel.LEVEL_0,
-}: SprintProps) {
+function Sprint({ maxPage = 29 }: SprintProps) {
+  const { value: group } = useAppSelector(
+    (state: RootState) => state.difficulty
+  );
   const { data, isFetching, isError } = apiSlice.useGetWordsForGroupQuery({
     group,
     page: maxPage,
@@ -40,7 +39,6 @@ function Sprint({
   const dispatch = useAppDispatch();
 
   const setGame = () => {
-    dispatch(resetGame());
     if (data) {
       dispatch(createPares(data));
     }
@@ -48,6 +46,7 @@ function Sprint({
   };
 
   useEffect(() => {
+    dispatch(resetGame());
     if (data) {
       setGame();
     }
