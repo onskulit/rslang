@@ -20,3 +20,21 @@ export enum DifficultyLevel {
   LEVEL_4,
   LEVEL_5,
 }
+
+export enum Keyboard {
+  KEY_1 = '1',
+  KEY_2 = '2',
+  KEY_3 = '3',
+  KEY_4 = '4',
+  KEY_5 = '5',
+  SPACE = ' ',
+  ENTER = 'Enter',
+}
+
+export enum Options {
+  OPTION_1,
+  OPTION_2,
+  OPTION_3,
+  OPTION_4,
+  OPTION_5,
+}

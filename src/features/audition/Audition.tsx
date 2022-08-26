@@ -23,7 +23,11 @@ import { useAppSelector } from '../../app/hooks';
 import { ButtonRounded } from '../../common/components/buttons/Buttons';
 
 import GameResult from '../../common/components/games/gameResult/GameResult';
-import { GamesType } from '../../common/types/enums';
+import { GamesType, Keyboard } from '../../common/types/enums';
+
+const PROGRESSBAR_RED = 'red';
+const IMAGE_WIDTH = 300;
+const BUTTON_TEXT_HELP = 'Не знаю';
 
 function Audition(): JSX.Element {
   const [currentWord, setCurrentWord] = useState<IWord | null>(null);
@@ -127,8 +131,8 @@ function Audition(): JSX.Element {
     }
   }, [words]);
 
-  function onEnterClick(e: KeyboardEvent) {
-    if (e.key === 'Enter') {
+  function onEnterClick(event: KeyboardEvent) {
+    if (event.key === Keyboard.ENTER) {
       if (answer) {
         onNextClick();
       } else {
@@ -150,7 +154,7 @@ function Audition(): JSX.Element {
         <Progress
           percent={progress}
           showInfo={false}
-          strokeColor={gameOver ? 'red' : ''}
+          strokeColor={gameOver ? PROGRESSBAR_RED : ''}
           className={`${styles.progressBar} ${
             gameOver && styles.progressBarGameOver
           }`}
@@ -183,7 +187,7 @@ function Audition(): JSX.Element {
                   tabIndex={-1}
                   onClick={answer ? onNextClick : onHelpClick}
                 >
-                  {answer ? <ArrowRightOutlined /> : 'Не знаю'}
+                  {answer ? <ArrowRightOutlined /> : BUTTON_TEXT_HELP}
                 </ButtonRounded>
               </Row>
             )}
@@ -194,7 +198,7 @@ function Audition(): JSX.Element {
             <Row justify="center">
               <Image
                 preview={false}
-                width={300}
+                width={IMAGE_WIDTH}
                 src={`${BASE_URL}/${currentWord.image}`}
               />
             </Row>

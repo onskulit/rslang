@@ -4,6 +4,7 @@ import { Button } from 'antd';
 // import styles from './AudioButton.module.css';
 import { BASE_URL } from '../../constants/api';
 import { SoundOutlined } from '@ant-design/icons';
+import { Keyboard } from '../../types/enums';
 
 interface IAudioButtonProps {
   audioFile: string;
@@ -17,8 +18,8 @@ function AudioButton({ audioFile, mute }: IAudioButtonProps) {
     audio.play();
   }
 
-  function onSpaceHandler(e: KeyboardEvent) {
-    if (e.key === ' ') {
+  function onSpaceHandler(event: KeyboardEvent) {
+    if (event.key === Keyboard.SPACE) {
       playSound();
     }
   }

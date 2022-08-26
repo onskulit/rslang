@@ -3,6 +3,7 @@ import { Radio, Row, RadioChangeEvent, Space } from 'antd';
 
 import styles from './AuditionOptions.module.css';
 import { IWord, IWordWithAnswer } from '../../types/interfaces';
+import { Keyboard, Options } from '../../types/enums';
 
 interface IOptionsProps {
   options: IWordWithAnswer[];
@@ -38,22 +39,22 @@ function AuditionOptions({
     setIsAnswered(true);
   }
 
-  function onKeyPressHandler(e: KeyboardEvent) {
-    switch (e.key) {
-      case '1':
-        handleAnswer(options[0]);
+  function onKeyPressHandler(event: KeyboardEvent) {
+    switch (event.key) {
+      case Keyboard.KEY_1:
+        handleAnswer(options[Options.OPTION_1]);
         break;
-      case '2':
-        handleAnswer(options[1]);
+      case Keyboard.KEY_2:
+        handleAnswer(options[Options.OPTION_2]);
         break;
-      case '3':
-        handleAnswer(options[2]);
+      case Keyboard.KEY_3:
+        handleAnswer(options[Options.OPTION_3]);
         break;
-      case '4':
-        handleAnswer(options[3]);
+      case Keyboard.KEY_4:
+        handleAnswer(options[Options.OPTION_4]);
         break;
-      case '5':
-        handleAnswer(options[4]);
+      case Keyboard.KEY_5:
+        handleAnswer(options[Options.OPTION_5]);
         break;
 
       default:
@@ -83,8 +84,10 @@ function AuditionOptions({
     <Radio.Group
       size="large"
       disabled={isAnswered}
-      onChange={(e: RadioChangeEvent) => {
-        const option = options.find((option) => option.word === e.target.value);
+      onChange={(event: RadioChangeEvent) => {
+        const option = options.find(
+          (option) => option.word === event.target.value
+        );
 
         if (option) {
           handleAnswer(option);
