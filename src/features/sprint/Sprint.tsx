@@ -7,8 +7,9 @@ import { useEffect } from 'react';
 import Loader from '../../common/components/Loader';
 import ErrorMessage from '../../common/components/ErrorMessage';
 import GameResult from '../../common/components/games/gameResult/GameResult';
-import { Button, Progress, Row, Space, Typography } from 'antd';
+import { Progress, Row, Space, Typography } from 'antd';
 import { TitleLevel4 } from '../../common/components/typography/Titles';
+import { ButtonRounded } from '../../common/components/buttons/Buttons';
 
 interface SprintProps {
   maxPage?: number;
@@ -30,12 +31,12 @@ function Sprint({ maxPage = 29 }: SprintProps) {
     words,
     correctWords,
     wrongWords,
-    currentWord,
+    currentWordPos,
     totalScore,
     streakMultiplicity,
     streakProgress,
     secondsLeft,
-    progressSec,
+    progressRoundPercent,
     isFinished,
     isStarted,
     pointsForCorrectAnswer,
@@ -102,11 +103,11 @@ function Sprint({ maxPage = 29 }: SprintProps) {
             <Space>
               <Progress
                 type="circle"
-                percent={progressSec}
+                percent={progressRoundPercent}
                 format={() => secondsLeft}
                 width={80}
                 status="normal"
-                strokeColor={secondsLeft <= 10 ? 'red' : '#1890ff'}
+                strokeColor={secondsLeft <= 10 ? 'red' : ''}
               />
               <Progress
                 type="circle"
@@ -128,19 +129,21 @@ function Sprint({ maxPage = 29 }: SprintProps) {
               style={{ display: 'flex' }}
             >
               <Text strong style={{ fontSize: 30 }}>
-                {words[currentWord][0].word}
+                {words[currentWordPos][0].word}
               </Text>
               <Text type="secondary" style={{ fontSize: 26 }}>
-                {words[currentWord][1]}
+                {words[currentWordPos][1]}
               </Text>
             </Space>
           </Row>
           <Row justify="center">
             <Space>
-              <Button onClick={() => dispatch(checkAnswer(true))}>Верно</Button>
-              <Button onClick={() => dispatch(checkAnswer(false))}>
+              <ButtonRounded onClick={() => dispatch(checkAnswer(true))}>
+                Верно
+              </ButtonRounded>
+              <ButtonRounded onClick={() => dispatch(checkAnswer(false))}>
                 Неверно
-              </Button>
+              </ButtonRounded>
             </Space>
           </Row>
         </Space>

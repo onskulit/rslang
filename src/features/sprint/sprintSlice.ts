@@ -7,17 +7,23 @@ interface SprintState {
   words: [IWord, string, boolean][];
   correctWords: IWord[];
   wrongWords: IWord[];
-  currentWord: number;
+  currentWordPos: number;
   pointsForCorrectAnswer: number;
   totalScore: number;
   streak: number;
   streakMultiplicity: number;
   streakProgress: number;
   secondsLeft: number;
-  progressSec: number;
+  progressRoundPercent: number;
   isFinished: boolean;
   isStarted: boolean;
 }
+
+const INITIAL_STREAK = 0;
+const INITIAL_TOTAL_SCORE = 0;
+const INITIAL_CURRENT_WORD_POS = 0;
+const INITIAL_STREAK_PROGRESS = 0;
+const INITIAL_PROGRESS_SEC = 100;
 
 const minPoints = 10;
 const pointsMultiplier = 2;
@@ -27,7 +33,7 @@ const maxStreak = streakForMultiplication * multiplicationSteps;
 const maxPoints = minPoints * pointsMultiplier ** multiplicationSteps;
 const roundDuration = 60;
 
-const countProgressSec = (secondsLeft: number) => {
+const countProgressRoundPercent = (secondsLeft: number) => {
   return (secondsLeft / roundDuration) * 100;
 };
 
@@ -35,18 +41,22 @@ const countStreakProgress = (streak: number) => {
   return (streak / maxStreak) * 100;
 };
 
+const countMultiplicity = (streak: number) => {
+  return pointsMultiplier ** (streak / streakForMultiplication);
+};
+
 const initialState: SprintState = {
   words: [],
   correctWords: [],
   wrongWords: [],
-  currentWord: 0,
+  currentWordPos: INITIAL_CURRENT_WORD_POS,
   pointsForCorrectAnswer: minPoints,
-  totalScore: 0,
-  streak: 0,
-  streakMultiplicity: 1,
-  streakProgress: 0,
+  totalScore: INITIAL_TOTAL_SCORE,
+  streak: INITIAL_STREAK,
+  streakMultiplicity: countMultiplicity(INITIAL_STREAK),
+  streakProgress: INITIAL_STREAK_PROGRESS,
   secondsLeft: roundDuration,
-  progressSec: 100,
+  progressRoundPercent: INITIAL_PROGRESS_SEC,
   isFinished: false,
   isStarted: false,
 };
@@ -67,7 +77,7 @@ export const sprintSlice = createSlice({
         state.isFinished = true;
         state.isStarted = false;
       }
-      state.progressSec = countProgressSec(state.secondsLeft);
+      state.progressRoundPercent = countProgressRoundPercent(state.secondsLeft);
     },
     createPares(state, action: PayloadAction<IWord[]>) {
       const wordsTranslation: string[] = [];
@@ -92,33 +102,32 @@ export const sprintSlice = createSlice({
       state.words = shuffleFisherYates(finalWords);
     },
     checkAnswer(state, action: PayloadAction<boolean>) {
-      if (action.payload === state.words[state.currentWord][2]) {
+      if (action.payload === state.words[state.currentWordPos][2]) {
         state.totalScore += state.pointsForCorrectAnswer;
         if (state.streak < maxStreak) {
           state.streak++;
           state.streakProgress = countStreakProgress(state.streak);
         }
-        state.correctWords.push(state.words[state.currentWord][0]);
+        state.correctWords.push(state.words[state.currentWordPos][0]);
         if (
           state.pointsForCorrectAnswer < maxPoints &&
           state.streak % streakForMultiplication === 0
         ) {
-          state.streakMultiplicity =
-            pointsMultiplier ** (state.streak / streakForMultiplication);
+          state.streakMultiplicity = countMultiplicity(state.streak);
           state.pointsForCorrectAnswer *= pointsMultiplier;
         }
       } else {
-        state.streak = 0;
-        state.streakMultiplicity = 1;
-        state.streakProgress = 0;
+        state.streak = INITIAL_STREAK;
+        state.streakMultiplicity = countMultiplicity(state.streak);
+        state.streakProgress = INITIAL_STREAK_PROGRESS;
         state.pointsForCorrectAnswer = minPoints;
-        state.wrongWords.push(state.words[state.currentWord][0]);
+        state.wrongWords.push(state.words[state.currentWordPos][0]);
       }
-      if (state.words.length - 1 === state.currentWord) {
+      if (state.words.length - 1 === state.currentWordPos) {
         state.isFinished = true;
         state.isStarted = false;
       } else {
-        state.currentWord++;
+        state.currentWordPos++;
       }
     },
   },
