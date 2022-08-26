@@ -80,26 +80,24 @@ export const sprintSlice = createSlice({
       state.progressRoundPercent = countProgressRoundPercent(state.secondsLeft);
     },
     createPares(state, action: PayloadAction<IWord[]>) {
-      const wordsTranslation: string[] = [];
-      action.payload.forEach((word) => {
-        wordsTranslation.push(word.wordTranslate);
-      });
-      const shuffledTranslation = shuffleFisherYates(wordsTranslation);
-      const finalTranslation: string[] = [];
-      for (let i = 0; i < wordsTranslation.length; i++) {
-        finalTranslation.push(
-          Math.random() < 0.5 ? wordsTranslation[i] : shuffledTranslation[i]
-        );
-      }
-      const finalWords: [IWord, string, boolean][] = [];
+      const paresForGame: [IWord, string, boolean][] = [];
+
       for (let i = 0; i < action.payload.length; i++) {
-        finalWords.push([
-          action.payload[i],
-          finalTranslation[i],
-          finalTranslation[i] === wordsTranslation[i],
+        const word = action.payload[i];
+        const randomPosition = Math.floor(
+          Math.random() * action.payload.length
+        );
+        const translationForPare =
+          Math.random() < 0.5
+            ? word.wordTranslate
+            : action.payload[randomPosition].wordTranslate;
+        paresForGame.push([
+          word,
+          translationForPare,
+          translationForPare === word.wordTranslate,
         ]);
       }
-      state.words = shuffleFisherYates(finalWords);
+      state.words = shuffleFisherYates(paresForGame);
     },
     checkAnswer(state, action: PayloadAction<boolean>) {
       if (action.payload === state.words[state.currentWordPos][2]) {
