@@ -35,6 +35,7 @@ function Sprint({ maxPage = 29 }: SprintProps) {
     totalScore,
     streakMultiplicity,
     streakProgress,
+    streakColor,
     secondsLeft,
     progressRoundPercent,
     isFinished,
@@ -80,19 +81,6 @@ function Sprint({ maxPage = 29 }: SprintProps) {
     return () => document.removeEventListener('keyup', keyUpHandler);
   }, [isStarted]);
 
-  const updateStreakColor = () => {
-    switch (streakMultiplicity) {
-      case 1:
-        return 'grey';
-      case 2:
-        return 'yellow';
-      case 4:
-        return 'green';
-      case 8:
-        return 'purple';
-    }
-  };
-
   return (
     <div>
       {isFetching && <Loader />}
@@ -115,7 +103,7 @@ function Sprint({ maxPage = 29 }: SprintProps) {
                 format={() => `X${streakMultiplicity}`}
                 width={80}
                 status="normal"
-                strokeColor={updateStreakColor()}
+                strokeColor={streakColor}
               />
             </Space>
           </Row>

@@ -3,6 +3,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IWord } from '../../common/types/interfaces';
 import shuffleFisherYates from '../../common/utils/shuffleFisherYates';
 
+enum StreakColor {
+  STEP_1 = 'grey',
+  STEP_2 = 'yellow',
+  STEP_3 = 'green',
+  STEP_4 = 'purple',
+}
+
 interface SprintState {
   words: [IWord, string, boolean][];
   correctWords: IWord[];
@@ -13,6 +20,7 @@ interface SprintState {
   streak: number;
   streakMultiplicity: number;
   streakProgress: number;
+  streakColor: StreakColor;
   secondsLeft: number;
   progressRoundPercent: number;
   isFinished: boolean;
@@ -42,7 +50,14 @@ const countStreakProgress = (streak: number) => {
 };
 
 const countMultiplicity = (streak: number) => {
-  return pointsMultiplier ** (streak / streakForMultiplication);
+  return pointsMultiplier ** Math.floor(streak / streakForMultiplication);
+};
+
+const updateStreakColor = (streak: number) => {
+  if (streak < streakForMultiplication) return StreakColor.STEP_1;
+  if (streak < streakForMultiplication * 2) return StreakColor.STEP_2;
+  if (streak < streakForMultiplication * 3) return StreakColor.STEP_3;
+  return StreakColor.STEP_4;
 };
 
 const initialState: SprintState = {
@@ -55,6 +70,7 @@ const initialState: SprintState = {
   streak: INITIAL_STREAK,
   streakMultiplicity: countMultiplicity(INITIAL_STREAK),
   streakProgress: INITIAL_STREAK_PROGRESS,
+  streakColor: StreakColor.STEP_1,
   secondsLeft: roundDuration,
   progressRoundPercent: INITIAL_PROGRESS_SEC,
   isFinished: false,
@@ -111,16 +127,16 @@ export const sprintSlice = createSlice({
           state.pointsForCorrectAnswer < maxPoints &&
           state.streak % streakForMultiplication === 0
         ) {
-          state.streakMultiplicity = countMultiplicity(state.streak);
           state.pointsForCorrectAnswer *= pointsMultiplier;
         }
       } else {
         state.streak = INITIAL_STREAK;
-        state.streakMultiplicity = countMultiplicity(state.streak);
         state.streakProgress = INITIAL_STREAK_PROGRESS;
         state.pointsForCorrectAnswer = minPoints;
         state.wrongWords.push(state.words[state.currentWordPos][0]);
       }
+      state.streakMultiplicity = countMultiplicity(state.streak);
+      state.streakColor = updateStreakColor(state.streak);
       if (state.words.length - 1 === state.currentWordPos) {
         state.isFinished = true;
         state.isStarted = false;
