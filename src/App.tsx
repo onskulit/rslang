@@ -50,25 +50,24 @@ const checkToken = (userData: IUserAuthData) => {
   return { isFetching: false, isSuccess: isSuccess };
 };
 
-const checkAuth = (isTokenRefreshed = false) => {
+const checkAuth = () => {
   const userData: IUserAuthData = JSON.parse(
     storage.get(STORAGE_KEY.userAuthData)
   );
+
   if (userData) {
     const response = checkToken(userData);
-    console.log(555);
-
-    if (!response.isSuccess && !response.isFetching && !isTokenRefreshed) {
-      refreshToken(userData);
-      checkAuth(true);
-    }
-
     return response;
   }
   return { isFetching: false, isSuccess: false };
 };
 
 function App() {
+  // const userData: IUserAuthData = JSON.parse(
+  //   storage.get(STORAGE_KEY.userAuthData)
+  // );
+
+  // refreshToken(userData);
   const authResponse = checkAuth();
   const dispatch = useAppDispatch();
 

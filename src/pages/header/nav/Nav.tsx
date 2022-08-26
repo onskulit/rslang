@@ -7,6 +7,8 @@ import { Dropdown, Menu, Space } from 'antd';
 import styles from './Nav.module.css';
 import { useMemo } from 'react';
 import gamesInfo from '../../../common/constants/gamesInfo';
+import { storage } from '../../../utils/localStorage';
+import { STORAGE_KEY } from '../../../common/constants/localStorage';
 
 function Nav() {
   const { validate } = useAppSelector((state) => state.user);
@@ -14,6 +16,7 @@ function Nav() {
 
   const handleLogIn = () => {
     dispatch(changeValidation(false));
+    storage.remove(STORAGE_KEY.userAuthData);
   };
 
   const dropdownMenuClickHandler = useMemo(

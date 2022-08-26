@@ -31,7 +31,6 @@ const RegistrationForm: FC<IFormAuthProps> = ({ setAuthType }) => {
       const jsonData = JSON.stringify(userSignInData);
       storage.set(STORAGE_KEY.userAuthData, jsonData);
       dispatch(changeValidation(true));
-      console.log(userSignInData);
     }
   }, [userSignInData]);
 

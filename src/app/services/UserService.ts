@@ -1,7 +1,6 @@
-import { API, BASE_URL } from '../../common/constants/api';
+import { API, BASE_URL, HEADERS, METHODS } from '../../common/constants/api';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { IUserInputData } from '../../common/types/user';
-import { StringLiteral } from 'typescript';
 
 interface IUserDataQuery {
   userId: string;
@@ -20,10 +19,10 @@ export const userAPI = createApi({
     createUser: builder.mutation<IUserInputData, Partial<IUserInputData>>({
       query: (user) => ({
         url: API.users,
-        method: 'post',
+        method: METHODS.post,
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+          Accept: HEADERS.accept,
+          'Content-Type': HEADERS.contentType,
         },
         body: user,
       }),
@@ -32,33 +31,33 @@ export const userAPI = createApi({
     signIn: builder.mutation<IUserInputData, Partial<IUserInputData>>({
       query: (user) => ({
         url: API.signin,
-        method: 'post',
+        method: METHODS.post,
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+          Accept: HEADERS.accept,
+          'Content-Type': HEADERS.contentType,
         },
         body: user,
       }),
     }),
-    // `${API.users}/${userId}`
+
     getUserById: builder.query<IUserInputData, IUserDataQuery>({
       query: ({ userId, token }) => ({
         url: `${API.users}/${userId}`,
         headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+          Authorization: HEADERS.authorization(token),
+          Accept: HEADERS.accept,
+          'Content-Type': HEADERS.contentType,
         },
       }),
     }),
-    // /users/{id}/tokens
+
     refreshToken: builder.query<IUserTokenData, IUserDataQuery>({
       query: ({ userId, token }) => ({
         url: `${API.users}/${userId}/tokens`,
         headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+          Authorization: HEADERS.authorization(token),
+          Accept: HEADERS.accept,
+          'Content-Type': HEADERS.contentType,
         },
       }),
     }),
