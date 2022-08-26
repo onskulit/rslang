@@ -1,8 +1,13 @@
 export const INITIAL_VALUE = 0;
 export const MAX_PAGE = 29;
-export const WORDS_FOR_GAME = 10;
-export const NUMBER_OF_OPTIONS = 5;
 export const PERCENT_100 = 100;
+export const DISABLED_TABINDEX = -1;
+
+export enum Numbers {
+  ZERO,
+  ONE,
+  TWO,
+}
 
 export enum DifficultyLevel {
   LEVEL_0,

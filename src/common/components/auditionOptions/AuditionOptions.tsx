@@ -4,6 +4,7 @@ import { Radio, Row, RadioChangeEvent, Space } from 'antd';
 import styles from './AuditionOptions.module.css';
 import { IWord, IWordWithAnswer } from '../../types/interfaces';
 import { Keyboard, Options } from '../../types/enums';
+import { DISABLED_TABINDEX } from '../../constants/numbers';
 
 interface IOptionsProps {
   options: IWordWithAnswer[];
@@ -104,7 +105,7 @@ function AuditionOptions({
               <Radio.Button
                 value={option.word}
                 key={option.id}
-                tabIndex={-1}
+                tabIndex={DISABLED_TABINDEX}
                 className={`${styles.option} ${
                   isAnswered &&
                   correctOption?.word === option?.word &&
