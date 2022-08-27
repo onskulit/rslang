@@ -1,0 +1,9 @@
+.optionIncorrect {
+  color: red !important;
+  border-color: red !important;
+}
+
+.optionCorrect {
+  color: green !important;
+  border-color: green !important;
+}

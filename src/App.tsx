@@ -8,7 +8,7 @@ import AppFooter from './pages/footer/Footer';
 import GameMenu from './common/components/games/GameMenu';
 import { GamesType } from './common/types/enums';
 import Sprint from './features/sprint/Sprint';
-import AudioСall from './features/audiocall/AudioСall';
+import Audition from './features/audition/Audition';
 import gamesInfo from './common/constants/gamesInfo';
 
 const { Content } = Layout;
@@ -26,13 +26,13 @@ function App() {
             element={<GameMenu game={GamesType.sprint} />}
           />
           <Route
-            path="/audiocall"
-            element={<GameMenu game={GamesType.audiocall} />}
+            path="/audition"
+            element={<GameMenu game={GamesType.audition} />}
           />
           <Route path={gamesInfo[GamesType.sprint].path} element={<Sprint />} />
           <Route
-            path={gamesInfo[GamesType.audiocall].path}
-            element={<AudioСall />}
+            path={gamesInfo[GamesType.audition].path}
+            element={<Audition />}
           />
           <Route path="/statistics" element={<Statistics />} />
         </Routes>
