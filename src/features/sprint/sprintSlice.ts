@@ -1,7 +1,7 @@
 import { SLICE_NAMES } from './../../common/constants/sliceNames';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IWord } from '../../common/types/interfaces';
-import shuffleFisherYates from '../../common/utils/shuffleFisherYates';
+import shuffle from '../../common/utils/shuffle';
 
 enum StreakColor {
   STEP_1 = 'grey',
@@ -113,7 +113,7 @@ export const sprintSlice = createSlice({
           translationForPare === word.wordTranslate,
         ]);
       }
-      state.words = shuffleFisherYates(paresForGame);
+      state.words = shuffle(paresForGame);
     },
     checkAnswer(state, action: PayloadAction<boolean>) {
       if (action.payload === state.words[state.currentWordPos][2]) {
