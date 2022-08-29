@@ -1,4 +1,4 @@
-import { Row, Space } from 'antd';
+import { Divider, Row, Space } from 'antd';
 import gamesInfo from '../../../constants/gamesInfo';
 import { GamesType } from '../../../types/enums';
 import { IWord } from '../../../types/interfaces';
@@ -21,7 +21,11 @@ function GameResult({
 }: GameResultProps) {
   const gameInfo = gamesInfo[game];
   return (
-    <Space direction="vertical" size="small" style={{ display: 'flex' }}>
+    <Space
+      direction="vertical"
+      size="small"
+      style={{ display: 'flex', marginBottom: 40 }}
+    >
       <Row justify="center">
         <TitleLevel3>Игра окончена!</TitleLevel3>
       </Row>
