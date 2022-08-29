@@ -35,11 +35,19 @@ function GameResult({
       </Row>
       <>
         {!!correctWords.length && (
-          <GameResultTable title="Правильные ответы:" words={correctWords} />
+          <GameResultTable
+            title="Правильные ответы:"
+            words={correctWords}
+            style={{ borderColor: 'green' }}
+          />
         )}
 
         {!!wrongWords.length && (
-          <GameResultTable title="Неправильные ответы:" words={wrongWords} />
+          <GameResultTable
+            title="Неправильные ответы:"
+            words={wrongWords}
+            style={{ borderColor: 'red' }}
+          />
         )}
       </>
     </Space>
