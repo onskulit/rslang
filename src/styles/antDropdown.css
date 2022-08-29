@@ -1,0 +1,12 @@
+.ant-dropdown-menu-item a {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.ant-dropdown-menu-item-active {
+  background-color: var(--blue);
+}
+
+.ant-dropdown-menu-item:hover {
+  background-color: var(--blue);
+}
