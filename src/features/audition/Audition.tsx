@@ -25,6 +25,7 @@ import { ButtonRounded } from '../../common/components/buttons/Buttons';
 import GameResult from '../../common/components/games/gameResult/GameResult';
 import { GamesType, Keyboard } from '../../common/types/enums';
 import GameCloser from '../../common/components/games/GameCloser';
+import Loader from '../../common/components/Loader';
 
 const NUMBER_OF_WORDS = 10;
 const NUMBER_OF_OPTIONS = 5;
@@ -157,21 +158,17 @@ function Audition(): JSX.Element {
   return (
     <>
       <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-        <Progress
-          percent={progress}
-          showInfo={false}
-          strokeColor={gameOver ? PROGRESSBAR_RED : ''}
-          className={`${styles.progressBar} ${
-            gameOver && styles.progressBarGameOver
-          }`}
-        />
-        {isLoading && (
-          <Row justify="center">
-            <Spin />
-          </Row>
-        )}
+        {isLoading && <Loader />}
         {isSuccess && (
           <>
+            <Progress
+              percent={progress}
+              showInfo={false}
+              strokeColor={gameOver ? PROGRESSBAR_RED : ''}
+              className={`${styles.progressBar} ${
+                gameOver && styles.progressBarGameOver
+              }`}
+            />
             <GameCloser />
             <Row justify="center">
               {currentWord && !end && (
