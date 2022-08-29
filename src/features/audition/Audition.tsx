@@ -24,6 +24,7 @@ import { ButtonRounded } from '../../common/components/buttons/Buttons';
 
 import GameResult from '../../common/components/games/gameResult/GameResult';
 import { GamesType, Keyboard } from '../../common/types/enums';
+import GameCloser from '../../common/components/games/GameCloser';
 
 const NUMBER_OF_WORDS = 10;
 const NUMBER_OF_OPTIONS = 5;
@@ -171,6 +172,7 @@ function Audition(): JSX.Element {
         )}
         {isSuccess && (
           <>
+            <GameCloser />
             <Row justify="center">
               {currentWord && !end && (
                 <AudioButton audioFile={currentWord?.audio} mute={gameOver} />

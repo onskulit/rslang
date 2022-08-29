@@ -1,4 +1,4 @@
-import { Divider, Row, Space } from 'antd';
+import { Row, Space } from 'antd';
 import gamesInfo from '../../../constants/gamesInfo';
 import { GamesType } from '../../../types/enums';
 import { IWord } from '../../../types/interfaces';

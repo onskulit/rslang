@@ -10,6 +10,7 @@ import GameResult from '../../common/components/games/gameResult/GameResult';
 import { Progress, Row, Space, Typography } from 'antd';
 import { TitleLevel4 } from '../../common/components/typography/Titles';
 import { ButtonRounded } from '../../common/components/buttons/Buttons';
+import GameCloser from '../../common/components/games/GameCloser';
 
 interface SprintProps {
   maxPage?: number;
@@ -87,6 +88,7 @@ function Sprint({ maxPage = 29 }: SprintProps) {
       {isError && <ErrorMessage error="Что-то пошло не так" />}
       {isStarted && (
         <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+          <GameCloser />
           <Row justify="center">
             <Space>
               <Progress
