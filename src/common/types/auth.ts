@@ -8,3 +8,15 @@ export interface IUserLogInData {
 export interface IFormAuthProps {
   setAuthType: Dispatch<SetStateAction<string>>;
 }
+
+export interface IAuth {
+  isFetching: boolean;
+  isSuccess: boolean;
+}
+
+export interface ILogInData {
+  email: string;
+  password: string;
+  confirmPassword?: string;
+  name?: string;
+}

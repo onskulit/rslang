@@ -1,15 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Button, Checkbox, Form, Input, Space } from 'antd';
-import {
-  useCreateUserMutation,
-  useSignInMutation,
-} from '../../app/services/UserService';
-import { ValidateErrorEntity } from 'rc-field-form/lib/interface';
+import React, { useState } from 'react';
 import RegistrationForm from './components/registration/RegistrationForm';
 import LogInForm from './components/login/LogInForm';
 import { AUTH_TUPE } from '../../common/constants/auth';
-import { Navigate, Route } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { Navigate } from 'react-router-dom';
+import { useAppSelector } from '../../app/hooks';
+import styles from './authorization.module.css';
 
 const Authorization = () => {
   const [authType, setAuthType] = useState(AUTH_TUPE.logIn);
@@ -18,7 +13,7 @@ const Authorization = () => {
   return validate ? (
     <Navigate to="/" replace={true} />
   ) : (
-    <div>
+    <div className={styles.auth}>
       {authType === AUTH_TUPE.logIn ? (
         <LogInForm setAuthType={setAuthType} />
       ) : (

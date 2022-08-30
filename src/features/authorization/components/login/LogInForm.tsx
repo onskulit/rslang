@@ -1,44 +1,29 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import { LockOutlined, GoogleOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
-import { useAppDispatch } from '../../../../app/hooks';
-import { changeValidation } from '../../../../app/reducers/userSlice';
-import { useSignInMutation } from '../../../../app/services/UserService';
-import { AUTH_TUPE, DATA_UNDERFINED } from '../../../../common/constants/auth';
+import { AUTH_TUPE } from '../../../../common/constants/auth';
 import {
   AUTH_INPUT_PLACEHOLDER,
   BAD_FORM_MESSAGE,
   FORM_ITEM_NAMES,
 } from '../../../../common/constants/form';
-import { STORAGE_KEY } from '../../../../common/constants/localStorage';
 import { IFormAuthProps } from '../../../../common/types/auth';
-import { storage } from '../../../../utils/localStorage';
+import styles from '../../authorization.module.css';
+import { performSignIn, userSignIn } from '../../common';
 
 const LogInForm: FC<IFormAuthProps> = ({ setAuthType }) => {
-  const userAuthData = storage.get(STORAGE_KEY.userAuthData);
-  const [signIn, { data: userSignInData, error, isLoading }] =
-    useSignInMutation();
-  const dispatch = useAppDispatch();
-  const [errorMessage, setErrorMessage] = useState('');
-
-  useEffect(() => {
-    if (typeof userSignInData !== DATA_UNDERFINED) {
-      const jsonData = JSON.stringify(userSignInData);
-      storage.set(STORAGE_KEY.userAuthData, jsonData);
-      dispatch(changeValidation(true));
-    }
-  }, [userSignInData]);
+  const { signIn, isSignInLoading, error } = performSignIn();
 
   return (
     <>
       {error && <h1 style={{ color: 'red' }}>Неверный e-mail или пароль</h1>}
-      {isLoading ? (
+      {isSignInLoading ? (
         <h1>Loading....</h1>
       ) : (
         <Form
           className="login-form"
           initialValues={{ remember: true }}
-          onFinish={(data) => signIn(data)}
+          onFinish={(data) => userSignIn(data, signIn)}
         >
           <Form.Item
             name={FORM_ITEM_NAMES.email}
@@ -83,10 +68,13 @@ const LogInForm: FC<IFormAuthProps> = ({ setAuthType }) => {
               className="login-form-button"
               style={{ width: '100%' }}
             >
-              Log in
+              войти
             </Button>
             Ещё не с нами? Тогда
-            <button onClick={() => setAuthType(AUTH_TUPE.signIn)}>
+            <button
+              className={styles.authButton}
+              onClick={() => setAuthType(AUTH_TUPE.signIn)}
+            >
               зарегистрируйся
             </button>
           </Form.Item>

@@ -1,16 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface IUserAuthData {
-  message: string;
-  name: string;
-  refreshToken: string;
-  token: string;
-  userId: string;
-}
-
 const initialState = {
   authData: {},
   validate: false,
+  validationData: {},
 };
 
 const userSlice = createSlice({

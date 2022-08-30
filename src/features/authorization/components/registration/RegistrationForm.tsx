@@ -1,17 +1,12 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { LockOutlined, UserOutlined, GoogleOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
-import {
-  useCreateUserMutation,
-  useSignInMutation,
-} from '../../../../app/services/UserService';
+import { useCreateUserMutation } from '../../../../app/services/UserService';
 import { IFormAuthProps } from '../../../../common/types/auth';
-import { AUTH_TUPE, DATA_UNDERFINED } from '../../../../common/constants/auth';
-import { storage } from '../../../../utils/localStorage';
-import { changeValidation } from '../../../../app/reducers/userSlice';
-import { useAppDispatch } from '../../../../app/hooks';
+import { AUTH_TUPE } from '../../../../common/constants/auth';
 import { IUserInputData } from '../../../../common/types/user';
-import { STORAGE_KEY } from '../../../../common/constants/localStorage';
+import { performSignIn, userSignIn } from '../../common';
+import styles from '../../authorization.module.css';
 import {
   AUTH_INPUT_PLACEHOLDER,
   BAD_FORM_MESSAGE,
@@ -22,21 +17,11 @@ import {
 const RegistrationForm: FC<IFormAuthProps> = ({ setAuthType }) => {
   const [createUser, { error: creationError, isLoading: isCreationLoading }] =
     useCreateUserMutation();
-  const [signIn, { data: userSignInData, isLoading: isSignInLoading }] =
-    useSignInMutation();
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (typeof userSignInData !== DATA_UNDERFINED) {
-      const jsonData = JSON.stringify(userSignInData);
-      storage.set(STORAGE_KEY.userAuthData, jsonData);
-      dispatch(changeValidation(true));
-    }
-  }, [userSignInData]);
+  const { signIn, isSignInLoading } = performSignIn();
 
   const authorizeUser = async (userInputData: IUserInputData) => {
     const creationData = await createUser(userInputData);
-    if (creationData && !creationError) signIn(userInputData);
+    if (creationData && !creationError) userSignIn(userInputData, signIn);
   };
 
   return (
@@ -153,10 +138,13 @@ const RegistrationForm: FC<IFormAuthProps> = ({ setAuthType }) => {
                 className="login-form-button"
                 style={{ width: '100%' }}
               >
-                Log in
+                зарегистрироваться
               </Button>
               Уже с нами?
-              <button onClick={() => setAuthType(AUTH_TUPE.logIn)}>
+              <button
+                className={styles.authButton}
+                onClick={() => setAuthType(AUTH_TUPE.logIn)}
+              >
                 Да, войти!
               </button>
             </Form.Item>

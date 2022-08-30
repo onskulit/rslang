@@ -14,68 +14,40 @@ import Authorization from './features/authorization/authorization';
 import { storage } from './utils/localStorage';
 import { useEffect } from 'react';
 import { useAppDispatch } from './app/hooks';
-import {
-  useGetUserByIdQuery,
-  useRefreshTokenQuery,
-} from './app/services/UserService';
+import { useGetUserByIdQuery } from './app/services/UserService';
 import { IUserAuthData } from './common/types/user';
 import { changeValidation } from './app/reducers/userSlice';
 import { STORAGE_KEY } from './common/constants/localStorage';
+import { IAuth } from './common/types/auth';
 
 const { Content } = Layout;
 
-const refreshToken = (userData: IUserAuthData) => {
-  const { data, isSuccess } = useRefreshTokenQuery({
-    token: userData.refreshToken,
-    userId: userData.userId,
-  });
+const checkToken = (): IAuth => {
+  const { isSuccess, isFetching } = useGetUserByIdQuery();
 
-  if (isSuccess) {
-    userData.token = data.token;
-    userData.refreshToken = data.refreshToken;
-    storage.set(STORAGE_KEY.userAuthData, JSON.stringify(userData));
-  }
+  return { isFetching, isSuccess };
 };
 
-const checkToken = (userData: IUserAuthData) => {
-  const { isSuccess, isFetching } = useGetUserByIdQuery({
-    token: userData.token,
-    userId: userData.userId,
-  });
-
-  if (isFetching) {
-    return { isFetching: true, isSuccess: isSuccess };
-  }
-
-  return { isFetching: false, isSuccess: isSuccess };
-};
-
-const checkAuth = () => {
+const checkAuth = (): IAuth => {
   const userData: IUserAuthData = JSON.parse(
     storage.get(STORAGE_KEY.userAuthData)
   );
 
   if (userData) {
-    const response = checkToken(userData);
-    return response;
+    const { isFetching, isSuccess } = checkToken();
+    return { isFetching, isSuccess };
   }
+
   return { isFetching: false, isSuccess: false };
 };
 
 function App() {
-  // const userData: IUserAuthData = JSON.parse(
-  //   storage.get(STORAGE_KEY.userAuthData)
-  // );
-
-  // refreshToken(userData);
   const authResponse = checkAuth();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    authResponse.isSuccess
-      ? dispatch(changeValidation(true))
-      : dispatch(changeValidation(false));
-  }, [authResponse]);
+    dispatch(changeValidation(authResponse.isSuccess));
+  }, [authResponse.isSuccess]);
 
   return (
     <>

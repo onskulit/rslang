@@ -17,6 +17,7 @@ function Nav() {
   const handleLogIn = () => {
     dispatch(changeValidation(false));
     storage.remove(STORAGE_KEY.userAuthData);
+    storage.remove(STORAGE_KEY.userLogInData);
   };
 
   const dropdownMenuClickHandler = useMemo(
