@@ -1,0 +1,9 @@
+.advantages {
+  padding: 5rem 0;
+  background-color: var(--yellow);
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 3rem !important;
+}

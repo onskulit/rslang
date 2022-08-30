@@ -1,0 +1,20 @@
+.hero {
+  /* background-color: var(--yellow); */
+  min-height: 70vh;
+}
+
+.container {
+  /* background-color: var(--blue); */
+  height: 100%;
+}
+
+.image {
+  width: 100%;
+}
+
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}

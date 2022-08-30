@@ -18,7 +18,7 @@ function App() {
   return (
     <Layout>
       <Header />
-      <Content style={{ padding: '0 25px' }}>
+      <Content>
         <Col>
           <Routes>
             <Route path="/" element={<MainPage />} />
