@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { SLICE_NAMES } from '../../common/constants/sliceNames';
 
 const initialState = {
   authData: {},
@@ -7,7 +8,7 @@ const initialState = {
 };
 
 const userSlice = createSlice({
-  name: 'name',
+  name: SLICE_NAMES.validation,
   initialState,
   reducers: {
     changeValidation: (state, action: PayloadAction<boolean>) => {

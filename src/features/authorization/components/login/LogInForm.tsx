@@ -1,7 +1,10 @@
 import React, { FC } from 'react';
 import { LockOutlined, GoogleOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Spin } from 'antd';
-import { AUTH_TUPE } from '../../../../common/constants/auth';
+import {
+  AUTH_TUPE,
+  MIN_PASSWORD_NUMBER,
+} from '../../../../common/constants/auth';
 import {
   AUTH_INPUT_PLACEHOLDER,
   BAD_FORM_MESSAGE,
@@ -44,7 +47,7 @@ const LogInForm: FC<IFormAuthProps> = ({ setAuthType }) => {
               },
               () => ({
                 validator(_, value) {
-                  if (value.length >= 8) {
+                  if (value.length >= MIN_PASSWORD_NUMBER) {
                     return Promise.resolve();
                   }
                   return Promise.reject(
