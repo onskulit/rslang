@@ -30,6 +30,7 @@
 
 .image {
   width: 80%;
+  max-width: 120px;
   margin-bottom: 1rem;
 }
 
