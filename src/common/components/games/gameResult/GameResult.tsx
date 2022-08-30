@@ -21,7 +21,11 @@ function GameResult({
 }: GameResultProps) {
   const gameInfo = gamesInfo[game];
   return (
-    <Space direction="vertical" size="small" style={{ display: 'flex' }}>
+    <Space
+      direction="vertical"
+      size="small"
+      style={{ display: 'flex', marginBottom: 40 }}
+    >
       <Row justify="center">
         <TitleLevel3>Игра окончена!</TitleLevel3>
       </Row>
@@ -35,11 +39,19 @@ function GameResult({
       </Row>
       <>
         {!!correctWords.length && (
-          <GameResultTable title="Правильные ответы:" words={correctWords} />
+          <GameResultTable
+            title="Правильные ответы:"
+            words={correctWords}
+            style={{ borderColor: 'green' }}
+          />
         )}
 
         {!!wrongWords.length && (
-          <GameResultTable title="Неправильные ответы:" words={wrongWords} />
+          <GameResultTable
+            title="Неправильные ответы:"
+            words={wrongWords}
+            style={{ borderColor: 'red' }}
+          />
         )}
       </>
     </Space>
