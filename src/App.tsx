@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import MainPage from './pages/mainPage/MainPage';
 import Textbook from './features/textbook/Textbook';
 import Statistics from './features/statistics/Statistics';
-import { Layout } from 'antd';
+import { Layout, Spin } from 'antd';
 import AppFooter from './pages/footer/Footer';
 import GameMenu from './common/components/games/GameMenu';
 import { GamesType } from './common/types/enums';
@@ -52,7 +52,7 @@ function App() {
   return (
     <>
       {authResponse.isFetching ? (
-        <h1>Loading...</h1>
+        <Spin />
       ) : (
         <Layout>
           <Header />

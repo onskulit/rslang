@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { LockOutlined, GoogleOutlined } from '@ant-design/icons';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Spin } from 'antd';
 import { AUTH_TUPE } from '../../../../common/constants/auth';
 import {
   AUTH_INPUT_PLACEHOLDER,
@@ -18,7 +18,7 @@ const LogInForm: FC<IFormAuthProps> = ({ setAuthType }) => {
     <>
       {error && <h1 style={{ color: 'red' }}>Неверный e-mail или пароль</h1>}
       {isSignInLoading ? (
-        <h1>Loading....</h1>
+        <Spin />
       ) : (
         <Form
           className="login-form"
