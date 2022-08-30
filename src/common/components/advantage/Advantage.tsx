@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { Button, Col, Row, Image, Typography, Space, Card } from 'antd';
+import { Image, Typography, Card } from 'antd';
 
 import styles from './Advantage.module.css';
 

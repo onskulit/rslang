@@ -8,7 +8,7 @@ import notebookImage from '../../../assets/svg/notebook.svg';
 import whiteboardImage from '../../../assets/svg/whiteboard.svg';
 import trophyImage from '../../../assets/svg/trophy.svg';
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 function Advantages() {
   return (

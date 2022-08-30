@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Col, Row, Image, Typography, Space } from 'antd';
+import { Col, Row, Image, Typography, Space } from 'antd';
 import heroImage from '../../../assets/svg/hero.svg';
 
 import styles from './Hero.module.css';
@@ -17,8 +17,10 @@ function Hero() {
               direction="vertical"
               className={styles.textContainer}
             >
-              <Title level={2}>The World is yours with RS&nbsp;Lang</Title>
-              <Text>
+              <Title level={2} className={styles.title}>
+                The World is yours with RS&nbsp;Lang
+              </Title>
+              <Text className={styles.text}>
                 RS Lang — это эффективный сервис для увлекательной практики
                 английского языка.
               </Text>

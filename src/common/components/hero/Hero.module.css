@@ -1,11 +1,18 @@
 .hero {
-  /* background-color: var(--yellow); */
   min-height: 70vh;
 }
 
 .container {
-  /* background-color: var(--blue); */
   height: 100%;
+}
+
+h2.title {
+  font-size: 2.8rem;
+}
+
+.text {
+  font-size: 2rem;
+  line-height: 2rem;
 }
 
 .image {
