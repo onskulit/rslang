@@ -1,5 +1,5 @@
 import styles from './Audition.module.css';
-import { Row, Space, Spin, Progress, Image } from 'antd';
+import { Row, Space, Progress, Image } from 'antd';
 import { useEffect, useState } from 'react';
 import { useGetWordsForGroupQuery } from '../api/apiSlice';
 import {
