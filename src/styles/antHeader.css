@@ -1,5 +1,7 @@
 .ant-page-header {
   position: relative;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .ant-page-header::after {
@@ -24,6 +26,11 @@
     #eec0ef,
     #cdccff
   );
+}
+
+.ant-page-header-heading {
+  width: min(100% - 3rem, 1600px);
+  margin-inline: auto;
 }
 
 .ant-page-header-heading-left {

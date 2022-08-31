@@ -37,3 +37,9 @@
 .text {
   line-height: 1.3em;
 }
+
+@media (max-width: 767px) {
+  .image {
+    max-width: 90px;
+  }
+}

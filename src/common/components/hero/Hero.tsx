@@ -11,32 +11,30 @@ function Hero() {
   return (
     <div className={styles.hero}>
       <Container>
-        <Col className={styles.container}>
-          <Row>
-            <Col span={12}>
-              <Space
-                align="center"
-                direction="vertical"
-                className={styles.textContainer}
-              >
-                <Title level={2} className={styles.title}>
-                  The World is yours with RS&nbsp;Lang
-                </Title>
-                <Text className={styles.text}>
-                  RS Lang — это эффективный сервис для увлекательной практики
-                  английского языка.
-                </Text>
-              </Space>
-            </Col>
-            <Col span={12}>
-              <Image
-                src={heroImage}
-                preview={false}
-                rootClassName={styles.image}
-              />
-            </Col>
-          </Row>
-        </Col>
+        <Row className={styles.container}>
+          <Col span={24} md={12}>
+            <Space
+              align="center"
+              direction="vertical"
+              className={styles.textContainer}
+            >
+              <Title level={2} className={styles.title}>
+                The World is yours with RS&nbsp;Lang
+              </Title>
+              <Text className={styles.text}>
+                RS Lang — это эффективный сервис для увлекательной практики
+                английского языка.
+              </Text>
+            </Space>
+          </Col>
+          <Col span={24} md={12}>
+            <Image
+              src={heroImage}
+              preview={false}
+              rootClassName={styles.image}
+            />
+          </Col>
+        </Row>
       </Container>
     </div>
   );

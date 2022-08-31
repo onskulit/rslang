@@ -1,5 +1,36 @@
 .footer {
-  padding: 5px 24px;
+  position: relative;
+  margin-top: 1rem;
+  padding: 1rem 0;
+  background-color: var(--default-white);
+}
+
+.footer::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-image: linear-gradient(
+    to right,
+    #e94e99,
+    #fd5e82,
+    #ff766d,
+    #ff925e,
+    #ffad58,
+    #ffb16a,
+    #ffb57b,
+    #ffba8b,
+    #ffb4ad,
+    #ffb6d1,
+    #eec0ef,
+    #cdccff
+  );
+}
+
+.wrapper {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -7,24 +38,35 @@
   gap: 5px;
 }
 
-.footer div:not(:last-child) {
-  margin-right: 30px;
-}
-
 .infoLinks {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
 }
 
 .infoLink {
   font-size: 22px;
+  color: var(--blue--dark);
+}
+
+.infoLink:hover {
+  color: var(--blue);
+}
+
+.infoLink:hover svg {
+  color: var(--blue);
+}
+
+.infoLink svg {
+  width: 100%;
+  height: 100%;
+  transition: color var(--transition);
 }
 
 .linkLogo {
   position: relative;
-  width: 100px;
-  height: 60px;
+  width: 22px;
+  height: 22px;
 }
 
 .shoolLogo {
@@ -41,6 +83,12 @@
   gap: 15px;
 }
 
+h4.developersTitle {
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin: 0;
+}
+
 .developersLinks {
   display: flex;
   align-items: center;
@@ -48,13 +96,13 @@
 }
 
 .developersLink {
-  font-size: 16px;
+  font-size: 0.875rem;
   font-weight: 700;
-  color: var(--decoration-color);
+  color: var(--blue--dark);
 }
 
 .developersLink:hover {
-  color: var(--decoration-color);
+  color: var(--blue--dark);
   text-decoration: underline;
 }
 
@@ -67,5 +115,15 @@
 @media (max-width: 374.98px) {
   .footer {
     justify-content: center;
+  }
+
+  .wrapper {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .developers {
+    flex-direction: column;
+    gap: 0;
   }
 }

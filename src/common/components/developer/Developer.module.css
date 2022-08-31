@@ -72,3 +72,19 @@
 .goal {
   font-weight: 700;
 }
+
+@media (max-width: 767px) {
+  .card {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .name {
+    text-align: center;
+  }
+
+  .photo img {
+    width: 150px;
+    height: 150px;
+  }
+}

@@ -36,3 +36,13 @@
   width: 100%;
   gap: 20px;
 }
+
+@media (max-width: 767px) {
+  .developers {
+    padding: 1rem 0;
+  }
+
+  h2.title {
+    margin-bottom: 0rem;
+  }
+}
