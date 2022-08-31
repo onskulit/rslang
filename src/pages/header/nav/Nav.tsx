@@ -1,9 +1,8 @@
 import { DownOutlined } from '@ant-design/icons';
 import { NavLink } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { Button } from 'antd';
 import { changeValidation } from '../../../app/reducers/userSlice';
-import { Dropdown, Menu, Space } from 'antd';
+import { Dropdown, Menu, Space, Button } from 'antd';
 import styles from './Nav.module.css';
 import { useMemo } from 'react';
 import gamesInfo from '../../../common/constants/gamesInfo';

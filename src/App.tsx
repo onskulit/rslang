@@ -19,6 +19,7 @@ import { IUserAuthData } from './common/types/user';
 import { changeValidation } from './app/reducers/userSlice';
 import { STORAGE_KEY } from './common/constants/localStorage';
 import { IAuth } from './common/types/auth';
+import Loader from './common/components/Loader';
 
 const { Content } = Layout;
 
@@ -52,7 +53,7 @@ function App() {
   return (
     <>
       {authResponse.isFetching ? (
-        <Spin />
+        <Loader />
       ) : (
         <Layout>
           <Header />
