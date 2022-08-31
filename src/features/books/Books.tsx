@@ -28,8 +28,12 @@ function Books() {
       <header>
         <Space>
           <nav>
-            <button onClick={() => setActiveBook('Textbook')}>Учебник</button>
-            <button onClick={() => setActiveBook('Dictionary')}>Словарь</button>
+            <button onClick={() => setActiveBook(BOOK.textbook)}>
+              Учебник
+            </button>
+            <button onClick={() => setActiveBook(BOOK.dictionary)}>
+              Словарь
+            </button>
           </nav>
           <button>
             <SettingOutlined />
@@ -53,7 +57,7 @@ function Books() {
             <Text className={'word-amount'}>1-600</Text>
           </Space>
           <Space className="level">
-            <Title level={3}>A1</Title>
+            <TitleLevel3>A1</TitleLevel3>
           </Space>
         </Radio.Button>
         <Radio.Button value={1} className={'button'}>
@@ -64,7 +68,7 @@ function Books() {
             <Text className={'word-amount'}>601-1200</Text>
           </Space>
           <Space className="level">
-            <Title level={3}>A2</Title>
+            <TitleLevel3>A2</TitleLevel3>
           </Space>
         </Radio.Button>
         <Radio.Button value={2} className={'button'}>
@@ -75,7 +79,7 @@ function Books() {
             <Text className={'word-amount'}>1201-1800</Text>
           </Space>
           <Space className="level">
-            <Title level={3}>B1</Title>
+            <TitleLevel3>B1</TitleLevel3>
           </Space>
         </Radio.Button>
         <Radio.Button value={3} className={'button'}>
@@ -86,7 +90,7 @@ function Books() {
             <Text className={'word-amount'}>1801-2400</Text>
           </Space>
           <Space className="level">
-            <Title level={3}>A1</Title>
+            <TitleLevel3>B2</TitleLevel3>
           </Space>
         </Radio.Button>
         <Radio.Button value={4} className={'button'}>
@@ -97,7 +101,7 @@ function Books() {
             <Text className={'word-amount'}>2401-3000</Text>
           </Space>
           <Space className="level">
-            <Title level={3}>C1</Title>
+            <TitleLevel3>C1</TitleLevel3>
           </Space>
         </Radio.Button>
         <Radio.Button value={5} className={'button'}>
