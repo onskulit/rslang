@@ -6,10 +6,12 @@ import { STORAGE_KEY } from '../../common/constants/localStorage';
 import { IWord } from '../../common/types/interfaces';
 
 export interface IUserWord {
-  difficulty: string;
+  difficulty: boolean;
   optional: {
+    learningProgress: number;
     percentCorrectAnswers: number;
     isNew: boolean;
+    isLearned: boolean;
   };
 }
 
