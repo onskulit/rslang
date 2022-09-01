@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Button, Divider, Popover, Grid } from 'antd';
 import { NavLink } from 'react-router-dom';
+import { HEADER_LINKS } from '../../constants/headerLinks';
 import styles from './MobileMenu.module.css';
 
 const { useBreakpoint } = Grid;
@@ -13,28 +14,27 @@ function MobileMenu() {
     setIsVisible(newVisible);
   };
 
-  const mobileLinks = (
-    <div className={`${styles.menu}`}>
-      <NavLink to="/" className={styles.link}>
-        Главная
-      </NavLink>
-      <Divider className={styles.divider} />
-      <NavLink to="/textbook" className={styles.link}>
-        Учебник
-      </NavLink>
-      <Divider className={styles.divider} />
-      <NavLink to="/sprint" className={styles.link}>
-        Спринт
-      </NavLink>
-      <Divider className={styles.divider} />
-      <NavLink to="/audition" className={styles.link}>
-        Аудиовызов
-      </NavLink>
-      <Divider className={styles.divider} />
-      <NavLink to="/statistics" className={styles.link}>
-        Статистика
-      </NavLink>
-    </div>
+  const mobileLinks = useMemo(
+    () => (
+      <>
+        {Object.values(HEADER_LINKS).map((link, index) => (
+          <>
+            <NavLink
+              to={link.path}
+              key={index}
+              className={styles.link}
+              onClick={() => {
+                setIsVisible(false);
+              }}
+            >
+              {link.name}
+            </NavLink>
+            <Divider className={styles.divider} />
+          </>
+        ))}
+      </>
+    ),
+    []
   );
 
   return (

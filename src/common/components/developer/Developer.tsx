@@ -1,15 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import {
-  Button,
-  Col,
-  Row,
-  Image,
-  Typography,
-  Space,
-  Card,
-  Divider,
-} from 'antd';
+import { Image, Typography, Card, Divider } from 'antd';
 
 import styles from './Developer.module.css';
 
