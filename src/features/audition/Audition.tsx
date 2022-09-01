@@ -19,13 +19,14 @@ import AuditionOptions from '../../common/components/auditionOptions/AuditionOpt
 import { ArrowRightOutlined } from '@ant-design/icons';
 import AudioButton from '../../common/components/audioButton/AudioButton';
 import { BASE_URL } from '../../common/constants/api';
-import { useAppSelector } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { ButtonRounded } from '../../common/components/buttons/Buttons';
 
 import GameResult from '../../common/components/games/gameResult/GameResult';
 import { GamesType, Keyboard } from '../../common/types/enums';
 import GameCloser from '../../common/components/games/GameCloser';
 import Loader from '../../common/components/Loader';
+import { updateGameStatus } from '../gameStatus/gameStatusSlice';
 
 const NUMBER_OF_WORDS = 10;
 const NUMBER_OF_OPTIONS = 5;
@@ -47,6 +48,7 @@ function Audition(): JSX.Element {
   const [results, setResults] = useState<boolean>(false);
   const [gameOver, setGameOver] = useState<boolean>(false);
 
+  const dispatch = useAppDispatch();
   const difficulty = useAppSelector(
     (state: DifficultyState) => state.difficulty.value
   );
@@ -135,6 +137,7 @@ function Audition(): JSX.Element {
       ]) as IWord[];
       setCurrentOptions(currentOptions);
       setShuffledWords(shuffledWordsTemp);
+      dispatch(updateGameStatus(true));
     }
   }, [words]);
 
@@ -169,7 +172,7 @@ function Audition(): JSX.Element {
                 gameOver && styles.progressBarGameOver
               }`}
             />
-            <GameCloser />
+            {!results && <GameCloser />}
             <Row justify="center">
               {currentWord && !end && (
                 <AudioButton audioFile={currentWord?.audio} mute={gameOver} />

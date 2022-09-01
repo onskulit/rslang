@@ -1,7 +1,12 @@
 import { Row, Space } from 'antd';
+import { useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
+import { useAppDispatch } from '../../../../app/hooks';
+import { updateGameStatus } from '../../../../features/gameStatus/gameStatusSlice';
 import gamesInfo from '../../../constants/gamesInfo';
 import { GamesType } from '../../../types/enums';
 import { IWord } from '../../../types/interfaces';
+import { ButtonRounded } from '../../buttons/Buttons';
 import ResultMessage from '../../gameOverMessage/ResultMessage';
 import { TitleLevel3, TitleLevel4 } from '../../typography/Titles';
 import GameResultTable from './gameResultTable/GameResultTable';
@@ -20,10 +25,15 @@ function GameResult({
   wrongWords,
 }: GameResultProps) {
   const gameInfo = gamesInfo[game];
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(updateGameStatus(false));
+  }, []);
   return (
     <Space
       direction="vertical"
-      size="small"
+      size="middle"
       style={{ display: 'flex', marginBottom: 40 }}
     >
       <Row justify="center">
@@ -54,6 +64,16 @@ function GameResult({
           />
         )}
       </>
+      <Row justify="center">
+        <Space>
+          <NavLink to={gameInfo.pathWithMenu}>
+            <ButtonRounded style={{ width: 200 }}>Сыграть снова</ButtonRounded>
+          </NavLink>
+          <NavLink to="/">
+            <ButtonRounded style={{ width: 200 }}>На Главную</ButtonRounded>
+          </NavLink>
+        </Space>
+      </Row>
     </Space>
   );
 }

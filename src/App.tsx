@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import MainPage from './pages/mainPage/MainPage';
 import Textbook from './features/textbook/Textbook';
 import Statistics from './features/statistics/Statistics';
-import { Layout, Spin } from 'antd';
+import { Layout } from 'antd';
 import AppFooter from './pages/footer/Footer';
 import GameMenu from './common/components/games/GameMenu';
 import { GamesType } from './common/types/enums';
@@ -13,13 +13,14 @@ import gamesInfo from './common/constants/gamesInfo';
 import Authorization from './features/authorization/authorization';
 import { storage } from './utils/localStorage';
 import { useEffect } from 'react';
-import { useAppDispatch } from './app/hooks';
+import { useAppDispatch, useAppSelector } from './app/hooks';
 import { useGetUserByIdQuery } from './app/services/UserService';
 import { IUserAuthData } from './common/types/user';
 import { changeValidation } from './app/reducers/userSlice';
 import { STORAGE_KEY } from './common/constants/localStorage';
 import { IAuth } from './common/types/auth';
 import Loader from './common/components/Loader';
+import { RootState } from './app/store';
 
 const { Content } = Layout;
 
@@ -46,6 +47,8 @@ function App() {
   const authResponse = checkAuth();
   const dispatch = useAppDispatch();
 
+  const { isRunning } = useAppSelector((state: RootState) => state.gameStatus);
+
   useEffect(() => {
     dispatch(changeValidation(authResponse.isSuccess));
   }, [authResponse.isSuccess]);
@@ -56,7 +59,7 @@ function App() {
         <Loader />
       ) : (
         <Layout>
-          <Header />
+          {!isRunning && <Header />}
           <Content style={{ padding: '0 25px' }}>
             <Routes>
               <Route path="/" element={<MainPage />} />

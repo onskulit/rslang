@@ -5,6 +5,7 @@ import sprintReducer from '../features/sprint/sprintSlice';
 import { userAPI } from './services/UserService';
 import difficultyReducer from '../features/difficulty/difficultySlice';
 import userReducer from './reducers/userSlice';
+import gameStatusReducer from '../features/gameStatus/gameStatusSlice';
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     [apiSlice.reducerPath]: apiSlice.reducer,
     [userAPI.reducerPath]: userAPI.reducer,
     sprint: sprintReducer,
+    gameStatus: gameStatusReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware, userAPI.middleware),
