@@ -8,3 +8,17 @@ export const API = {
   users: '/users',
   signin: '/signin',
 };
+
+export const METHODS = {
+  get: 'GET',
+  post: 'POST',
+  put: 'PUT',
+  patch: 'PATCH',
+  delete: 'DELETE',
+};
+
+export const HEADERS = {
+  accept: 'application/json',
+  contentType: 'application/json',
+  authorization: (token: string): string => `Bearer ${token}`,
+};

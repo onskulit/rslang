@@ -1,11 +1,24 @@
 import { DownOutlined } from '@ant-design/icons';
 import { NavLink } from 'react-router-dom';
-import { Dropdown, Menu, Space } from 'antd';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { changeValidation } from '../../../app/reducers/userSlice';
+import { Dropdown, Menu, Space, Button } from 'antd';
 import styles from './Nav.module.css';
 import { useMemo } from 'react';
 import gamesInfo from '../../../common/constants/gamesInfo';
+import { storage } from '../../../utils/localStorage';
+import { STORAGE_KEY } from '../../../common/constants/localStorage';
 
 function Nav() {
+  const { validate } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+
+  const handleLogIn = () => {
+    dispatch(changeValidation(false));
+    storage.remove(STORAGE_KEY.userAuthData);
+    storage.remove(STORAGE_KEY.userLogInData);
+  };
+
   const dropdownMenuClickHandler = useMemo(
     () => (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) =>
       e.preventDefault(),
@@ -36,6 +49,13 @@ function Nav() {
         </a>
       </Dropdown>
       <NavLink to="/statistics">Статистика</NavLink>
+      {validate ? (
+        <Button onClick={handleLogIn}>Выход</Button>
+      ) : (
+        <Button>
+          <NavLink to="/authorization">Вход</NavLink>
+        </Button>
+      )}
     </nav>
   );
 }
