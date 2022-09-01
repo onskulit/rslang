@@ -1,7 +1,9 @@
 import { Row, Space } from 'antd';
+import { NavLink } from 'react-router-dom';
 import gamesInfo from '../../../constants/gamesInfo';
 import { GamesType } from '../../../types/enums';
 import { IWord } from '../../../types/interfaces';
+import { ButtonRounded } from '../../buttons/Buttons';
 import ResultMessage from '../../gameOverMessage/ResultMessage';
 import { TitleLevel3, TitleLevel4 } from '../../typography/Titles';
 import GameResultTable from './gameResultTable/GameResultTable';
@@ -54,6 +56,16 @@ function GameResult({
           />
         )}
       </>
+      <Row justify="center">
+        <Space>
+          <NavLink to={gameInfo.pathWithMenu}>
+            <ButtonRounded style={{ width: 200 }}>Сыграть снова</ButtonRounded>
+          </NavLink>
+          <NavLink to="/">
+            <ButtonRounded style={{ width: 200 }}>В главное меню</ButtonRounded>
+          </NavLink>
+        </Space>
+      </Row>
     </Space>
   );
 }
