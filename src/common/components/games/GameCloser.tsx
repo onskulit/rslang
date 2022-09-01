@@ -4,10 +4,14 @@ import {
 } from '@ant-design/icons';
 import { Modal } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../../app/hooks';
+import { updateGameStatus } from '../../../features/gameStatus/gameStatusSlice';
 
 const { confirm } = Modal;
+
 function GameCloser() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const closeConfirm = () => {
     confirm({
       title: 'Вы действительно хотите покинуть игру?',
@@ -15,6 +19,7 @@ function GameCloser() {
       cancelText: 'Отмена',
       okText: 'Да',
       onOk() {
+        dispatch(updateGameStatus(false));
         navigate('/');
       },
     });

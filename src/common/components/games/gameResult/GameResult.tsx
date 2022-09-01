@@ -1,5 +1,8 @@
 import { Row, Space } from 'antd';
+import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useAppDispatch } from '../../../../app/hooks';
+import { updateGameStatus } from '../../../../features/gameStatus/gameStatusSlice';
 import gamesInfo from '../../../constants/gamesInfo';
 import { GamesType } from '../../../types/enums';
 import { IWord } from '../../../types/interfaces';
@@ -22,10 +25,15 @@ function GameResult({
   wrongWords,
 }: GameResultProps) {
   const gameInfo = gamesInfo[game];
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(updateGameStatus(false));
+  }, []);
   return (
     <Space
       direction="vertical"
-      size="small"
+      size="middle"
       style={{ display: 'flex', marginBottom: 40 }}
     >
       <Row justify="center">
