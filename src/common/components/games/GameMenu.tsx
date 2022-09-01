@@ -1,6 +1,7 @@
 import { Radio, Row, Space } from 'antd';
 import { NavLink } from 'react-router-dom';
-import { useAppDispatch } from '../../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { RootState } from '../../../app/store';
 import { difficultyChanged } from '../../../features/difficulty/difficultySlice';
 import gamesInfo from '../../constants/gamesInfo';
 import { difficulties, languageLevels } from '../../constants/getEnums';
@@ -15,6 +16,9 @@ interface GameMenuProps {
 function GameMenu({ game }: GameMenuProps) {
   const gameInfo = gamesInfo[game];
   const dispatch = useAppDispatch();
+  const { value: difficulty } = useAppSelector(
+    (state: RootState) => state.difficulty
+  );
 
   return (
     <Space direction="vertical" size="small" style={{ display: 'flex' }}>
@@ -27,7 +31,7 @@ function GameMenu({ game }: GameMenuProps) {
       <Row justify="center">Выберите уровень сложности</Row>
       <Row justify="center">
         <Radio.Group
-          defaultValue="0"
+          defaultValue={difficulty}
           size="large"
           onChange={(e) => dispatch(difficultyChanged(+e.target.value))}
         >
