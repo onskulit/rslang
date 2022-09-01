@@ -10,41 +10,81 @@ import { GamesType } from './common/types/enums';
 import Sprint from './features/sprint/Sprint';
 import Audition from './features/audition/Audition';
 import gamesInfo from './common/constants/gamesInfo';
-import Col from 'antd/es/grid/col';
+import Authorization from './features/authorization/authorization';
+import { storage } from './utils/localStorage';
+import { useEffect } from 'react';
+import { useAppDispatch } from './app/hooks';
+import { useGetUserByIdQuery } from './app/services/UserService';
+import { IUserAuthData } from './common/types/user';
+import { changeValidation } from './app/reducers/userSlice';
+import { STORAGE_KEY } from './common/constants/localStorage';
+import { IAuth } from './common/types/auth';
+import Loader from './common/components/Loader';
 
 const { Content } = Layout;
 
+const checkToken = (): IAuth => {
+  const { isSuccess, isFetching } = useGetUserByIdQuery();
+
+  return { isFetching, isSuccess };
+};
+
+const checkAuth = (): IAuth => {
+  const userData: IUserAuthData = JSON.parse(
+    storage.get(STORAGE_KEY.userAuthData)
+  );
+
+  if (userData) {
+    const { isFetching, isSuccess } = checkToken();
+    return { isFetching, isSuccess };
+  }
+
+  return { isFetching: false, isSuccess: false };
+};
+
 function App() {
+  const authResponse = checkAuth();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(changeValidation(authResponse.isSuccess));
+  }, [authResponse.isSuccess]);
+
   return (
-    <Layout>
-      <Header />
-      <Content>
-        <Col>
-          <Routes>
-            <Route path="/" element={<MainPage />} />
-            <Route path="/textbook" element={<Textbook />} />
-            <Route
-              path="/sprint"
-              element={<GameMenu game={GamesType.sprint} />}
-            />
-            <Route
-              path="/audition"
-              element={<GameMenu game={GamesType.audition} />}
-            />
-            <Route
-              path={gamesInfo[GamesType.sprint].path}
-              element={<Sprint />}
-            />
-            <Route
-              path={gamesInfo[GamesType.audition].path}
-              element={<Audition />}
-            />
-            <Route path="/statistics" element={<Statistics />} />
-          </Routes>
-        </Col>
-      </Content>
-      <AppFooter />
-    </Layout>
+    <>
+      {authResponse.isFetching ? (
+        <Loader />
+      ) : (
+        <Layout>
+          <Header />
+          <Content>
+            <Routes>
+              <Route path="/" element={<MainPage />} />
+              <Route path="/textbook" element={<Textbook />} />
+              <Route
+                path="/sprint"
+                element={<GameMenu game={GamesType.sprint} />}
+              />
+              <Route
+                path="/audition"
+                element={<GameMenu game={GamesType.audition} />}
+              />
+              <Route
+                path={gamesInfo[GamesType.sprint].path}
+                element={<Sprint />}
+              />
+              <Route
+                path={gamesInfo[GamesType.audition].path}
+                element={<Audition />}
+              />
+              <Route path="/statistics" element={<Statistics />} />
+              <Route path="/authorization" element={<Authorization />} />
+            </Routes>
+          </Content>
+          <AppFooter />
+        </Layout>
+      )}
+    </>
   );
 }
 
