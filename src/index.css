@@ -18,6 +18,7 @@
   --blue--dark: #5855f2;
   --red: #fc3f1d;
 
+  --border-radius: 15px;
   --transition: 0.3s ease;
 }
 
@@ -26,6 +27,7 @@
 @import url('./styles/antHeader.css');
 @import url('./styles/antNav.css');
 @import url('./styles/antDropdown.css');
+@import url('./styles/antPopover.css');
 
 body {
   margin: 0;

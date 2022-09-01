@@ -9,9 +9,7 @@ function Header() {
     () => navigate('/', { replace: true }),
     [navigate]
   );
-  return (
-    <PageHeader title="RSLang Team 43" extra={<Nav />} onBack={handleOnClick} />
-  );
+  return <PageHeader title="RSLang" extra={<Nav />} onBack={handleOnClick} />;
 }
 
 export default Header;

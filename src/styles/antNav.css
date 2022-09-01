@@ -5,3 +5,12 @@
 .ant-dropdown-open .anticon {
   transform: rotate(180deg);
 }
+
+.ant-popover-inner-content {
+  padding: 18px 16px;
+  width: 200px;
+}
+
+.ant-popover-open {
+  /* background-color: red !important; */
+}
