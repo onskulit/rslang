@@ -62,7 +62,7 @@ function GameResult({
             <ButtonRounded style={{ width: 200 }}>Сыграть снова</ButtonRounded>
           </NavLink>
           <NavLink to="/">
-            <ButtonRounded style={{ width: 200 }}>В главное меню</ButtonRounded>
+            <ButtonRounded style={{ width: 200 }}>На Главную</ButtonRounded>
           </NavLink>
         </Space>
       </Row>
