@@ -1,10 +1,23 @@
+.ant-dropdown-menu {
+  border-radius: var(--border-radius);
+}
+
 .ant-dropdown-menu-item a {
   font-size: 1rem;
   font-weight: 500;
 }
 
+.ant-dropdown-menu-item {
+  margin-bottom: 0.5rem;
+}
+
+.ant-dropdown-menu-item:last-child {
+  margin-bottom: 0;
+}
+
 .ant-dropdown-menu-item-active {
   background-color: var(--blue);
+  border-radius: var(--border-radius);
 }
 
 .ant-dropdown-menu-item:hover {
