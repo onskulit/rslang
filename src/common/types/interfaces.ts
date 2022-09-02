@@ -40,18 +40,19 @@ export interface IGameStatistic {
   maxStreak: number;
 }
 
+export interface IDailyStatistics {
+  textbook: {
+    newWordsAmount: number;
+    percentCorrectAnswers: number;
+  };
+  [GamesType.sprint]: IGameStatistic;
+  [GamesType.audition]: IGameStatistic;
+}
 export interface IStatisticData {
   learnedWords: number;
   optional: {
     daily: {
-      [date: string]: {
-        textbook: {
-          newWordsAmount: number;
-          percentCorrectAnswers: number;
-        };
-        [GamesType.sprint]: IGameStatistic;
-        [GamesType.audition]: IGameStatistic;
-      };
+      [date: string]: IDailyStatistics;
     };
   };
 }

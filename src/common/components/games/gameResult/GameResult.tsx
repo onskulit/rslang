@@ -1,6 +1,6 @@
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { Row, Space } from 'antd';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAppDispatch } from '../../../../app/hooks';
 import {
@@ -8,13 +8,20 @@ import {
   useUpdateDailyStatisticsMutation,
 } from '../../../../features/api/statisticsSlice';
 import { updateGameStatus } from '../../../../features/gameStatus/gameStatusSlice';
-import { getCurrentDate } from '../../../utils/getDate';
+import { getCurrentDate } from '../../../utils/getCurrentDate';
 import { storage } from '../../../../utils/localStorage';
-import { initialStatistics } from '../../../constants/initialStatistics';
+import {
+  initialDailyStatistics,
+  initialStatistics,
+} from '../../../constants/initialStatistics';
 import gamesInfo from '../../../constants/gamesInfo';
 import { STORAGE_KEY } from '../../../constants/localStorage';
 import { GamesType } from '../../../types/enums';
-import { IStatisticData, IWord } from '../../../types/interfaces';
+import {
+  IStatisticData,
+  IUserStatisticsResponse,
+  IWord,
+} from '../../../types/interfaces';
 import { ButtonRounded } from '../../buttons/Buttons';
 import ResultMessage from '../../gameOverMessage/ResultMessage';
 import { TitleLevel3, TitleLevel4 } from '../../typography/Titles';
@@ -44,14 +51,31 @@ function GameResult({
   const gameInfo = gamesInfo[game];
   const dispatch = useAppDispatch();
 
-  const updateStatistics = async (statistics: IStatisticData) => {
-    const todayStatistics = statistics.optional.daily[getCurrentDate()];
-    await updateDailyStatistics({
-      userId: userData.userId,
-      token: userData.token,
-      body: statistics,
-    });
-  };
+  const updateStatistics = useMemo(
+    () => async (statistics: IStatisticData) => {
+      const statisticsCopy = JSON.parse(
+        JSON.stringify(statistics)
+      ) as IStatisticData;
+      const todayStatistics = statisticsCopy.optional.daily[getCurrentDate()];
+      if (!todayStatistics) {
+        statisticsCopy.optional.daily[getCurrentDate()] = {
+          ...initialDailyStatistics,
+        };
+      }
+      const currentGame = statisticsCopy.optional.daily[getCurrentDate()][game];
+      currentGame.maxStreak =
+        currentGame.maxStreak > maxStreak ? currentGame.maxStreak : maxStreak;
+      currentGame.rightWords += correctWords.length;
+      currentGame.wrongWords += wrongWords.length;
+      console.log(statisticsCopy);
+      await updateDailyStatistics({
+        userId: userData.userId,
+        token: userData.token,
+        body: statisticsCopy,
+      });
+    },
+    []
+  );
 
   const createStatistics = () => {
     const statistics = initialStatistics;
@@ -76,7 +100,10 @@ function GameResult({
 
   useEffect(() => {
     if (data) {
-      console.log(data);
+      updateStatistics({
+        learnedWords: data.learnedWords,
+        optional: data.optional,
+      });
     }
   }, [data]);
 

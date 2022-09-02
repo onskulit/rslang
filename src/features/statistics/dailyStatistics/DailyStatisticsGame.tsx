@@ -7,7 +7,7 @@ import {
   IStatisticData,
   IUserStatisticsResponse,
 } from '../../../common/types/interfaces';
-import { getCurrentDate } from '../../../common/utils/getDate';
+import { getCurrentDate } from '../../../common/utils/getCurrentDate';
 
 interface DailyStatisticsGameProps {
   game: GamesType;
@@ -15,7 +15,7 @@ interface DailyStatisticsGameProps {
 }
 
 const getPercentOfRightAnswers = (right: number, wrong: number) => {
-  return (right / (right + wrong)) * 100;
+  return Math.round((right / (right + wrong)) * 100);
 };
 function DailyStatisticsGame({ game, statistics }: DailyStatisticsGameProps) {
   const gameInfo = gamesInfo[game];

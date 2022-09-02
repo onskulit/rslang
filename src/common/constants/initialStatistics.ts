@@ -1,6 +1,6 @@
-import { GamesType } from './../types/enums';
-import { getCurrentDate } from '../utils/getDate';
-import { IStatisticData } from './../types/interfaces';
+import { GamesType } from '../types/enums';
+import { getCurrentDate } from '../utils/getCurrentDate';
+import { IDailyStatistics, IStatisticData } from '../types/interfaces';
 
 const initialGameStatistics = {
   newWordsAmount: 0,
@@ -8,18 +8,21 @@ const initialGameStatistics = {
   wrongWords: 0,
   maxStreak: 0,
 };
+
+export const initialDailyStatistics: IDailyStatistics = {
+  textbook: {
+    newWordsAmount: 0,
+    percentCorrectAnswers: 0,
+  },
+  [GamesType.sprint]: { ...initialGameStatistics },
+  [GamesType.audition]: { ...initialGameStatistics },
+};
+
 export const initialStatistics: IStatisticData = {
   learnedWords: 0,
   optional: {
     daily: {
-      [getCurrentDate()]: {
-        textbook: {
-          newWordsAmount: 0,
-          percentCorrectAnswers: 0,
-        },
-        [GamesType.sprint]: initialGameStatistics,
-        [GamesType.audition]: initialGameStatistics,
-      },
+      [getCurrentDate()]: { ...initialDailyStatistics },
     },
   },
 };
