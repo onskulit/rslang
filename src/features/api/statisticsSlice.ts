@@ -1,4 +1,7 @@
-import { IStatisticData } from './../../common/types/interfaces';
+import {
+  IStatisticData,
+  IUserStatisticsResponse,
+} from './../../common/types/interfaces';
 import { API, BASE_URL, HEADERS, METHODS } from '../../common/constants/api';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
@@ -17,7 +20,10 @@ export const statisticsAPI = createApi({
   reducerPath: 'statistics',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
-    getDailyStatistics: builder.query<IUserStatistic, IUserStatisticQuery>({
+    getDailyStatistics: builder.query<
+      IUserStatisticsResponse,
+      IUserStatisticQuery
+    >({
       query: ({ userId, token }) => ({
         url: `${API.users}/${userId}/statistics`,
         headers: {
@@ -28,7 +34,7 @@ export const statisticsAPI = createApi({
       }),
     }),
     updateDailyStatistics: builder.mutation<
-      IUserStatistic,
+      IUserStatisticsResponse,
       Partial<IUserStatistic>
     >({
       query: ({ userId, token, body }) => ({

@@ -1,10 +1,13 @@
 import { Card, Col, Progress, Row, Space } from 'antd';
 import StatisticsCard from '../../../common/components/statistics/statisticsCard/StatisticsCard';
 import { TitleLevel4 } from '../../../common/components/typography/Titles';
-import { IStatisticData } from '../../../common/types/interfaces';
+import {
+  IStatisticData,
+  IUserStatisticsResponse,
+} from '../../../common/types/interfaces';
 
 interface DailyStatisticsGameProps {
-  statistics: IStatisticData;
+  statistics: IUserStatisticsResponse;
 }
 
 function DailyStatisticsWords({ statistics }: DailyStatisticsGameProps) {

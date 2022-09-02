@@ -17,6 +17,12 @@ function Statistics() {
     }
   );
 
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+    }
+  }, [data]);
+
   return (
     <Space
       direction="vertical"
@@ -31,12 +37,9 @@ function Statistics() {
       {isSuccess && (
         <>
           <TitleLevel3>Статистика</TitleLevel3>
-          <DailyStatisticsGame game={GamesType.sprint} statistics={data.body} />
-          <DailyStatisticsGame
-            game={GamesType.audition}
-            statistics={data.body}
-          />
-          <DailyStatisticsWords statistics={data.body} />
+          <DailyStatisticsGame game={GamesType.sprint} statistics={data} />
+          <DailyStatisticsGame game={GamesType.audition} statistics={data} />
+          <DailyStatisticsWords statistics={data} />
         </>
       )}
     </Space>

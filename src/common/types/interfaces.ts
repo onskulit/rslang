@@ -55,3 +55,7 @@ export interface IStatisticData {
     };
   };
 }
+
+export interface IUserStatisticsResponse extends IStatisticData {
+  userId: string;
+}
