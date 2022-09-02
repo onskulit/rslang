@@ -16,6 +16,7 @@ interface GameResultProps {
   game: GamesType;
   correctWords: IWord[];
   wrongWords: IWord[];
+  maxStreak: number;
 }
 
 function GameResult({
@@ -23,6 +24,7 @@ function GameResult({
   game,
   correctWords,
   wrongWords,
+  maxStreak,
 }: GameResultProps) {
   const gameInfo = gamesInfo[game];
   const dispatch = useAppDispatch();
