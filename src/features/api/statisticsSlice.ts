@@ -27,7 +27,10 @@ export const statisticsAPI = createApi({
         },
       }),
     }),
-    dailyStatistics: builder.mutation<IUserStatistic, Partial<IUserStatistic>>({
+    updateDailyStatistics: builder.mutation<
+      IUserStatistic,
+      Partial<IUserStatistic>
+    >({
       query: ({ userId, token, body }) => ({
         url: `${API.users}/${userId}/statistics`,
         method: METHODS.put,
@@ -42,5 +45,5 @@ export const statisticsAPI = createApi({
   }),
 });
 
-export const { useDailyStatisticsMutation, useGetDailyStatisticsQuery } =
+export const { useUpdateDailyStatisticsMutation, useGetDailyStatisticsQuery } =
   statisticsAPI;

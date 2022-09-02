@@ -1,14 +1,14 @@
 import { GamesType } from './../types/enums';
-import { getCurrentDate } from './../../utils/getDate';
+import { getCurrentDate } from '../utils/getDate';
 import { IStatisticData } from './../types/interfaces';
 
-const defaultGameStatistics = {
+const initialGameStatistics = {
   newWordsAmount: 0,
   rightWords: 0,
   wrongWords: 0,
   maxStreak: 0,
 };
-export const defaultStatistics: IStatisticData = {
+export const initialStatistics: IStatisticData = {
   learnedWords: 0,
   optional: {
     daily: {
@@ -17,8 +17,8 @@ export const defaultStatistics: IStatisticData = {
           newWordsAmount: 0,
           percentCorrectAnswers: 0,
         },
-        [GamesType.sprint]: defaultGameStatistics,
-        [GamesType.audition]: defaultGameStatistics,
+        [GamesType.sprint]: initialGameStatistics,
+        [GamesType.audition]: initialGameStatistics,
       },
     },
   },

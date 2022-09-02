@@ -1,14 +1,20 @@
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { Row, Space } from 'antd';
 import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAppDispatch } from '../../../../app/hooks';
-import { statisticsAPI } from '../../../../features/api/statisticsSlice';
+import {
+  statisticsAPI,
+  useUpdateDailyStatisticsMutation,
+} from '../../../../features/api/statisticsSlice';
 import { updateGameStatus } from '../../../../features/gameStatus/gameStatusSlice';
+import { getCurrentDate } from '../../../utils/getDate';
 import { storage } from '../../../../utils/localStorage';
+import { initialStatistics } from '../../../constants/initialStatistics';
 import gamesInfo from '../../../constants/gamesInfo';
 import { STORAGE_KEY } from '../../../constants/localStorage';
 import { GamesType } from '../../../types/enums';
-import { IWord } from '../../../types/interfaces';
+import { IStatisticData, IWord } from '../../../types/interfaces';
 import { ButtonRounded } from '../../buttons/Buttons';
 import ResultMessage from '../../gameOverMessage/ResultMessage';
 import { TitleLevel3, TitleLevel4 } from '../../typography/Titles';
@@ -30,17 +36,50 @@ function GameResult({
   maxStreak,
 }: GameResultProps) {
   const userData = JSON.parse(storage.get(STORAGE_KEY.userAuthData));
-  const { data, isError } = statisticsAPI.useGetDailyStatisticsQuery({
-    userId: userData.userId,
-    token: userData.token,
+  const { data, error } = statisticsAPI.useGetDailyStatisticsQuery({
+    userId: userData ? userData.userId : '',
+    token: userData ? userData.token : '',
   });
+  const [updateDailyStatistics] = useUpdateDailyStatisticsMutation();
   const gameInfo = gamesInfo[game];
   const dispatch = useAppDispatch();
 
+  const updateStatistics = async (statistics: IStatisticData) => {
+    const todayStatistics = statistics.optional.daily[getCurrentDate()];
+    await updateDailyStatistics({
+      userId: userData.userId,
+      token: userData.token,
+      body: statistics,
+    });
+  };
+
+  const createStatistics = () => {
+    const statistics = initialStatistics;
+    updateStatistics(statistics);
+  };
+
   useEffect(() => {
     dispatch(updateGameStatus(false));
-    console.log(userData);
   }, []);
+
+  useEffect(() => {
+    if (error) {
+      const typedError = error as FetchBaseQueryError;
+      const status = typedError.status;
+      if (status === 'PARSING_ERROR') {
+        if (typedError.originalStatus === 404) {
+          createStatistics();
+        }
+      }
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+    }
+  }, [data]);
+
   return (
     <Space
       direction="vertical"
