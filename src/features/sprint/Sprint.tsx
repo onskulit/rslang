@@ -11,6 +11,7 @@ import { Progress, Row, Space, Typography } from 'antd';
 import { TitleLevel4 } from '../../common/components/typography/Titles';
 import { ButtonRounded } from '../../common/components/buttons/Buttons';
 import GameCloser from '../../common/components/games/GameCloser';
+import { updateGameStatus } from '../gameStatus/gameStatusSlice';
 
 interface SprintProps {
   maxPage?: number;
@@ -55,6 +56,7 @@ function Sprint({ maxPage = 29 }: SprintProps) {
   useEffect(() => {
     dispatch(resetGame());
     if (data) {
+      dispatch(updateGameStatus(true));
       setGame();
     }
   }, [data]);
@@ -87,7 +89,11 @@ function Sprint({ maxPage = 29 }: SprintProps) {
       {isFetching && <Loader />}
       {isError && <ErrorMessage error="Что-то пошло не так" />}
       {isStarted && (
-        <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+        <Space
+          direction="vertical"
+          size="middle"
+          style={{ display: 'flex', paddingTop: 20 }}
+        >
           <GameCloser />
           <Row justify="center">
             <Space>
