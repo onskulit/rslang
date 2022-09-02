@@ -7,7 +7,6 @@ export const API = {
   words: '/words',
   users: '/users',
   signin: '/signin',
-  statistics: '/statistics',
 };
 
 export const METHODS = {

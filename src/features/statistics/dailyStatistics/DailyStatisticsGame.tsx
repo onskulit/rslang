@@ -1,12 +1,22 @@
 import { Card, Col, Progress, Row, Space } from 'antd';
 import StatisticsCard from '../../../common/components/statistics/statisticsCard/StatisticsCard';
 import { TitleLevel4 } from '../../../common/components/typography/Titles';
+import gamesInfo from '../../../common/constants/gamesInfo';
+import { GamesType } from '../../../common/types/enums';
+import { IStatisticData } from '../../../common/types/interfaces';
 
-function DailyStatistics() {
+interface DailyStatisticsGameProps {
+  game: GamesType;
+  statistics: IStatisticData;
+}
+
+function DailyStatisticsGame({ game, statistics }: DailyStatisticsGameProps) {
+  const gameInfo = gamesInfo[game];
+
   return (
     <StatisticsCard>
       <Row justify="center">
-        <TitleLevel4>GameName</TitleLevel4>
+        <TitleLevel4>{gameInfo.name}</TitleLevel4>
       </Row>
       <Row justify="center" align="bottom">
         <Col span={8}>
@@ -32,4 +42,4 @@ function DailyStatistics() {
   );
 }
 
-export default DailyStatistics;
+export default DailyStatisticsGame;
