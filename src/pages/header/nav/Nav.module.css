@@ -5,6 +5,7 @@
 
 .wrapper {
   display: flex;
+  align-items: center;
   gap: 15px;
 }
 
@@ -35,6 +36,11 @@
 .nav a:hover::after {
   transform: scaleX(1);
   transform-origin: left;
+}
+
+.button {
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 .hidden {

@@ -1,12 +1,20 @@
 .ant-btn-default {
-  background-color: var(--default-button-color);
-  border-color: var(--default-button-color);
-  color: var(--button-text-color);
+  background-color: transparent;
+  border-color: var(--default-black);
+  color: var(--default-black);
+  border-radius: var(--border-radius);
 }
 
-.ant-btn-default:hover {
-  border-color: var(--default-button-color);
-  color: var(--default-button-color);
+.ant-btn-default:hover,
+.ant-btn-default:focus {
+  border-color: var(--default-black);
+  color: var(--default-black);
+  transition: color var(--transition), border-color var(--transition),
+    background-color var(--transition);
+}
+
+.ant-btn-default a {
+  transition: none;
 }
 
 .ant-btn-primary {

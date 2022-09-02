@@ -54,9 +54,11 @@ function Nav() {
         </Dropdown>
         <NavLink to="/statistics">Статистика</NavLink>
         {validate ? (
-          <Button onClick={handleLogIn}>Выход</Button>
+          <Button onClick={handleLogIn} className={styles.button}>
+            Выход
+          </Button>
         ) : (
-          <Button>
+          <Button className={styles.button}>
             <NavLink to="/authorization">Вход</NavLink>
           </Button>
         )}

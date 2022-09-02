@@ -42,14 +42,14 @@
   display: none;
 }
 
+.menuItem:last-child .divider {
+  display: none;
+}
+
 .divider {
   position: relative;
   margin: 14px 0;
   border: none;
-}
-
-.divider:last-child {
-  display: none;
 }
 
 .divider::after {
