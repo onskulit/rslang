@@ -1,5 +1,4 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
 import { apiSlice } from '../features/api/apiSlice';
 import sprintReducer from '../features/sprint/sprintSlice';
 import { userAPI } from './services/UserService';
@@ -9,7 +8,6 @@ import gameStatusReducer from '../features/gameStatus/gameStatusSlice';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
     difficulty: difficultyReducer,
     user: userReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
