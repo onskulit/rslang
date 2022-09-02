@@ -1,15 +1,35 @@
 :root {
-  --main-bg-color: #fefdfe;
+  --main-bg-color: #ffeef3;
+  --main-bg-color-transparent: rgba(255, 255, 255, 0.3);
   --main-text-color: #131313;
+  --default-black: #000000;
+  --default-white: #ffffff;
   --button-text-color: #fff;
   --primary-button-color: #506cf0;
   --primary-button-hover-color: #6881f9;
   --default-button-color: #a7c0cd;
   --decoration-color: #fe7860;
+
+  --green: #b2eacd;
+  --pink: #e94e99;
+  --pink-light: #fcafb7;
+  --pink-light: #fcafb7;
+  --violet: #c27fbc;
+  --yellow: #ffd35c;
+  --blue: #cdccff;
+  --blue--dark: #5855f2;
+  --red: #fc3f1d;
+
+  --border-radius: 15px;
+  --transition: 0.3s ease;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&display=swap');
 @import url('./styles/antButtons.css');
+@import url('./styles/antHeader.css');
+@import url('./styles/antNav.css');
+@import url('./styles/antDropdown.css');
+@import url('./styles/antPopover.css');
 
 body {
   margin: 0;
@@ -32,7 +52,7 @@ h4 {
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: var(--button-text-color);
+  background-color: var(--main-bg-color);
   color: var(--main-text-color);
 }
 

@@ -1,0 +1,45 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: var(--blue);
+  border-radius: 15px;
+}
+
+.cardGreen {
+  background-color: var(--green);
+}
+
+.cardBlue {
+  background-color: var(--blue);
+}
+
+.cardYellow {
+  background-color: var(--yellow);
+}
+
+.cardPink {
+  background-color: var(--pink-light);
+}
+
+.title {
+  text-align: center;
+}
+
+.image {
+  width: 80%;
+  max-width: 120px;
+  margin-bottom: 1rem;
+}
+
+.text {
+  line-height: 1.3em;
+}
+
+@media (max-width: 767px) {
+  .image {
+    max-width: 90px;
+  }
+}

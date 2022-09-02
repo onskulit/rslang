@@ -2,12 +2,14 @@ import { DownOutlined } from '@ant-design/icons';
 import { NavLink } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { changeValidation } from '../../../app/reducers/userSlice';
-import { Dropdown, Menu, Space, Button } from 'antd';
+import { storage } from '../../../utils/localStorage';
+import { STORAGE_KEY } from '../../../common/constants/localStorage';
+import { Dropdown, Menu, Space, Grid, Button } from 'antd';
 import styles from './Nav.module.css';
 import { useMemo } from 'react';
 import gamesInfo from '../../../common/constants/gamesInfo';
-import { storage } from '../../../utils/localStorage';
-import { STORAGE_KEY } from '../../../common/constants/localStorage';
+import MobileMenu from '../../../common/components/mobileMenu/MobileMenu';
+const { useBreakpoint } = Grid;
 
 function Nav() {
   const { validate } = useAppSelector((state) => state.user);
@@ -35,27 +37,31 @@ function Nav() {
     ),
     []
   );
+  const screens = useBreakpoint();
 
   return (
     <nav className={styles.nav}>
-      <NavLink to="/">Главная</NavLink>
-      <NavLink to="/textbook">Учебник</NavLink>
-      <Dropdown overlay={menu}>
-        <a onClick={dropdownMenuClickHandler}>
-          <Space>
-            Игры
-            <DownOutlined />
-          </Space>
-        </a>
-      </Dropdown>
-      <NavLink to="/statistics">Статистика</NavLink>
-      {validate ? (
-        <Button onClick={handleLogIn}>Выход</Button>
-      ) : (
-        <Button>
-          <NavLink to="/authorization">Вход</NavLink>
-        </Button>
-      )}
+      <div className={`${styles.wrapper} ${!screens.md && styles.hidden}`}>
+        <NavLink to="/">Главная</NavLink>
+        <NavLink to="/textbook">Учебник</NavLink>
+        <Dropdown overlay={menu}>
+          <a onClick={dropdownMenuClickHandler}>
+            <Space>
+              Игры
+              <DownOutlined />
+            </Space>
+          </a>
+        </Dropdown>
+        <NavLink to="/statistics">Статистика</NavLink>
+        {validate ? (
+          <Button onClick={handleLogIn}>Выход</Button>
+        ) : (
+          <Button>
+            <NavLink to="/authorization">Вход</NavLink>
+          </Button>
+        )}
+      </div>
+      <MobileMenu />
     </nav>
   );
 }

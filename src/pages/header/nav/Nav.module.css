@@ -3,6 +3,11 @@
   gap: 15px;
 }
 
+.wrapper {
+  display: flex;
+  gap: 15px;
+}
+
 .nav a {
   position: relative;
   color: var(--default-black);
@@ -30,4 +35,8 @@
 .nav a:hover::after {
   transform: scaleX(1);
   transform-origin: left;
+}
+
+.hidden {
+  display: none;
 }

@@ -1,0 +1,12 @@
+.ant-popover {
+  border-radius: var(--border-radius);
+  background-color: transparent;
+}
+
+.ant-popover-inner {
+  border-radius: var(--border-radius);
+}
+
+.ant-popover-arrow {
+  display: none;
+}
