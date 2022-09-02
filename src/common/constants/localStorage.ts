@@ -1,4 +1,4 @@
-export const STORAGE_KEY = {
-  userAuthData: 'userAuthData',
-  userLogInData: 'logInData',
-};
+export enum STORAGE_KEY {
+  userAuthData = 'userAuthData',
+  userLogInData = 'logInData',
+}

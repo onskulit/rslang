@@ -1,3 +1,4 @@
+import { GamesType } from './enums';
 import { DifficultyLevel } from '../types/enums';
 
 export interface IWord {
@@ -29,5 +30,28 @@ export interface IWordsQuery {
 export interface DifficultyState {
   difficulty: {
     value: number;
+  };
+}
+
+export interface IGameStatistic {
+  newWordsAmount: number;
+  rightWords: number;
+  wrongWords: number;
+  maxStreak: number;
+}
+
+export interface IStatisticData {
+  learnedWords: number;
+  optional: {
+    daily: {
+      [date: string]: {
+        textbook: {
+          newWordsAmount: number;
+          percentCorrectAnswers: number;
+        };
+        [GamesType.sprint]: IGameStatistic;
+        [GamesType.audition]: IGameStatistic;
+      };
+    };
   };
 }

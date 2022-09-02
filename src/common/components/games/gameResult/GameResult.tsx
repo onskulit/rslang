@@ -2,8 +2,11 @@ import { Row, Space } from 'antd';
 import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAppDispatch } from '../../../../app/hooks';
+import { statisticsAPI } from '../../../../features/api/statisticsSlice';
 import { updateGameStatus } from '../../../../features/gameStatus/gameStatusSlice';
+import { storage } from '../../../../utils/localStorage';
 import gamesInfo from '../../../constants/gamesInfo';
+import { STORAGE_KEY } from '../../../constants/localStorage';
 import { GamesType } from '../../../types/enums';
 import { IWord } from '../../../types/interfaces';
 import { ButtonRounded } from '../../buttons/Buttons';
@@ -26,11 +29,17 @@ function GameResult({
   wrongWords,
   maxStreak,
 }: GameResultProps) {
+  const userData = JSON.parse(storage.get(STORAGE_KEY.userAuthData));
+  const { data, isError } = statisticsAPI.useGetDailyStatisticsQuery({
+    userId: userData.userId,
+    token: userData.token,
+  });
   const gameInfo = gamesInfo[game];
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(updateGameStatus(false));
+    console.log(userData);
   }, []);
   return (
     <Space
