@@ -1,5 +1,5 @@
 import { MutationTrigger } from '@reduxjs/toolkit/dist/query/react/buildHooks';
-import { ILogInData, IUserLogInData } from '../../common/types/auth';
+import { IUserLogInData } from '../../common/types/auth';
 import { IUserInputData } from '../../common/types/user';
 import {
   BaseQueryFn,
