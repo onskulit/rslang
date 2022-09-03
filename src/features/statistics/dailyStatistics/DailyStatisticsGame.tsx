@@ -1,24 +1,25 @@
 import { Col, Progress, Row } from 'antd';
+import { useMemo } from 'react';
 import StatisticsCard from '../../../common/components/statistics/statisticsCard/StatisticsCard';
 import { TitleLevel4 } from '../../../common/components/typography/Titles';
 import gamesInfo from '../../../common/constants/gamesInfo';
 import { GamesType } from '../../../common/types/enums';
 import { IUserStatisticsResponse } from '../../../common/types/interfaces';
 import { getCurrentDate } from '../../../common/utils/getCurrentDate';
+import { getPercentOfRightAnswers } from '../../../common/utils/getPercentOfRightAnswers';
 import styles from './DailyStatistics.module.css';
 
 interface DailyStatisticsGameProps {
   game: GamesType;
   statistics: IUserStatisticsResponse;
 }
-
-const getPercentOfRightAnswers = (right: number, wrong: number) => {
-  return Math.round((right / (right + wrong)) * 100);
-};
 function DailyStatisticsGame({ game, statistics }: DailyStatisticsGameProps) {
   const gameInfo = gamesInfo[game];
 
-  const todaysStatistics = statistics.optional.daily[getCurrentDate()];
+  const todaysStatistics = useMemo(
+    () => statistics.optional.daily[getCurrentDate()],
+    [statistics]
+  );
   return (
     <StatisticsCard>
       <Row justify="center">

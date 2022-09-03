@@ -1,5 +1,4 @@
 import { Row, Space } from 'antd';
-import { useEffect } from 'react';
 import { TitleLevel3 } from '../../common/components/typography/Titles';
 import { STORAGE_KEY } from '../../common/constants/localStorage';
 import { GamesType } from '../../common/types/enums';
@@ -16,12 +15,6 @@ function Statistics() {
       token: userData ? userData.token : '',
     }
   );
-
-  useEffect(() => {
-    if (data) {
-      console.log(data);
-    }
-  }, [data]);
 
   return (
     <Space
