@@ -17,11 +17,13 @@ import {
 import gamesInfo from '../../../constants/gamesInfo';
 import { STORAGE_KEY } from '../../../constants/localStorage';
 import { GamesType } from '../../../types/enums';
-import { IStatisticData, IWord } from '../../../types/interfaces';
+import { IStatisticData, IUserWord, IWord } from '../../../types/interfaces';
 import { ButtonRounded } from '../../buttons/Buttons';
 import ResultMessage from '../../gameOverMessage/ResultMessage';
 import { TitleLevel3, TitleLevel4 } from '../../typography/Titles';
 import GameResultTable from './gameResultTable/GameResultTable';
+import { useLazyGetUserWordQuery } from '../../../../features/api/userSlice';
+import { initialWordInfo } from '../../../constants/initialWordInfo';
 
 interface GameResultProps {
   result?: number;
@@ -31,6 +33,9 @@ interface GameResultProps {
   maxStreak: number;
 }
 
+const wordsToLearnEasy = 3;
+const wordsToLearnDifficult = 5;
+
 function GameResult({
   result,
   game,
@@ -39,16 +44,104 @@ function GameResult({
   maxStreak,
 }: GameResultProps) {
   const userData = JSON.parse(storage.get(STORAGE_KEY.userAuthData));
-  const { data, isSuccess, error } = statisticsAPI.useGetDailyStatisticsQuery({
+  const {
+    data: statistics,
+    isSuccess,
+    error: statisticsError,
+  } = statisticsAPI.useGetDailyStatisticsQuery({
     userId: userData ? userData.userId : '',
     token: userData ? userData.token : '',
   });
+  const [getUserWord] = useLazyGetUserWordQuery();
   const [updateDailyStatistics] = useUpdateDailyStatisticsMutation();
-  const gameInfo = gamesInfo[game];
+
+  const gameInfo = useMemo(() => gamesInfo[game], []);
+
   const dispatch = useAppDispatch();
+
+  const updateWordInfo = useMemo(
+    () => (id: string, wordInfo: IUserWord, isRightAnswer: boolean) => {
+      const wordInfoCopy = JSON.parse(JSON.stringify(wordInfo)) as IUserWord;
+      if (isRightAnswer) {
+        if (!wordInfoCopy.optional.isLearned)
+          wordInfoCopy.optional.learningProgress++;
+        if (wordInfoCopy.difficulty) {
+          if (wordInfoCopy.optional.learningProgress >= wordsToLearnDifficult)
+            wordInfoCopy.optional.isLearned = true;
+        } else {
+          if (wordInfoCopy.optional.learningProgress >= wordsToLearnEasy)
+            wordInfoCopy.optional.isLearned = true;
+        }
+      } else {
+        if (wordInfoCopy.optional.learningProgress) {
+          wordInfoCopy.optional.learningProgress--;
+          if (wordInfoCopy.difficulty) {
+            if (wordInfoCopy.optional.learningProgress < wordsToLearnDifficult)
+              wordInfoCopy.optional.isLearned = false;
+          } else {
+            if (wordInfoCopy.optional.learningProgress < wordsToLearnEasy)
+              wordInfoCopy.optional.isLearned = false;
+          }
+        }
+      }
+      return { isLearned: wordInfoCopy.optional.isLearned };
+    },
+    []
+  );
+
+  const setWordInfo = useMemo(
+    () => async (isRightAnswer: boolean, id: string) => {
+      const wordInfoStatistics = {
+        isNew: false,
+        isLearned: false,
+      };
+      const response = await getUserWord({ wordId: id });
+
+      if (response.error) {
+        const typedError = response.error as FetchBaseQueryError;
+        const status = typedError.status;
+        if (status === 'PARSING_ERROR') {
+          if (typedError.originalStatus === 404) {
+            wordInfoStatistics.isNew = true;
+            const { isLearned } = updateWordInfo(
+              id,
+              { ...initialWordInfo },
+              isRightAnswer
+            );
+            if (isLearned) wordInfoStatistics.isLearned = true;
+          }
+        }
+      }
+      if (response.data) {
+        const { isLearned } = updateWordInfo(id, response.data, isRightAnswer);
+        if (isLearned) wordInfoStatistics.isLearned = true;
+      }
+
+      return wordInfoStatistics;
+    },
+    []
+  );
+  const updateWordsInfo = useMemo(
+    () => async () => {
+      const wordsInfoStatistics = { newWords: 0, learnedWords: 0 };
+      correctWords.forEach(async (word) => {
+        const { isNew, isLearned } = await setWordInfo(true, word.id);
+        if (isNew) wordsInfoStatistics.newWords++;
+        if (isLearned) wordsInfoStatistics.learnedWords++;
+      });
+      wrongWords.forEach(async (word) => {
+        const { isNew, isLearned } = await setWordInfo(false, word.id);
+        if (isNew) wordsInfoStatistics.newWords++;
+        if (isLearned) wordsInfoStatistics.learnedWords++;
+      });
+      return wordsInfoStatistics;
+    },
+    []
+  );
 
   const updateStatistics = useMemo(
     () => async (statistics: IStatisticData) => {
+      const wordsStatistics = await updateWordsInfo();
       const statisticsCopy = JSON.parse(
         JSON.stringify(statistics)
       ) as IStatisticData;
@@ -64,7 +157,6 @@ function GameResult({
         currentGame.maxStreak > maxStreak ? currentGame.maxStreak : maxStreak;
       currentGame.rightWords += correctWords.length;
       currentGame.wrongWords += wrongWords.length;
-      console.log(statisticsCopy);
       await updateDailyStatistics({
         userId: userData.userId,
         token: userData.token,
@@ -74,18 +166,21 @@ function GameResult({
     []
   );
 
-  const createStatistics = () => {
-    const statistics = initialStatistics;
-    updateStatistics(statistics);
-  };
+  const createStatistics = useMemo(
+    () => () => {
+      const statistics = initialStatistics;
+      updateStatistics(statistics);
+    },
+    []
+  );
 
   useEffect(() => {
     dispatch(updateGameStatus(false));
   }, []);
 
   useEffect(() => {
-    if (error) {
-      const typedError = error as FetchBaseQueryError;
+    if (statisticsError) {
+      const typedError = statisticsError as FetchBaseQueryError;
       const status = typedError.status;
       if (status === 'PARSING_ERROR') {
         if (typedError.originalStatus === 404) {
@@ -93,23 +188,19 @@ function GameResult({
         }
       }
     }
-  }, [error]);
+  }, [statisticsError]);
 
   useEffect(() => {
     if (isSuccess) {
       updateStatistics({
-        learnedWords: data.learnedWords,
-        optional: data.optional,
+        learnedWords: statistics.learnedWords,
+        optional: statistics.optional,
       });
     }
   }, [isSuccess]);
 
   return (
-    <Space
-      direction="vertical"
-      size="middle"
-      style={{ display: 'flex', marginBottom: 40 }}
-    >
+    <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
       <Row justify="center">
         <TitleLevel3>Игра окончена!</TitleLevel3>
       </Row>

@@ -33,6 +33,16 @@ export interface DifficultyState {
   };
 }
 
+export interface IUserWord {
+  difficulty: boolean;
+  optional: {
+    learningProgress: number;
+    percentCorrectAnswers: number;
+    isNew: boolean;
+    isLearned: boolean;
+  };
+}
+
 export interface IGameStatistic {
   isPlayed: boolean;
   newWordsAmount: number;
