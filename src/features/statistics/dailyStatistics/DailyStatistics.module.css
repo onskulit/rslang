@@ -1,11 +1,11 @@
-.gameResult {
+.result {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100px;
 }
 
-.gameResultInfo {
+.resultInfo {
   display: flex;
   justify-content: center;
   align-items: center;

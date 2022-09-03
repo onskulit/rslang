@@ -16,18 +16,16 @@ function DailyStatisticsWords({ statistics }: DailyStatisticsGameProps) {
       </Row>
       <Row justify="center" align="top">
         <Col span={8}>
-          <Row className={`${styles.gameResult}`}>Значение</Row>
-          <Row className={`${styles.gameResultInfo}`}>новых слов за день</Row>
+          <Row className={`${styles.result}`}>Значение</Row>
+          <Row className={`${styles.resultInfo}`}>новых слов за день</Row>
         </Col>
         <Col span={8}>
-          <Row className={`${styles.gameResult}`}>Значение</Row>
-          <Row className={`${styles.gameResultInfo}`}>
-            изученных слов за день
-          </Row>
+          <Row className={`${styles.result}`}>Значение</Row>
+          <Row className={`${styles.resultInfo}`}>изученных слов за день</Row>
         </Col>
         <Col span={8}>
-          <Row className={`${styles.gameResult}`}>Значение</Row>
-          <Row className={`${styles.gameResultInfo}`}>
+          <Row className={`${styles.result}`}>Значение</Row>
+          <Row className={`${styles.resultInfo}`}>
             правильных ответов за день
           </Row>
         </Col>

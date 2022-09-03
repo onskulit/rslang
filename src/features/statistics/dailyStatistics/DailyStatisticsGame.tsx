@@ -32,17 +32,15 @@ function DailyStatisticsGame({ game, statistics }: DailyStatisticsGameProps) {
       )}
       {!!todaysStatistics && (
         <>
-          <Row justify="center" align="bottom">
+          <Row justify="center">
             <Col span={8}>
-              <Row className={`${styles.gameResult}`}>
+              <Row className={`${styles.result}`}>
                 {todaysStatistics[game].newWordsAmount}
               </Row>
-              <Row className={`${styles.gameResultInfo}`}>
-                новых слов за день
-              </Row>
+              <Row className={`${styles.resultInfo}`}>новых слов за день</Row>
             </Col>
             <Col span={8}>
-              <Row className={`${styles.gameResult}`}>
+              <Row className={`${styles.result}`}>
                 {
                   <Progress
                     type="circle"
@@ -55,15 +53,13 @@ function DailyStatisticsGame({ game, statistics }: DailyStatisticsGameProps) {
                   />
                 }
               </Row>
-              <Row className={`${styles.gameResultInfo}`}>
-                правильных ответов
-              </Row>
+              <Row className={`${styles.resultInfo}`}>правильных ответов</Row>
             </Col>
             <Col span={8}>
-              <Row className={`${styles.gameResult}`}>
+              <Row className={`${styles.result}`}>
                 {todaysStatistics[game].maxStreak}
               </Row>
-              <Row className={`${styles.gameResultInfo}`}>Лучшая серия</Row>
+              <Row className={`${styles.resultInfo}`}>Лучшая серия</Row>
             </Col>
           </Row>
         </>
