@@ -1,10 +1,12 @@
 import { Col, Progress, Row } from 'antd';
+import { useMemo } from 'react';
 import StatisticsCard from '../../../common/components/statistics/statisticsCard/StatisticsCard';
 import { TitleLevel4 } from '../../../common/components/typography/Titles';
 import gamesInfo from '../../../common/constants/gamesInfo';
 import { GamesType } from '../../../common/types/enums';
 import { IUserStatisticsResponse } from '../../../common/types/interfaces';
 import { getCurrentDate } from '../../../common/utils/getCurrentDate';
+import styles from './DailyStatistics.module.css';
 
 interface DailyStatisticsGameProps {
   game: GamesType;
@@ -32,13 +34,15 @@ function DailyStatisticsGame({ game, statistics }: DailyStatisticsGameProps) {
         <>
           <Row justify="center" align="bottom">
             <Col span={8}>
-              <Row justify="center" align="middle" style={{ height: 100 }}>
+              <Row className={`${styles.gameResult}`}>
                 {todaysStatistics[game].newWordsAmount}
               </Row>
-              <Row justify="center">новых слов за день</Row>
+              <Row className={`${styles.gameResultInfo}`}>
+                новых слов за день
+              </Row>
             </Col>
             <Col span={8}>
-              <Row justify="center" align="middle" style={{ height: 100 }}>
+              <Row className={`${styles.gameResult}`}>
                 {
                   <Progress
                     type="circle"
@@ -51,13 +55,15 @@ function DailyStatisticsGame({ game, statistics }: DailyStatisticsGameProps) {
                   />
                 }
               </Row>
-              <Row justify="center">Правильных ответов</Row>
+              <Row className={`${styles.gameResultInfo}`}>
+                правильных ответов
+              </Row>
             </Col>
             <Col span={8}>
-              <Row justify="center" align="middle" style={{ height: 100 }}>
+              <Row className={`${styles.gameResult}`}>
                 {todaysStatistics[game].maxStreak}
               </Row>
-              <Row justify="center">Лучшая серия</Row>
+              <Row className={`${styles.gameResultInfo}`}>Лучшая серия</Row>
             </Col>
           </Row>
         </>
