@@ -168,10 +168,8 @@ function GameResult({
           const { isNew, isLearned } = await setWordInfo(true, word.id);
           if (isNew) wordsInfoStatistics.newWords++;
           if (isLearned) wordsInfoStatistics.learnedWords++;
-          console.log(isNew, isLearned);
         })
       );
-      console.log(result);
       await Promise.allSettled(
         wrongWords.map(async (word) => {
           const { isNew, isLearned } = await setWordInfo(false, word.id);
