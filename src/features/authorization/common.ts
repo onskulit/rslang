@@ -9,10 +9,14 @@ import {
   MutationDefinition,
 } from '@reduxjs/toolkit/dist/query';
 import { STORAGE_KEY } from '../../common/constants/localStorage';
-import { storage } from '../../utils/localStorage';
+import { storage } from '../../common/utils/localStorage';
 import { DATA_UNDERFINED } from '../../common/constants/auth';
 import { useEffect } from 'react';
-import { useSignInMutation } from '../api/userSlice';
+import {
+  IUserWordQuery,
+  IUserWordResponse,
+  useSignInMutation,
+} from '../api/userSlice';
 import { useAppDispatch } from '../../app/hooks';
 import { changeValidation } from '../user/userSlice';
 import { SerializedError } from '@reduxjs/toolkit';
@@ -52,6 +56,22 @@ interface IPerformSignIn {
   isSignInLoading: boolean;
   error: FetchBaseQueryError | SerializedError | undefined;
 }
+
+export type IPostPutWord = MutationTrigger<
+  MutationDefinition<
+    Partial<IUserWordQuery>,
+    BaseQueryFn<
+      string | FetchArgs,
+      unknown,
+      FetchBaseQueryError,
+      Record<string, unknown>,
+      FetchBaseQueryMeta
+    >,
+    never,
+    IUserWordResponse,
+    'auth'
+  >
+>;
 
 export const userSignIn = (
   data: IUserLogInData,

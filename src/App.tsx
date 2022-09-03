@@ -12,7 +12,7 @@ import Sprint from './features/sprint/Sprint';
 import Audition from './features/audition/Audition';
 import gamesInfo from './common/constants/gamesInfo';
 import Authorization from './features/authorization/authorization';
-import { storage } from './utils/localStorage';
+import { storage } from './common/utils/localStorage';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from './app/hooks';
 import { useGetUserByIdQuery } from './features/api/userSlice';

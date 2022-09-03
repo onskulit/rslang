@@ -43,7 +43,7 @@ function Nav() {
     <nav className={styles.nav}>
       <div className={`${styles.wrapper} ${!screens.md && styles.hidden}`}>
         <NavLink to="/">Главная</NavLink>
-        <NavLink to="/textbook">Учебник</NavLink>
+        <NavLink to="/books">Учебник</NavLink>
         <Dropdown overlay={menu}>
           <a onClick={dropdownMenuClickHandler}>
             <Space>
