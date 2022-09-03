@@ -22,7 +22,7 @@ function DailyStatisticsWords({ statistics }: DailyStatisticsGameProps) {
     if (todaysStatistics) {
       let isAnyPlayed = false;
       let newWords = 0;
-      const learnedWords = 0;
+      const learnedWords = todaysStatistics.learnedWords;
       let rightAnswers = 0;
       let wrongAnswers = 0;
       if (todaysStatistics) {
