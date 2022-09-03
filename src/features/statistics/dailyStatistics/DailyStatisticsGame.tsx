@@ -1,5 +1,4 @@
 import { Col, Progress, Row } from 'antd';
-import { useMemo } from 'react';
 import StatisticsCard from '../../../common/components/statistics/statisticsCard/StatisticsCard';
 import { TitleLevel4 } from '../../../common/components/typography/Titles';
 import gamesInfo from '../../../common/constants/gamesInfo';

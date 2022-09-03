@@ -2,9 +2,9 @@ import { statisticsAPI } from './../features/api/statisticsSlice';
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import { apiSlice } from '../features/api/apiSlice';
 import sprintReducer from '../features/sprint/sprintSlice';
-import { userAPI } from './services/UserService';
+import { userAPI } from '../features/api/userSlice';
 import difficultyReducer from '../features/difficulty/difficultySlice';
-import userReducer from './reducers/userSlice';
+import userReducer from '../features/user/userSlice';
 import gameStatusReducer from '../features/gameStatus/gameStatusSlice';
 
 export const store = configureStore({

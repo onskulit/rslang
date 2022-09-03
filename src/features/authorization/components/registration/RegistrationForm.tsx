@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { LockOutlined, UserOutlined, GoogleOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Spin } from 'antd';
-import { useCreateUserMutation } from '../../../../app/services/UserService';
+import { useCreateUserMutation } from '../../../api/userSlice';
 import { IFormAuthProps } from '../../../../common/types/auth';
 import { AUTH_TUPE } from '../../../../common/constants/auth';
 import { IUserInputData } from '../../../../common/types/user';

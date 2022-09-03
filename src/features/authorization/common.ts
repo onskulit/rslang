@@ -12,9 +12,9 @@ import { STORAGE_KEY } from '../../common/constants/localStorage';
 import { storage } from '../../utils/localStorage';
 import { DATA_UNDERFINED } from '../../common/constants/auth';
 import { useEffect } from 'react';
-import { useSignInMutation } from '../../app/services/UserService';
+import { useSignInMutation } from '../api/userSlice';
 import { useAppDispatch } from '../../app/hooks';
-import { changeValidation } from '../../app/reducers/userSlice';
+import { changeValidation } from '../user/userSlice';
 import { SerializedError } from '@reduxjs/toolkit';
 
 type MutationTriggerSignIn = MutationTrigger<
