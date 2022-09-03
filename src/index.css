@@ -5,8 +5,8 @@
   --default-black: #000000;
   --default-white: #ffffff;
   --button-text-color: #fff;
-  --primary-button-color: #506cf0;
-  --primary-button-hover-color: #6881f9;
+  --primary-button-color: #7678ed;
+  --primary-button-hover-color: #574bc2;
   --default-button-color: #a7c0cd;
   --decoration-color: #fe7860;
 
@@ -37,6 +37,7 @@
 @import url('./styles/antDropdown.css');
 @import url('./styles/antPopover.css');
 @import url('./styles/antRadio.css');
+@import url('./styles/antModal.css');
 
 body {
   margin: 0;

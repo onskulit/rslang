@@ -63,10 +63,12 @@ function GameMenu({ game }: GameMenuProps) {
             </Radio.Group>
           </Row>
           <Row justify="center">
-            {/* <ButtonRounded>
-              <NavLink to={gameInfo.path}>Начать игру</NavLink>
-            </ButtonRounded> */}
-            <Button shape="round" size={'large'} style={{ width: 150 }}>
+            <Button
+              type="primary"
+              shape="round"
+              size={'large'}
+              style={{ width: 150 }}
+            >
               <NavLink to={gameInfo.path}>Начать игру</NavLink>
             </Button>
           </Row>

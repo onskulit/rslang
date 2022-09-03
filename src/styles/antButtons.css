@@ -19,11 +19,13 @@
 
 .ant-btn-primary {
   background-color: var(--primary-button-color);
-  border-color: var(--primary-button-color);
+  border-color: var(--primary-button-hover-color);
+  border-radius: var(--border-radius);
+  border: none;
 }
 
 .ant-btn-primary:hover {
-  background-color: var(--primary-button-hover-color);
+  background-color: #574bc2;
 }
 
 .ant-btn-primary:focus {
