@@ -1,4 +1,4 @@
-import { Divider, Row } from 'antd';
+import { Divider } from 'antd';
 import Advantages from '../../common/components/advantages/Advantages';
 import Container from '../../common/components/container/Container';
 import Developers from '../../common/components/developers/Developers';

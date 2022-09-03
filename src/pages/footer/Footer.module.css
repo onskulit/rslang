@@ -46,15 +46,15 @@
 
 .infoLink {
   font-size: 22px;
-  color: var(--blue--dark);
+  color: var(--primary-button-color);
 }
 
 .infoLink:hover {
-  color: var(--blue);
+  color: var(--primary-button-hover-color);
 }
 
 .infoLink:hover svg {
-  color: var(--blue);
+  color: var(--primary-button-hover-color);
 }
 
 .infoLink svg {
@@ -112,7 +112,7 @@ h4.developersTitle {
   margin: 0;
 }
 
-@media (max-width: 374.98px) {
+@media (max-width: 767px) {
   .footer {
     justify-content: center;
   }
