@@ -1,10 +1,7 @@
-import { Card, Col, Progress, Row, Space } from 'antd';
+import { Col, Row } from 'antd';
 import StatisticsCard from '../../../common/components/statistics/statisticsCard/StatisticsCard';
 import { TitleLevel4 } from '../../../common/components/typography/Titles';
-import {
-  IStatisticData,
-  IUserStatisticsResponse,
-} from '../../../common/types/interfaces';
+import { IUserStatisticsResponse } from '../../../common/types/interfaces';
 
 interface DailyStatisticsGameProps {
   statistics: IUserStatisticsResponse;

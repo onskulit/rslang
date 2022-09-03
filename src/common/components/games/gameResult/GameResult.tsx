@@ -17,11 +17,7 @@ import {
 import gamesInfo from '../../../constants/gamesInfo';
 import { STORAGE_KEY } from '../../../constants/localStorage';
 import { GamesType } from '../../../types/enums';
-import {
-  IStatisticData,
-  IUserStatisticsResponse,
-  IWord,
-} from '../../../types/interfaces';
+import { IStatisticData, IWord } from '../../../types/interfaces';
 import { ButtonRounded } from '../../buttons/Buttons';
 import ResultMessage from '../../gameOverMessage/ResultMessage';
 import { TitleLevel3, TitleLevel4 } from '../../typography/Titles';

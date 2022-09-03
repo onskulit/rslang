@@ -1,12 +1,9 @@
-import { Card, Col, Progress, Row, Space } from 'antd';
+import { Col, Progress, Row } from 'antd';
 import StatisticsCard from '../../../common/components/statistics/statisticsCard/StatisticsCard';
 import { TitleLevel4 } from '../../../common/components/typography/Titles';
 import gamesInfo from '../../../common/constants/gamesInfo';
 import { GamesType } from '../../../common/types/enums';
-import {
-  IStatisticData,
-  IUserStatisticsResponse,
-} from '../../../common/types/interfaces';
+import { IUserStatisticsResponse } from '../../../common/types/interfaces';
 import { getCurrentDate } from '../../../common/utils/getCurrentDate';
 
 interface DailyStatisticsGameProps {
