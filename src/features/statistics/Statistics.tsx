@@ -36,7 +36,7 @@ function Statistics() {
       )}
       {isSuccess && (
         <>
-          <TitleLevel3>Статистика</TitleLevel3>
+          <TitleLevel3>Статистика (сегодня)</TitleLevel3>
           <DailyStatisticsGame game={GamesType.sprint} statistics={data} />
           <DailyStatisticsGame game={GamesType.audition} statistics={data} />
           <DailyStatisticsWords statistics={data} />

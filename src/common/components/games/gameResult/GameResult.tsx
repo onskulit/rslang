@@ -43,7 +43,7 @@ function GameResult({
   maxStreak,
 }: GameResultProps) {
   const userData = JSON.parse(storage.get(STORAGE_KEY.userAuthData));
-  const { data, error } = statisticsAPI.useGetDailyStatisticsQuery({
+  const { data, isSuccess, error } = statisticsAPI.useGetDailyStatisticsQuery({
     userId: userData ? userData.userId : '',
     token: userData ? userData.token : '',
   });
@@ -99,13 +99,13 @@ function GameResult({
   }, [error]);
 
   useEffect(() => {
-    if (data) {
+    if (isSuccess) {
       updateStatistics({
         learnedWords: data.learnedWords,
         optional: data.optional,
       });
     }
-  }, [data]);
+  }, [isSuccess]);
 
   return (
     <Space
