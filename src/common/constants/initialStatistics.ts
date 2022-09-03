@@ -11,6 +11,7 @@ const initialGameStatistics = {
 };
 
 export const initialDailyStatistics: IDailyStatistics = {
+  learnedWords: 0,
   textbook: {
     newWordsAmount: 0,
     percentCorrectAnswers: 0,

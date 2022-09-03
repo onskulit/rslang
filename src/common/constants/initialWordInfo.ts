@@ -8,6 +8,6 @@ const initialOptional = {
 };
 
 export const initialWordInfo: IUserWord = {
-  difficulty: false,
+  difficulty: 'false',
   optional: { ...initialOptional },
 };

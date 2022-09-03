@@ -34,7 +34,7 @@ export interface DifficultyState {
 }
 
 export interface IUserWord {
-  difficulty: boolean;
+  difficulty: boolean | string;
   optional: {
     learningProgress: number;
     percentCorrectAnswers: number;
@@ -52,6 +52,7 @@ export interface IGameStatistic {
 }
 
 export interface IDailyStatistics {
+  learnedWords: number;
   textbook: {
     newWordsAmount: number;
     percentCorrectAnswers: number;

@@ -22,7 +22,11 @@ import { ButtonRounded } from '../../buttons/Buttons';
 import ResultMessage from '../../gameOverMessage/ResultMessage';
 import { TitleLevel3, TitleLevel4 } from '../../typography/Titles';
 import GameResultTable from './gameResultTable/GameResultTable';
-import { useLazyGetUserWordQuery } from '../../../../features/api/userSlice';
+import {
+  useLazyGetUserWordQuery,
+  usePostUserWordMutation,
+  usePutUserWordMutation,
+} from '../../../../features/api/userSlice';
 import { initialWordInfo } from '../../../constants/initialWordInfo';
 
 interface GameResultProps {
@@ -53,6 +57,8 @@ function GameResult({
     token: userData ? userData.token : '',
   });
   const [getUserWord] = useLazyGetUserWordQuery();
+  const [postUserWord] = usePostUserWordMutation();
+  const [putUserWord] = usePutUserWordMutation();
   const [updateDailyStatistics] = useUpdateDailyStatisticsMutation();
 
   const gameInfo = useMemo(() => gamesInfo[game], []);
@@ -60,32 +66,59 @@ function GameResult({
   const dispatch = useAppDispatch();
 
   const updateWordInfo = useMemo(
-    () => (id: string, wordInfo: IUserWord, isRightAnswer: boolean) => {
-      const wordInfoCopy = JSON.parse(JSON.stringify(wordInfo)) as IUserWord;
-      if (isRightAnswer) {
-        if (!wordInfoCopy.optional.isLearned)
-          wordInfoCopy.optional.learningProgress++;
-        if (wordInfoCopy.difficulty) {
-          if (wordInfoCopy.optional.learningProgress >= wordsToLearnDifficult)
-            wordInfoCopy.optional.isLearned = true;
-        } else {
-          if (wordInfoCopy.optional.learningProgress >= wordsToLearnEasy)
-            wordInfoCopy.optional.isLearned = true;
-        }
-      } else {
-        if (wordInfoCopy.optional.learningProgress) {
-          wordInfoCopy.optional.learningProgress--;
-          if (wordInfoCopy.difficulty) {
-            if (wordInfoCopy.optional.learningProgress < wordsToLearnDifficult)
-              wordInfoCopy.optional.isLearned = false;
+    () =>
+      (
+        id: string,
+        wordInfo: IUserWord,
+        isRightAnswer: boolean,
+        isNew: boolean
+      ) => {
+        const wordInfoCopy = JSON.parse(JSON.stringify(wordInfo)) as IUserWord;
+        const isDifficult = wordInfoCopy.difficulty === 'true' ? true : false;
+        if (isRightAnswer) {
+          if (!wordInfoCopy.optional.isLearned)
+            wordInfoCopy.optional.learningProgress++;
+          if (isDifficult) {
+            if (wordInfoCopy.optional.learningProgress >= wordsToLearnDifficult)
+              wordInfoCopy.optional.isLearned = true;
           } else {
-            if (wordInfoCopy.optional.learningProgress < wordsToLearnEasy)
-              wordInfoCopy.optional.isLearned = false;
+            if (wordInfoCopy.optional.learningProgress >= wordsToLearnEasy)
+              wordInfoCopy.optional.isLearned = true;
+          }
+        } else {
+          if (wordInfoCopy.optional.learningProgress) {
+            wordInfoCopy.optional.learningProgress--;
+            if (isDifficult) {
+              if (
+                wordInfoCopy.optional.learningProgress < wordsToLearnDifficult
+              )
+                wordInfoCopy.optional.isLearned = false;
+            } else {
+              if (wordInfoCopy.optional.learningProgress < wordsToLearnEasy)
+                wordInfoCopy.optional.isLearned = false;
+            }
           }
         }
-      }
-      return { isLearned: wordInfoCopy.optional.isLearned };
-    },
+        wordInfoCopy.difficulty = wordInfoCopy.difficulty.toString();
+        if (isNew) {
+          postUserWord({
+            wordId: id,
+            body: {
+              difficulty: wordInfoCopy.difficulty,
+              optional: wordInfoCopy.optional,
+            },
+          });
+        } else {
+          putUserWord({
+            wordId: id,
+            body: {
+              difficulty: wordInfoCopy.difficulty,
+              optional: wordInfoCopy.optional,
+            },
+          });
+        }
+        return { isLearned: wordInfoCopy.optional.isLearned };
+      },
     []
   );
 
@@ -106,14 +139,20 @@ function GameResult({
             const { isLearned } = updateWordInfo(
               id,
               { ...initialWordInfo },
-              isRightAnswer
+              isRightAnswer,
+              true
             );
             if (isLearned) wordInfoStatistics.isLearned = true;
           }
         }
       }
       if (response.data) {
-        const { isLearned } = updateWordInfo(id, response.data, isRightAnswer);
+        const { isLearned } = updateWordInfo(
+          id,
+          response.data,
+          isRightAnswer,
+          false
+        );
         if (isLearned) wordInfoStatistics.isLearned = true;
       }
 
@@ -124,16 +163,22 @@ function GameResult({
   const updateWordsInfo = useMemo(
     () => async () => {
       const wordsInfoStatistics = { newWords: 0, learnedWords: 0 };
-      correctWords.forEach(async (word) => {
-        const { isNew, isLearned } = await setWordInfo(true, word.id);
-        if (isNew) wordsInfoStatistics.newWords++;
-        if (isLearned) wordsInfoStatistics.learnedWords++;
-      });
-      wrongWords.forEach(async (word) => {
-        const { isNew, isLearned } = await setWordInfo(false, word.id);
-        if (isNew) wordsInfoStatistics.newWords++;
-        if (isLearned) wordsInfoStatistics.learnedWords++;
-      });
+      await Promise.allSettled(
+        correctWords.map(async (word) => {
+          const { isNew, isLearned } = await setWordInfo(true, word.id);
+          if (isNew) wordsInfoStatistics.newWords++;
+          if (isLearned) wordsInfoStatistics.learnedWords++;
+          console.log(isNew, isLearned);
+        })
+      );
+      console.log(result);
+      await Promise.allSettled(
+        wrongWords.map(async (word) => {
+          const { isNew, isLearned } = await setWordInfo(false, word.id);
+          if (isNew) wordsInfoStatistics.newWords++;
+          if (isLearned) wordsInfoStatistics.learnedWords++;
+        })
+      );
       return wordsInfoStatistics;
     },
     []
@@ -151,8 +196,15 @@ function GameResult({
           ...initialDailyStatistics,
         };
       }
+      const learnedWords =
+        statisticsCopy.optional.daily[getCurrentDate()].learnedWords;
+      statisticsCopy.optional.daily[getCurrentDate()].learnedWords =
+        learnedWords
+          ? wordsStatistics.learnedWords
+          : learnedWords + wordsStatistics.learnedWords;
       const currentGame = statisticsCopy.optional.daily[getCurrentDate()][game];
       currentGame.isPlayed = true;
+      currentGame.newWordsAmount += wordsStatistics.newWords;
       currentGame.maxStreak =
         currentGame.maxStreak > maxStreak ? currentGame.maxStreak : maxStreak;
       currentGame.rightWords += correctWords.length;
