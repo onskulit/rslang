@@ -25,12 +25,20 @@ function DailyStatisticsGame({ game, statistics }: DailyStatisticsGameProps) {
       <Row justify="center">
         <TitleLevel4>{gameInfo.name}</TitleLevel4>
       </Row>
-      {!todaysStatistics && (
-        <Row justify="center">
+      {(!todaysStatistics || !todaysStatistics[game].isPlayed) && (
+        <Row
+          justify="center"
+          style={{
+            paddingTop: 40,
+            height: '100%',
+            fontSize: 16,
+            textAlign: 'center',
+          }}
+        >
           Похоже, что сегодня вы не играли в {gameInfo.name}
         </Row>
       )}
-      {!!todaysStatistics && (
+      {todaysStatistics && todaysStatistics[game].isPlayed && (
         <>
           <Row justify="center">
             <Col span={8}>

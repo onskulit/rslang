@@ -6,11 +6,7 @@ interface StatisticsCardProps {
   children: React.ReactNode;
 }
 function StatisticsCard({ children }: StatisticsCardProps) {
-  return (
-    <Card.Grid className={styles.card} style={{ width: 500 }}>
-      {children}
-    </Card.Grid>
-  );
+  return <Card.Grid className={styles.card}>{children}</Card.Grid>;
 }
 
 export default StatisticsCard;

@@ -3,6 +3,7 @@ import { getCurrentDate } from '../utils/getCurrentDate';
 import { IDailyStatistics, IStatisticData } from '../types/interfaces';
 
 const initialGameStatistics = {
+  isPlayed: false,
   newWordsAmount: 0,
   rightWords: 0,
   wrongWords: 0,

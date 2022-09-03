@@ -34,6 +34,7 @@ export interface DifficultyState {
 }
 
 export interface IGameStatistic {
+  isPlayed: boolean;
   newWordsAmount: number;
   rightWords: number;
   wrongWords: number;

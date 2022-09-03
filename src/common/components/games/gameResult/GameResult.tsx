@@ -59,6 +59,7 @@ function GameResult({
         };
       }
       const currentGame = statisticsCopy.optional.daily[getCurrentDate()][game];
+      currentGame.isPlayed = true;
       currentGame.maxStreak =
         currentGame.maxStreak > maxStreak ? currentGame.maxStreak : maxStreak;
       currentGame.rightWords += correctWords.length;
