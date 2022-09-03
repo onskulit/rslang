@@ -1,15 +1,65 @@
-import React, { FC } from 'react';
-import { Typography } from 'antd';
+import React, { FC, MouseEventHandler, useEffect } from 'react';
+import { Space } from 'antd';
 import { SoundOutlined } from '@ant-design/icons';
 import styles from './CurrentWord.module.css';
-import { IWord } from '../../../../../common/types/interfaces';
-const { Title } = Typography;
+import { IWord } from '../../../../common/types/interfaces';
+import { BASE_URL } from '../../../../common/constants/api';
+import {
+  TitleLevel2,
+  TitleLevel3,
+} from '../../../../common/components/typography/Titles';
+import { useAppSelector } from '../../../../app/hooks';
+import {
+  IUserWord,
+  useGetUserWordQuery,
+  usePostUserWordMutation,
+  usePutUserWordMutation,
+} from '../../../../app/services/UserService';
+import { useDispatch } from 'react-redux';
 
 interface ICurrentWord {
   word: IWord | undefined;
 }
 
+const playAudio = (audioPath: string): void => {
+  const audio = new Audio(`${BASE_URL}/${audioPath}`);
+  audio.play();
+};
+
+// export interface IUserWord {
+// difficulty: boolean;
+// optional: {
+//   learningProgress: number;
+//   percentCorrectAnswers: number;
+//   isNew: boolean;
+//   isLearned: boolean;
+// };
+// }
+
 const CurrentWord: FC<ICurrentWord> = ({ word }) => {
+  const validation = useAppSelector((state) => state.user.validate);
+  const { data: dd, isSuccess: isWord } = useGetUserWordQuery(
+    word?.id as string
+  );
+  const [postWord, { isSuccess: isPostSuccess, data: postData }] =
+    usePostUserWordMutation();
+  const [putWord, { isSuccess: isPutSuccess, data: putData }] =
+    usePutUserWordMutation();
+
+  useEffect(() => {
+    console.log(isPostSuccess, isPutSuccess);
+  }, [postWord, putWord]);
+
+  const bodyE = {
+    difficulty: 'false',
+    optional: {
+      learningProgress: 0,
+      percentCorrectAnswers: 0,
+      isNew: false,
+      isLearned: true,
+    },
+  };
+
   return (
     <div className={styles.currentWord}>
       <div className={styles.image}>
@@ -32,11 +82,38 @@ const CurrentWord: FC<ICurrentWord> = ({ word }) => {
             {word?.wordTranslate}
           </Title>
           <p className={styles.transcription}>{word?.transcription}</p>
-        </div>
-        <div className="buttons">
-          <button>+ в изученое слово</button>
-          <button>+ в сложное слово</button>
-        </div>
+        </Space>
+        {validation ? (
+          <Space className="buttons">
+            <button
+              onClick={() => {
+                isWord
+                  ? putWord({
+                      wordId: word?.id,
+                      body: {
+                        difficulty: 'true',
+                        optional: {
+                          learningProgress: 0,
+                          percentCorrectAnswers: 0,
+                          isNew: false,
+                          isLearned: true,
+                        },
+                      },
+                    })
+                  : postWord({
+                      wordId: word?.id,
+                      body: bodyE,
+                    });
+              }}
+            >
+              + в изученое слово
+            </button>
+            <button>+ в сложное слово</button>
+          </Space>
+        ) : (
+          ''
+        )}
+        import CurrentWord
         <div className={'description'}>
           <div>
             <Title level={3}>Значение</Title>

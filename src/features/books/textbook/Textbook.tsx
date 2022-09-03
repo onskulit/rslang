@@ -26,8 +26,6 @@ const Textbook: FC<ITextbook> = ({ activeGroup }) => {
     page: activePage,
   });
 
-  // console.log(dsfgdg);
-
   const [activeWord, setActiveWord] = useState(
     words ? words[INITIAL_VALUE] : ''
   );
@@ -37,8 +35,6 @@ const Textbook: FC<ITextbook> = ({ activeGroup }) => {
   const toggleActiveWord = (index: number): void => {
     setActiveWord((words as IWord[])[index]);
   };
-
-  // console.log(words);
 
   const groupWordsData = {
     activeWord: activeWord,
