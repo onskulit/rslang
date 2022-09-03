@@ -1,4 +1,4 @@
-import { Typography } from 'antd';
+import { Typography, Grid } from 'antd';
 import React from 'react';
 
 interface TitleProps {
@@ -6,14 +6,19 @@ interface TitleProps {
 }
 
 const { Title } = Typography;
+const { useBreakpoint } = Grid;
 
 export function TitleLevel2({ children }: TitleProps) {
+  const screens = useBreakpoint();
+  const fontSize = screens.md ? '2.5rem' : '2rem';
+
   return (
     <Title
       level={2}
       style={{
-        fontSize: 32,
+        fontSize: fontSize,
         textTransform: 'uppercase',
+        textAlign: 'center',
       }}
     >
       {children}
@@ -22,11 +27,14 @@ export function TitleLevel2({ children }: TitleProps) {
 }
 
 export function TitleLevel3({ children }: TitleProps) {
+  const screens = useBreakpoint();
+  const fontSize = screens.md ? '2rem' : '1.5rem';
+
   return (
     <Title
       level={3}
       style={{
-        fontSize: 24,
+        fontSize: fontSize,
         textTransform: 'uppercase',
       }}
     >
@@ -36,11 +44,14 @@ export function TitleLevel3({ children }: TitleProps) {
 }
 
 export function TitleLevel4({ children }: TitleProps) {
+  const screens = useBreakpoint();
+  const fontSize = screens.md ? '1.5rem' : '1rem';
+
   return (
     <Title
       level={4}
       style={{
-        fontSize: 18,
+        fontSize: fontSize,
       }}
     >
       {children}

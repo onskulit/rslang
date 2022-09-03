@@ -1,0 +1,89 @@
+.container {
+  flex-grow: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 20vh;
+}
+
+.button a {
+  font-size: 1rem;
+  font-weight: 700 !important;
+}
+
+.difficultyContainer {
+  display: flex;
+  height: 60px;
+  gap: 10px;
+}
+
+.difficultyButton {
+  display: grid;
+  place-content: center;
+  color: var(--default-black);
+  background-color: transparent;
+  border-color: var(--blue) !important;
+  border-radius: 50% !important;
+  border-width: 1px !important;
+  width: 50px !important;
+  height: 50px !important;
+  padding: 0;
+  font-weight: 700;
+  border-style: 2px;
+  transition: transform var(--transition), color var(--transition);
+}
+
+.difficultyButton::before {
+  display: none !important;
+}
+
+.difficultyButton:hover {
+  color: var(--blue--dark);
+  transform: scale(1.1);
+}
+
+.difficultyButtonA1 {
+  background-color: var(--difficultyA1) !important;
+  color: var(--default-white) !important;
+}
+.difficultyButtonA2 {
+  background-color: var(--difficultyA2) !important;
+  color: var(--default-white) !important;
+}
+.difficultyButtonB1 {
+  background-color: var(--difficultyB1) !important;
+  color: var(--default-white) !important;
+}
+.difficultyButtonB2 {
+  background-color: var(--difficultyB2) !important;
+  color: var(--default-white) !important;
+}
+.difficultyButtonC1 {
+  background-color: var(--difficultyC1) !important;
+  color: var(--default-white) !important;
+}
+.difficultyButtonC2 {
+  background-color: var(--difficultyC2) !important;
+  color: var(--default-white) !important;
+}
+
+.mb {
+  margin-bottom: 40px;
+}
+
+@media (max-width: 767px) {
+  .container {
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+  }
+
+  .difficultyButton {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 0.875rem !important;
+  }
+
+  .mb {
+    margin-bottom: 20px;
+  }
+}

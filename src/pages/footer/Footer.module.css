@@ -112,7 +112,7 @@ h4.developersTitle {
   margin: 0;
 }
 
-@media (max-width: 374.98px) {
+@media (max-width: 767px) {
   .footer {
     justify-content: center;
   }

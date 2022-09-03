@@ -13,12 +13,18 @@
   --green: #b2eacd;
   --pink: #e94e99;
   --pink-light: #fcafb7;
-  --pink-light: #fcafb7;
   --violet: #c27fbc;
   --yellow: #ffd35c;
   --blue: #cdccff;
   --blue--dark: #5855f2;
   --red: #fc3f1d;
+
+  --difficultyA1: #f7b801;
+  --difficultyA2: #f18701;
+  --difficultyB1: #8ac926;
+  --difficultyB2: #55a630;
+  --difficultyC1: #7678ed;
+  --difficultyC2: #3d348b;
 
   --border-radius: 15px;
   --transition: 0.3s ease;
@@ -30,18 +36,17 @@
 @import url('./styles/antNav.css');
 @import url('./styles/antDropdown.css');
 @import url('./styles/antPopover.css');
+@import url('./styles/antRadio.css');
 
 body {
   margin: 0;
   font-family: 'Noto Sans', sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   color: var(--main-text-color);
 }
 
-h4 {
-  font-size: 16px;
-  font-weight: 700;
-  margin: 0;
+a {
+  font-weight: 500;
 }
 
 #root {
@@ -56,6 +61,25 @@ h4 {
   color: var(--main-text-color);
 }
 
+.ant-layout-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-height: 0;
+}
+
 .main {
   flex: 1 1 auto;
+}
+
+h2.ant-typography {
+  font-size: 32px;
+}
+
+h3.ant-typography {
+  font-size: 24px;
+}
+
+h4.ant-typography {
+  font-size: 18px;
 }
