@@ -18,6 +18,7 @@ interface SprintState {
   pointsForCorrectAnswer: number;
   totalScore: number;
   streak: number;
+  maxStreakInGame: number;
   streakMultiplicity: number;
   streakProgress: number;
   streakColor: StreakColor;
@@ -60,6 +61,10 @@ const updateStreakColor = (streak: number) => {
   return StreakColor.STEP_4;
 };
 
+const checkMaxStreakInGame = (streak: number, maxStreak: number) => {
+  return streak > maxStreak ? streak : maxStreak;
+};
+
 const initialState: SprintState = {
   words: [],
   correctWords: [],
@@ -68,6 +73,7 @@ const initialState: SprintState = {
   pointsForCorrectAnswer: minPoints,
   totalScore: INITIAL_TOTAL_SCORE,
   streak: INITIAL_STREAK,
+  maxStreakInGame: INITIAL_STREAK,
   streakMultiplicity: countMultiplicity(INITIAL_STREAK),
   streakProgress: INITIAL_STREAK_PROGRESS,
   streakColor: StreakColor.STEP_1,
@@ -135,6 +141,10 @@ export const sprintSlice = createSlice({
         state.pointsForCorrectAnswer = minPoints;
         state.wrongWords.push(state.words[state.currentWordPos][0]);
       }
+      state.maxStreakInGame = checkMaxStreakInGame(
+        state.streak,
+        state.maxStreakInGame
+      );
       state.streakMultiplicity = countMultiplicity(state.streak);
       state.streakColor = updateStreakColor(state.streak);
       if (state.words.length - 1 === state.currentWordPos) {

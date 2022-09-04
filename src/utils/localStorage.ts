@@ -1,7 +1,8 @@
+import { STORAGE_KEY } from './../common/constants/localStorage';
 export interface IStorage {
-  set: (key: string, value: string) => void;
-  remove: (key: string) => void;
-  get: (key: string) => string;
+  set: (key: STORAGE_KEY, value: string) => void;
+  remove: (key: STORAGE_KEY) => void;
+  get: (key: STORAGE_KEY) => string;
 }
 
 export const storage: IStorage = {

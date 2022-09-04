@@ -14,9 +14,9 @@ import Authorization from './features/authorization/authorization';
 import { storage } from './utils/localStorage';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from './app/hooks';
-import { useGetUserByIdQuery } from './app/services/UserService';
+import { useGetUserByIdQuery } from './features/api/userSlice';
 import { IUserAuthData } from './common/types/user';
-import { changeValidation } from './app/reducers/userSlice';
+import { changeValidation } from './features/user/userSlice';
 import { STORAGE_KEY } from './common/constants/localStorage';
 import { IAuth } from './common/types/auth';
 import Loader from './common/components/Loader';
@@ -60,7 +60,7 @@ function App() {
       ) : (
         <Layout>
           {!isRunning && <Header />}
-          <Content style={{ padding: '0 25px' }}>
+          <Content>
             <Routes>
               <Route path="/" element={<MainPage />} />
               <Route path="/textbook" element={<Textbook />} />

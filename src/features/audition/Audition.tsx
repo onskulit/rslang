@@ -38,6 +38,8 @@ function Audition(): JSX.Element {
   const [currentWord, setCurrentWord] = useState<IWord | null>(null);
   const [currentWords, setCurrentWords] = useState<IWord[]>([]);
   const [answer, setAnswer] = useState<IWordWithAnswer | null>(null);
+  const [streak, setStreak] = useState<number>(0);
+  const [maxStreak, setMaxStreak] = useState<number>(0);
   const [currentOptions, setCurrentOptions] = useState<IWord[]>([]);
   const [shuffledWords, setShuffledWords] = useState<IWord[]>([]);
   const [correctAnswers, setCorrectAnswers] = useState<IWordWithAnswer[]>([]);
@@ -82,6 +84,7 @@ function Audition(): JSX.Element {
 
   function onHelpClick() {
     setHelp(true);
+    setStreak(0);
   }
 
   function onAnswerClick(answer: IWordWithAnswer) {
@@ -92,8 +95,10 @@ function Audition(): JSX.Element {
 
     if (answer?.correct === true) {
       setCorrectAnswers((prev) => [...prev, answerCopy]);
+      setStreak((prev) => prev + 1);
     } else {
       setWrongAnswers((prev) => [...prev, answerCopy]);
+      setStreak(0);
     }
   }
 
@@ -158,6 +163,10 @@ function Audition(): JSX.Element {
     };
   }, [answer]);
 
+  useEffect(() => {
+    if (streak > maxStreak) setMaxStreak(streak);
+  }, [streak]);
+
   return (
     <>
       <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
@@ -216,6 +225,7 @@ function Audition(): JSX.Element {
             game={GamesType.audition}
             correctWords={correctAnswers}
             wrongWords={wrongAnswers}
+            maxStreak={maxStreak}
           />
         )}
       </Space>

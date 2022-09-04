@@ -5,7 +5,7 @@ import { HEADER_LINKS } from '../../constants/headerLinks';
 import styles from './MobileMenu.module.css';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { storage } from '../../../utils/localStorage';
-import { changeValidation } from '../../../app/reducers/userSlice';
+import { changeValidation } from '../../../features/user/userSlice';
 import { STORAGE_KEY } from '../../constants/localStorage';
 
 const { useBreakpoint } = Grid;

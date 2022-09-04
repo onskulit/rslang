@@ -1,24 +1,28 @@
+import { statisticsAPI } from './../features/api/statisticsSlice';
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
 import { apiSlice } from '../features/api/apiSlice';
 import sprintReducer from '../features/sprint/sprintSlice';
-import { userAPI } from './services/UserService';
+import { userAPI } from '../features/api/userSlice';
 import difficultyReducer from '../features/difficulty/difficultySlice';
-import userReducer from './reducers/userSlice';
+import userReducer from '../features/user/userSlice';
 import gameStatusReducer from '../features/gameStatus/gameStatusSlice';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
     difficulty: difficultyReducer,
     user: userReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
     [userAPI.reducerPath]: userAPI.reducer,
+    [statisticsAPI.reducerPath]: statisticsAPI.reducer,
     sprint: sprintReducer,
     gameStatus: gameStatusReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiSlice.middleware, userAPI.middleware),
+    getDefaultMiddleware().concat(
+      apiSlice.middleware,
+      userAPI.middleware,
+      statisticsAPI.middleware
+    ),
 });
 
 export type AppDispatch = typeof store.dispatch;

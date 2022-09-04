@@ -35,6 +35,7 @@ function Sprint({ maxPage = 29 }: SprintProps) {
     wrongWords,
     currentWordPos,
     totalScore,
+    maxStreakInGame,
     streakMultiplicity,
     streakProgress,
     streakColor,
@@ -150,6 +151,7 @@ function Sprint({ maxPage = 29 }: SprintProps) {
           result={totalScore}
           correctWords={correctWords}
           wrongWords={wrongWords}
+          maxStreak={maxStreakInGame}
         />
       )}
     </div>
