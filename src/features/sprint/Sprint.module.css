@@ -13,33 +13,33 @@
 }
 
 .buttonCorrect {
-  background-color: var(--success);
-  color: var(--default-white);
-  border-color: var(--success);
+  background-color: var(--success) !important;
+  color: var(--default-white) !important;
+  border-color: var(--success) !important;
   font-weight: 500;
 }
 
 .buttonIncorrect {
-  background-color: var(--red);
-  color: var(--default-white);
-  border-color: var(--red);
+  background-color: var(--red) !important;
+  color: var(--default-white) !important;
+  border-color: var(--red) !important;
   font-weight: 500;
 }
 
 .buttonCorrect:hover,
 .buttonCorrect:focus {
   font-weight: 500;
-  background-color: #6caa09;
-  color: var(--default-white);
-  border-color: var(--success);
+  background-color: #6caa09 !important;
+  color: var(--default-white) !important;
+  border-color: var(--success) !important;
 }
 
 .buttonIncorrect:hover,
 .buttonIncorrect:focus {
   font-weight: 500;
-  background-color: #c0290f;
-  color: var(--default-white);
-  border-color: var(--red);
+  background-color: #c0290f !important;
+  color: var(--default-white) !important;
+  border-color: var(--red) !important;
 }
 
 @media (max-width: 767px) {
