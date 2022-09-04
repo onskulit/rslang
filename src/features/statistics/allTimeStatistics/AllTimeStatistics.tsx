@@ -1,66 +1,10 @@
 import { useMemo } from 'react';
 import { Line } from 'react-chartjs-2';
 import { IUserStatisticsResponse } from '../../../common/types/interfaces';
-import {
-  Chart,
-  ArcElement,
-  LineElement,
-  BarElement,
-  PointElement,
-  BarController,
-  BubbleController,
-  DoughnutController,
-  LineController,
-  PieController,
-  PolarAreaController,
-  RadarController,
-  ScatterController,
-  CategoryScale,
-  LinearScale,
-  LogarithmicScale,
-  RadialLinearScale,
-  TimeScale,
-  TimeSeriesScale,
-  Decimation,
-  Filler,
-  Legend,
-  Title,
-  Tooltip,
-  SubTitle,
-} from 'chart.js';
 import { Space } from 'antd';
 import { getCurrentDate } from '../../../common/utils/getCurrentDate';
 import StatisticsCard from '../../../common/components/statistics/statisticsCard/StatisticsCard';
-
-Chart.register(
-  ArcElement,
-  LineElement,
-  BarElement,
-  PointElement,
-  BarController,
-  BubbleController,
-  DoughnutController,
-  LineController,
-  PieController,
-  PolarAreaController,
-  RadarController,
-  ScatterController,
-  CategoryScale,
-  LinearScale,
-  LogarithmicScale,
-  RadialLinearScale,
-  TimeScale,
-  TimeSeriesScale,
-  Decimation,
-  Filler,
-  Legend,
-  Title,
-  Tooltip,
-  SubTitle
-);
-
-Chart.defaults.font.size = 16;
-Chart.defaults.font.family = '"Noto Sans", sans-serif';
+import StatisticsChart from '../../../common/components/statistics/StatisticsChart/StatisticsChart';
 
 const cardStyles = { width: 700, height: 500 };
 
@@ -108,6 +52,9 @@ function AllTimeStatistics({ statistics }: AllTimeStatisticsProps) {
       if (!progress) progress = 0;
       return progress;
     });
+    /*     let dates = ['01.09.2022', '02.09.2022', '03.09.2022', '04.09.2022'];
+    let learnedWords = [4, 4, 6, 5];
+    let progressPerDay = [4, 8, 14, 19]; */
     if (dates.length < minPeriod) {
       const difference = minPeriod - dates.length;
       dates = prolongDates(difference, dates);
@@ -119,75 +66,21 @@ function AllTimeStatistics({ statistics }: AllTimeStatisticsProps) {
   return (
     <Space size="middle" direction="vertical" align="center">
       <StatisticsCard style={cardStyles}>
-        <Line
-          data={{
-            labels: dates,
-            datasets: [
-              {
-                label: 'Выученные слова',
-                data: learnedWords,
-                backgroundColor: '#e94e99',
-                borderColor: '#e94e99',
-              },
-            ],
-          }}
-          options={{
-            maintainAspectRatio: false,
-            responsive: true,
-            interaction: {
-              mode: 'index',
-              intersect: false,
-            },
-            scales: {
-              y: {
-                title: {
-                  display: true,
-                  text: 'Слов за день',
-                },
-                suggestedMax: 10,
-                min: 0,
-                ticks: {
-                  stepSize: 1,
-                },
-              },
-            },
-          }}
+        <StatisticsChart
+          labels={dates}
+          datasetLabel="Выученные слова"
+          data={learnedWords}
+          datasetColor="#e94e99"
+          yTitle="Слов за день"
         />
       </StatisticsCard>
       <StatisticsCard style={cardStyles}>
-        <Line
-          data={{
-            labels: dates,
-            datasets: [
-              {
-                label: 'Прогресс изучения',
-                data: progressPerDay,
-                backgroundColor: '#5855f2',
-                borderColor: '#5855f2',
-              },
-            ],
-          }}
-          options={{
-            maintainAspectRatio: false,
-            responsive: true,
-            interaction: {
-              mode: 'index',
-              intersect: false,
-            },
-            scales: {
-              y: {
-                title: {
-                  display: true,
-                  text: 'Слов за весь период',
-                },
-                suggestedMax: 10,
-                min: 0,
-                ticks: {
-                  stepSize: 1,
-                },
-              },
-            },
-          }}
+        <StatisticsChart
+          labels={dates}
+          datasetLabel="Прогресс изучения"
+          data={progressPerDay}
+          datasetColor="#5855f2"
+          yTitle="Слов за весь период"
         />
       </StatisticsCard>
     </Space>
