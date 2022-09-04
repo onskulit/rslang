@@ -4,6 +4,7 @@ import { STORAGE_KEY } from '../../common/constants/localStorage';
 import { GamesType } from '../../common/types/enums';
 import { storage } from '../../utils/localStorage';
 import { statisticsAPI } from '../api/statisticsSlice';
+import AllTimeStatistics from './allTimeStatistics/AllTimeStatistics';
 import DailyStatisticsGame from './dailyStatistics/DailyStatisticsGame';
 import DailyStatisticsWords from './dailyStatistics/DailyStatisticsWords';
 
@@ -36,6 +37,8 @@ function Statistics() {
           <DailyStatisticsGame game={GamesType.sprint} statistics={data} />
           <DailyStatisticsGame game={GamesType.audition} statistics={data} />
           <DailyStatisticsWords statistics={data} />
+          <TitleLevel3>Статистика (За всё время)</TitleLevel3>
+          <AllTimeStatistics statistics={data} />
         </>
       )}
     </Space>

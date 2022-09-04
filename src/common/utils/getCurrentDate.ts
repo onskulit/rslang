@@ -1,5 +1,5 @@
-export const getCurrentDate = () => {
-  const data = new Date();
+export const getCurrentDate = (date?: Date) => {
+  const data = date || new Date();
   const day =
     data.getDate().toString().length === 1
       ? `0${data.getDate()}`
