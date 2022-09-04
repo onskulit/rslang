@@ -30,6 +30,7 @@ import {
 } from 'chart.js';
 import { Space } from 'antd';
 import { getCurrentDate } from '../../../common/utils/getCurrentDate';
+import StatisticsCard from '../../../common/components/statistics/statisticsCard/StatisticsCard';
 
 Chart.register(
   ArcElement,
@@ -57,6 +58,11 @@ Chart.register(
   Tooltip,
   SubTitle
 );
+
+Chart.defaults.font.size = 16;
+Chart.defaults.font.family = '"Noto Sans", sans-serif';
+
+const cardStyles = { width: 700, height: 500 };
 
 interface AllTimeStatisticsProps {
   statistics: IUserStatisticsResponse;
@@ -99,6 +105,7 @@ function AllTimeStatistics({ statistics }: AllTimeStatisticsProps) {
     let progress = 0;
     let progressPerDay = Object.keys(statisticsPerDays).map((day) => {
       progress += statisticsPerDays[day].learnedWords;
+      if (!progress) progress = 0;
       return progress;
     });
     if (dates.length < minPeriod) {
@@ -110,61 +117,79 @@ function AllTimeStatistics({ statistics }: AllTimeStatisticsProps) {
     return { dates, learnedWords, progressPerDay };
   }, []);
   return (
-    <Space size="middle" direction="vertical">
-      <Line
-        data={{
-          labels: dates,
-          datasets: [
-            {
-              label: 'Выученные слова',
-              data: learnedWords,
-              backgroundColor: '#e94e99',
-              borderColor: '#e94e99',
+    <Space size="middle" direction="vertical" align="center">
+      <StatisticsCard style={cardStyles}>
+        <Line
+          data={{
+            labels: dates,
+            datasets: [
+              {
+                label: 'Выученные слова',
+                data: learnedWords,
+                backgroundColor: '#e94e99',
+                borderColor: '#e94e99',
+              },
+            ],
+          }}
+          options={{
+            maintainAspectRatio: false,
+            responsive: true,
+            interaction: {
+              mode: 'index',
+              intersect: false,
             },
-          ],
-        }}
-        options={{
-          responsive: true,
-          interaction: {
-            mode: 'index',
-            intersect: false,
-          },
-          scales: {
-            y: {
-              suggestedMin: 0,
+            scales: {
+              y: {
+                title: {
+                  display: true,
+                  text: 'Слов за день',
+                },
+                suggestedMax: 10,
+                min: 0,
+                ticks: {
+                  stepSize: 1,
+                },
+              },
             },
-          },
-        }}
-        width={700}
-        height={400}
-      />
-      <Line
-        data={{
-          labels: dates,
-          datasets: [
-            {
-              label: 'Прогресс изучения',
-              data: progressPerDay,
-              backgroundColor: '#5855f2',
-              borderColor: '#5855f2',
+          }}
+        />
+      </StatisticsCard>
+      <StatisticsCard style={cardStyles}>
+        <Line
+          data={{
+            labels: dates,
+            datasets: [
+              {
+                label: 'Прогресс изучения',
+                data: progressPerDay,
+                backgroundColor: '#5855f2',
+                borderColor: '#5855f2',
+              },
+            ],
+          }}
+          options={{
+            maintainAspectRatio: false,
+            responsive: true,
+            interaction: {
+              mode: 'index',
+              intersect: false,
             },
-          ],
-        }}
-        options={{
-          responsive: true,
-          interaction: {
-            mode: 'index',
-            intersect: false,
-          },
-          scales: {
-            y: {
-              suggestedMin: 0,
+            scales: {
+              y: {
+                title: {
+                  display: true,
+                  text: 'Слов за весь период',
+                },
+                suggestedMax: 10,
+                min: 0,
+                ticks: {
+                  stepSize: 1,
+                },
+              },
             },
-          },
-        }}
-        width={700}
-        height={400}
-      />
+          }}
+        />
+      </StatisticsCard>
     </Space>
   );
 }

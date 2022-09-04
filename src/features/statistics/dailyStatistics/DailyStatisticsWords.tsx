@@ -8,6 +8,8 @@ import { getCurrentDate } from '../../../common/utils/getCurrentDate';
 import { getPercentOfRightAnswers } from '../../../common/utils/getPercentOfRightAnswers';
 import styles from './DailyStatistics.module.css';
 
+const cardStyles = { width: 500, height: 220 };
+
 interface DailyStatisticsGameProps {
   statistics: IUserStatisticsResponse;
 }
@@ -47,7 +49,7 @@ function DailyStatisticsWords({ statistics }: DailyStatisticsGameProps) {
   }, [todaysStatistics]);
 
   return (
-    <StatisticsCard>
+    <StatisticsCard style={cardStyles}>
       <Row justify="center">
         <TitleLevel4>Статистика по словам</TitleLevel4>
       </Row>
