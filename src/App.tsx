@@ -60,7 +60,7 @@ function App() {
       ) : (
         <Layout>
           {!isRunning && <Header />}
-          <Content style={{ padding: '20px 25px' }}>
+          <Content>
             <Routes>
               <Route path="/" element={<MainPage />} />
               <Route path="/textbook" element={<Textbook />} />
