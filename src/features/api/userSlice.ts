@@ -25,17 +25,17 @@ export interface IUserWordQuery {
   body?: IUserWord;
 }
 
-interface IUserAggregatedWordData extends IWord {
+export interface IUserAggregatedWordData extends IWord {
   _id: string;
   userWord: IUserWord;
 }
 
-interface IUserAggregatedWordsData {
+export interface IUserAggregatedWordsData {
   paginatedResults: IUserAggregatedWordData[];
   totalCount: { count: number }[];
 }
 
-type IUserAggregatedWordsArray = IUserAggregatedWordsData[];
+export type IUserAggregatedWordsArray = IUserAggregatedWordsData[];
 
 interface IUserAggregatedWordsQuery {
   filter: string;

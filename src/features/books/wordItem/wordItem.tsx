@@ -1,13 +1,19 @@
 import React, { FC } from 'react';
-import { IWord } from '../../../common/types/interfaces';
+import {
+  IUserAggregatedWordData,
+  IUserAggregatedWordsArray,
+  IUserAggregatedWordsData,
+} from '../../../../app/services/UserService';
+import { IWord } from '../../../../common/types/interfaces';
 import './WordItem.css';
 
 interface IWordItemProps {
-  activeWord: IWord | string;
+  activeWord: IWord | string | IUserAggregatedWordsData;
   index: number;
-  word: IWord;
-  words: IWord[] | undefined;
+  word: IWord | IUserAggregatedWordData;
+  words: IWord[] | undefined | IUserAggregatedWordsArray;
   toggleActiveWord: (index: number) => void;
+  isStorageData: boolean;
 }
 
 const WORD_CLASSES = {
@@ -21,8 +27,18 @@ const WordItem: FC<IWordItemProps> = ({
   words,
   word,
   toggleActiveWord,
+  isStorageData,
 }) => {
   const toggleActiveStyle = (index: number): string => {
+    if (isStorageData && words) {
+      if (
+        (words as IUserAggregatedWordsArray)[0].paginatedResults[index]._id ===
+        (activeWord as IUserAggregatedWordData)._id
+      ) {
+        return WORD_CLASSES.active;
+      }
+      return WORD_CLASSES.inactive;
+    }
     if ((words as IWord[])[index].id === (activeWord as IWord).id) {
       return WORD_CLASSES.active;
     }
@@ -37,6 +53,7 @@ const WordItem: FC<IWordItemProps> = ({
       <span className={'styles.word'}>{word.word}</span>
       <span className={'styles.wordTranslate'}>{word.wordTranslate}</span>
     </button>
+    // <div>sdf</div>
   );
 };
 

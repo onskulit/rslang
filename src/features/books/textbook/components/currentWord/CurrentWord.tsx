@@ -10,15 +10,22 @@ import {
 } from '../../../../common/components/typography/Titles';
 import { useAppSelector } from '../../../../app/hooks';
 import {
+  IUserAggregatedWordData,
+  IUserAggregatedWordsData,
   IUserWordResponse,
+  useGetAggregatedWordsQuery,
   useGetUserWordQuery,
   usePostUserWordMutation,
   usePutUserWordMutation,
 } from '../../../../app/services/UserService';
 import { IPostPutWord } from '../../../authorization/common';
 
+type NeedWord = IWord | IUserAggregatedWordData | string;
+type NeedKnownWord = IWord | IUserAggregatedWordData;
+
 interface ICurrentWord {
-  word: IWord | undefined;
+  word: NeedWord;
+  isStorageData: boolean;
 }
 
 interface IProps {
@@ -35,24 +42,21 @@ const playAudio = (audioPath: string): void => {
 };
 
 const wordPutLearnProcess = (word: IUserWordResponse, put: IPostPutWord) => {
-  const { difficulty, optional, wordId, id } = word;
-  word;
+  const { difficulty, optional, wordId } = word;
   if (word.optional.isLearned) {
-    const newWord = {
+    put({
       wordId,
       body: {
-        difficulty,
+        difficulty: 'true',
         optional: {
           ...optional,
           isLearned: false,
         },
       },
-    };
-    put(newWord);
+    });
     return;
   }
-
-  const newWord = {
+  put({
     wordId,
     body: {
       difficulty: 'false',
@@ -61,8 +65,40 @@ const wordPutLearnProcess = (word: IUserWordResponse, put: IPostPutWord) => {
         isLearned: true,
       },
     },
-  };
-  put(newWord);
+  });
+};
+
+const wordPutDifficulteProcess = (
+  word: IUserWordResponse,
+  put: IPostPutWord
+) => {
+  const { optional, wordId } = word;
+  word;
+
+  if (word.difficulty === 'true') {
+    put({
+      wordId,
+      body: {
+        difficulty: 'false',
+        optional: {
+          ...optional,
+          isLearned: true,
+        },
+      },
+    });
+    return;
+  }
+
+  put({
+    wordId,
+    body: {
+      difficulty: 'true',
+      optional: {
+        ...optional,
+        isLearned: false,
+      },
+    },
+  });
 };
 
 const addToLearned = (props: IProps) => {
@@ -86,11 +122,42 @@ const addToLearned = (props: IProps) => {
   });
 };
 
-const CurrentWord: FC<ICurrentWord> = ({ word }) => {
+const addToDifficulte = (props: IProps) => {
+  if (props.isWord) {
+    const word = props.wordProps as IUserWordResponse;
+    wordPutDifficulteProcess(word, props.putWord);
+    return;
+  }
+
+  props.postWord({
+    wordId: props.id,
+    body: {
+      difficulty: 'true',
+      optional: {
+        learningProgress: 0,
+        percentCorrectAnswers: 0,
+        isNew: false,
+        isLearned: false,
+      },
+    },
+  });
+};
+
+const returnId = (
+  isStorageData: boolean,
+  word: IWord | IUserAggregatedWordData | string
+): string => {
+  return isStorageData
+    ? (word as IUserAggregatedWordData)._id
+    : (word as IWord).id;
+};
+
+const CurrentWord: FC<ICurrentWord> = ({ word, isStorageData }) => {
   const validation = useAppSelector((state) => state.user.validate);
   const { data: wordProps, isSuccess: isWord } = useGetUserWordQuery(
-    word?.id as string
+    returnId(isStorageData, word)
   );
+
   const [postWord, { isSuccess: isPostSuccess, data: postData }] =
     usePostUserWordMutation();
   const [putWord, { isSuccess: isPutSuccess, data: putData }] =
@@ -101,74 +168,95 @@ const CurrentWord: FC<ICurrentWord> = ({ word }) => {
     isWord,
     postWord,
     putWord,
-    id: word?.id as string,
+    id: isStorageData
+      ? (word as IUserAggregatedWordData)._id
+      : (word as IWord).id,
   };
-
-  useEffect(() => {
-    // console.log(isPostSuccess, postData);
-    console.log(putData);
-  }, [putData]);
 
   return (
     <div className={styles.currentWord}>
       <div className={styles.image}>
         <img
-          src={`https://rs-lang-react.herokuapp.com/${word?.image}`}
+          src={`${BASE_URL}/${(word as NeedKnownWord)?.image}`}
           alt="word image"
         />
       </div>
       <div className={styles.information}>
         <div className={styles.soundBox}>
-          <Title style={{ margin: 0 }} level={2}>
-            {word?.word}
-          </Title>
-          <button className={styles.soundButton}>
+          <TitleLevel2>{(word as NeedKnownWord)?.word}</TitleLevel2>
+          <button
+            className={styles.soundButton}
+            onClick={() => playAudio((word as NeedKnownWord)?.audio as string)}
+          >
             <SoundOutlined />
           </button>
         </div>
-        <div className={styles.transcriptionBox}>
-          <Title style={{ margin: 0 }} level={3}>
-            {word?.wordTranslate}
-          </Title>
-          <p className={styles.transcription}>{word?.transcription}</p>
+        <Space className={styles.transcriptionBox}>
+          <TitleLevel3>{(word as NeedKnownWord)?.wordTranslate}</TitleLevel3>
+          <p className={styles.transcription}>
+            {(word as NeedKnownWord)?.transcription}
+          </p>
         </Space>
         {validation ? (
           <Space className="buttons">
             <button onClick={() => addToLearned(props)}>
               + в изученое слово
             </button>
-            <button>+ в сложное слово</button>
+            <button onClick={() => addToDifficulte(props)}>
+              + в сложное слово
+            </button>
           </Space>
         ) : (
           ''
         )}
-        import CurrentWord
         <div className={'description'}>
-          <div>
-            <Title level={3}>Значение</Title>
+          <Space direction="vertical">
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <TitleLevel3>Значение</TitleLevel3>
+              <button
+                className={styles.soundButton}
+                onClick={() =>
+                  playAudio((word as NeedKnownWord)?.audioMeaning as string)
+                }
+              >
+                <SoundOutlined />
+              </button>
+            </div>
             <p
               className={'paragraph'}
               dangerouslySetInnerHTML={{
-                __html: word?.textMeaning as string,
+                __html: (word as NeedKnownWord)?.textMeaning as string,
               }}
             />
-            <p className={'paragraph'}>{word?.textMeaningTranslate}</p>
-          </div>
-          <div>
-            <Title level={3}>Пример </Title>
+            <p className={'paragraph'}>
+              {(word as NeedKnownWord)?.textMeaningTranslate}
+            </p>
+          </Space>
+          <Space direction="vertical">
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <TitleLevel3>Пример</TitleLevel3>
+              <button
+                className={styles.soundButton}
+                onClick={() =>
+                  playAudio((word as NeedKnownWord)?.audioExample as string)
+                }
+              >
+                <SoundOutlined />
+              </button>
+            </div>
             <p
               className={'paragraph'}
               dangerouslySetInnerHTML={{
-                __html: word?.textExample as string,
+                __html: (word as NeedKnownWord)?.textExample as string,
               }}
             />
-            <p className={'paragraph'}>{word?.textExampleTranslate}</p>
-          </div>
+            <p className={'paragraph'}>
+              {(word as NeedKnownWord)?.textExampleTranslate}
+            </p>
+          </Space>
         </div>
         <div className="statistic">
-          <Title style={{ marginBottom: '5px' }} level={3}>
-            Ответы в играх:
-          </Title>
+          <TitleLevel3>Ответы в играх:</TitleLevel3>
           <div className={styles.gamesBox}>
             <div className={styles.gameBox}>
               <span className={styles.game}>Аудиовызов</span>
