@@ -19,6 +19,8 @@
   --blue--dark: #5855f2;
   --red: #fc3f1d;
 
+  --success: #8ac926;
+
   --difficultyA1: #f7b801;
   --difficultyA2: #f18701;
   --difficultyB1: #8ac926;
@@ -38,6 +40,8 @@
 @import url('./styles/antPopover.css');
 @import url('./styles/antRadio.css');
 @import url('./styles/antModal.css');
+@import url('./styles/antProgress.css');
+@import url('./styles/antSpace.css');
 
 body {
   margin: 0;
@@ -52,6 +56,11 @@ a {
 
 #root {
   height: 100vh;
+}
+
+.container {
+  width: min(100% - 3rem, 1600px);
+  margin-inline: auto;
 }
 
 .ant-layout {

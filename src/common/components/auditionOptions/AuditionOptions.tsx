@@ -73,9 +73,7 @@ function AuditionOptions({
   useLayoutEffect(() => {
     setIsAnswered(false);
 
-    document.addEventListener('keydown', onKeyPressHandler, {
-      once: true,
-    });
+    document.addEventListener('keydown', onKeyPressHandler);
     return () => {
       document.removeEventListener('keydown', onKeyPressHandler);
     };
@@ -100,7 +98,7 @@ function AuditionOptions({
           <>{currentAnswer?.word}</>
         </Row>
         <Row justify="center">
-          <Space>
+          <Space className={`auditionOptions ${styles.list}`}>
             {options.map((option) => (
               <Radio.Button
                 value={option.word}

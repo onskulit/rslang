@@ -28,6 +28,7 @@ import {
   usePutUserWordMutation,
 } from '../../../../features/api/userSlice';
 import { initialWordInfo } from '../../../constants/initialWordInfo';
+import styles from './GameResult.module.css';
 
 interface GameResultProps {
   result?: number;
@@ -39,6 +40,8 @@ interface GameResultProps {
 
 const wordsToLearnEasy = 3;
 const wordsToLearnDifficult = 5;
+const CORRECT_COLOR = '#8ac926';
+const INCORRECT_COLOR = '#fc3f1d';
 
 function GameResult({
   result,
@@ -250,7 +253,11 @@ function GameResult({
   }, [isSuccess]);
 
   return (
-    <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+    <Space
+      direction="vertical"
+      size="middle"
+      style={{ display: 'flex', paddingTop: '2rem' }}
+    >
       <Row justify="center">
         <TitleLevel3>Игра окончена!</TitleLevel3>
       </Row>
@@ -267,7 +274,7 @@ function GameResult({
           <GameResultTable
             title="Правильные ответы:"
             words={correctWords}
-            style={{ borderColor: 'green' }}
+            style={{ borderColor: CORRECT_COLOR }}
           />
         )}
 
@@ -275,12 +282,12 @@ function GameResult({
           <GameResultTable
             title="Неправильные ответы:"
             words={wrongWords}
-            style={{ borderColor: 'red' }}
+            style={{ borderColor: INCORRECT_COLOR }}
           />
         )}
       </>
       <Row justify="center">
-        <Space>
+        <Space className={styles.buttons}>
           <NavLink to={gameInfo.pathWithMenu}>
             <ButtonRounded style={{ width: 200 }}>Сыграть снова</ButtonRounded>
           </NavLink>

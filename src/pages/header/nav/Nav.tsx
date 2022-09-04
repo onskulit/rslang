@@ -22,8 +22,8 @@ function Nav() {
   };
 
   const dropdownMenuClickHandler = useMemo(
-    () => (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) =>
-      e.preventDefault(),
+    () => (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) =>
+      event.preventDefault(),
     []
   );
   const menu = useMemo(

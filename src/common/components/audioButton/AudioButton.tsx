@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Button } from 'antd';
 
-// import styles from './AudioButton.module.css';
+import styles from './AudioButton.module.css';
 import { BASE_URL } from '../../constants/api';
 import { SoundOutlined } from '@ant-design/icons';
 import { Keyboard } from '../../types/enums';
@@ -36,8 +36,14 @@ function AudioButton({ audioFile, mute }: IAudioButtonProps) {
   }, [audioFile, mute]);
 
   return (
-    <Button tabIndex={0} shape="round" size="large" onClick={playSound}>
-      <SoundOutlined />
+    <Button
+      tabIndex={0}
+      shape="round"
+      size="large"
+      onClick={playSound}
+      className={styles.button}
+    >
+      <SoundOutlined className={styles.buttonIcon} />
     </Button>
   );
 }

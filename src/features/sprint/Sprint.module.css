@@ -1,0 +1,12 @@
+.sprint {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.container {
+  padding-bottom: 4rem;
+}
+
+/* @media (max-width: 767px) {
+} */

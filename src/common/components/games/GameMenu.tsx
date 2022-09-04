@@ -23,7 +23,7 @@ function GameMenu({ game }: GameMenuProps) {
   const currentDiffuculty = difficulty;
 
   return (
-    <div className={styles.container}>
+    <div className={`container ${styles.container}`}>
       <Space
         direction="vertical"
         size="small"

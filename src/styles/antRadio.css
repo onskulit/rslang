@@ -1,0 +1,3 @@
+.ant-radio-button-wrapper-disabled {
+  pointer-events: none;
+}

@@ -12,6 +12,7 @@ import { TitleLevel4 } from '../../common/components/typography/Titles';
 import { ButtonRounded } from '../../common/components/buttons/Buttons';
 import GameCloser from '../../common/components/games/GameCloser';
 import { updateGameStatus } from '../gameStatus/gameStatusSlice';
+import styles from './Sprint.module.css';
 
 interface SprintProps {
   maxPage?: number;
@@ -86,7 +87,8 @@ function Sprint({ maxPage = 29 }: SprintProps) {
   }, [isStarted]);
 
   return (
-    <div>
+    // <div className={`container ${styles.container}`}>
+    <div className={styles.sprint}>
       {isFetching && <Loader />}
       {isError && <ErrorMessage error="Что-то пошло не так" />}
       {isStarted && (

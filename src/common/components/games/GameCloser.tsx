@@ -1,13 +1,11 @@
-import {
-  CloseCircleOutlined,
-  ExclamationCircleOutlined,
-} from '@ant-design/icons';
+import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { Modal } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../app/hooks';
 import { updateGameStatus } from '../../../features/gameStatus/gameStatusSlice';
 
 const { confirm } = Modal;
+const CLOSE_ICON_COLOR = '#5855f2';
 
 function GameCloser() {
   const navigate = useNavigate();
@@ -26,12 +24,15 @@ function GameCloser() {
   };
   return (
     <>
-      <CloseCircleOutlined
+      <PlusOutlined
         style={{
-          fontSize: 20,
-          position: 'absolute',
+          fontSize: 36,
+          position: 'fixed',
+          top: 40,
           right: 40,
           cursor: 'pointer',
+          color: CLOSE_ICON_COLOR,
+          transform: 'rotate(45deg)',
         }}
         onClick={closeConfirm}
       />
