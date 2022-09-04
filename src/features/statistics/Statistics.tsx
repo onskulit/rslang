@@ -27,7 +27,7 @@ function Statistics() {
           <Row justify="center">
             К сожалению, мы не смогли получить вашу статистику.
           </Row>
-          <Row justify="center">Верноятно, вы не авторизованы.</Row>
+          <Row justify="center">Вероятно, вы не авторизованы.</Row>
         </>
       )}
       {isSuccess && (
