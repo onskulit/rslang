@@ -3,9 +3,9 @@ import { Modal } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../app/hooks';
 import { updateGameStatus } from '../../../features/gameStatus/gameStatusSlice';
+import styles from './GameCloser.module.css';
 
 const { confirm } = Modal;
-const CLOSE_ICON_COLOR = '#5855f2';
 
 function GameCloser() {
   const navigate = useNavigate();
@@ -24,18 +24,7 @@ function GameCloser() {
   };
   return (
     <>
-      <PlusOutlined
-        style={{
-          fontSize: 36,
-          position: 'fixed',
-          top: 40,
-          right: 40,
-          cursor: 'pointer',
-          color: CLOSE_ICON_COLOR,
-          transform: 'rotate(45deg)',
-        }}
-        onClick={closeConfirm}
-      />
+      <PlusOutlined className={styles.icon} onClick={closeConfirm} />
     </>
   );
 }

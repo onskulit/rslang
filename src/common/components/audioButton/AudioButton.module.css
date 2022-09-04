@@ -4,7 +4,7 @@
   width: 60px !important;
   height: 60px !important;
   background-color: var(--pink-light) !important;
-  border-color: var(--violet) !important;
+  border-color: var(--pink-light) !important;
 }
 
 .button:hover,

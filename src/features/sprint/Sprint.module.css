@@ -4,9 +4,50 @@
   flex-grow: 1;
 }
 
+.paddingTop {
+  padding-top: 15rem;
+}
+
 .container {
   padding-bottom: 4rem;
 }
 
-/* @media (max-width: 767px) {
-} */
+.buttonCorrect {
+  background-color: var(--success);
+  color: var(--default-white);
+  border-color: var(--success);
+  font-weight: 500;
+}
+
+.buttonIncorrect {
+  background-color: var(--red);
+  color: var(--default-white);
+  border-color: var(--red);
+  font-weight: 500;
+}
+
+.buttonCorrect:hover,
+.buttonCorrect:focus {
+  font-weight: 500;
+  background-color: #6caa09;
+  color: var(--default-white);
+  border-color: var(--success);
+}
+
+.buttonIncorrect:hover,
+.buttonIncorrect:focus {
+  font-weight: 500;
+  background-color: #c0290f;
+  color: var(--default-white);
+  border-color: var(--red);
+}
+
+@media (max-width: 767px) {
+  .paddingTop {
+    padding-top: 10vh;
+  }
+
+  .buttons {
+    flex-direction: column;
+  }
+}

@@ -15,3 +15,11 @@
 .ant-progress-status-success .ant-progress-bg {
   background-color: var(--success) !important;
 }
+
+.ant-progress-circle-trail {
+  stroke: #cdccff !important;
+}
+
+.ant-progress-circle-path {
+  stroke: #5855f2;
+}
