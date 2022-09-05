@@ -13,6 +13,7 @@ import {
   FORM_ITEM_NAMES,
   MIN_PASSWORD_SYMBOL,
 } from '../../../../common/constants/form';
+import Loader from '../../../../common/components/Loader';
 
 const RegistrationForm: FC<IFormAuthProps> = ({ setAuthType }) => {
   const [createUser, { error: creationError, isLoading: isCreationLoading }] =
@@ -27,7 +28,7 @@ const RegistrationForm: FC<IFormAuthProps> = ({ setAuthType }) => {
   return (
     <>
       {isCreationLoading || isSignInLoading ? (
-        <Spin />
+        <Loader />
       ) : (
         <>
           {creationError && (
@@ -39,6 +40,7 @@ const RegistrationForm: FC<IFormAuthProps> = ({ setAuthType }) => {
             onFinish={(data: IUserInputData) => authorizeUser(data)}
             initialValues={{ remember: true }}
             scrollToFirstError
+            style={{ marginTop: 20 }}
           >
             <Form.Item
               name={FORM_ITEM_NAMES.email}

@@ -21,7 +21,7 @@ function Statistics() {
     <Space
       direction="vertical"
       size="middle"
-      style={{ display: 'flex', alignItems: 'center' }}
+      style={{ display: 'flex', alignItems: 'center', paddingTop: 20 }}
     >
       {!!isError && (
         <>

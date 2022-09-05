@@ -13,6 +13,7 @@ import {
 import { IFormAuthProps } from '../../../../common/types/auth';
 import styles from '../../authorization.module.css';
 import { performSignIn, userSignIn } from '../../common';
+import Loader from '../../../../common/components/Loader';
 
 const LogInForm: FC<IFormAuthProps> = ({ setAuthType }) => {
   const { signIn, isSignInLoading, error } = performSignIn();
@@ -21,12 +22,13 @@ const LogInForm: FC<IFormAuthProps> = ({ setAuthType }) => {
     <>
       {error && <h1 style={{ color: 'red' }}>Неверный e-mail или пароль</h1>}
       {isSignInLoading ? (
-        <Spin />
+        <Loader />
       ) : (
         <Form
           className="login-form"
           initialValues={{ remember: true }}
           onFinish={(data) => userSignIn(data, signIn)}
+          style={{ marginTop: 20 }}
         >
           <Form.Item
             name={FORM_ITEM_NAMES.email}

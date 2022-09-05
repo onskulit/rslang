@@ -6,22 +6,22 @@ export const DEVELOPERS = {
   DIMA: {
     name: 'Дмитрий',
     about:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    goal: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      'С тех пор, как я начал программировать, я чувствую, что мой мозг работает на полную, и это потрясающе! Я постоянно совершенствуюсь, поэтому я уверен, что благодаря моим навыкам и личностным качествам я смогу добиться многого в IT-индустрии.',
+    goal: 'Занимился разработкой игры "Спринт", раздела "Статистика", работал над библиотекой компонентов. Взял на себя роль тимлида: занимался координацией, распределением задач, проведением общих встреч.',
     photo: photoDima,
   },
   EGOR: {
     name: 'Егор',
     about:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    goal: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      'Привет, главное моё стремление - это качественная жизнь. По моему мнению, Java Script способен принести в некоторые сферы именно это качество. Наглядный пример - этот сайт по изучению английского;)',
+    goal: 'Занимался разработкой раздела "Учебник", страницы авторизации.',
     photo: photoEgor,
   },
   ANDREY: {
     name: 'Андрей',
     about:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    goal: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      'Долгое время занимался фронтендом в качестве хобби, наконец решился сделать это своей основной профессией, благодаря RS School.',
+    goal: 'Начал с разработки игры "Аудиовызов", после этого сделал главную страницу. Значительную часть времени занимался разработкой дизайна и стилизацией всего приложения. Также работал над библиотекой компонентов',
     photo: photoAndrey,
   },
 };
