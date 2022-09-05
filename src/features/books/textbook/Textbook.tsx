@@ -1,5 +1,5 @@
-import { Pagination } from 'antd';
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import { Pagination, Typography } from 'antd';
+import React, { FC, useState } from 'react';
 import {
   INITIAL_VALUE,
   PAGINATION_MAX_PAGE,
@@ -19,6 +19,7 @@ import {
 } from '../../api/userSlice';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { SerializedError } from '@reduxjs/toolkit';
+import { NavLink } from 'react-router-dom';
 
 interface ITextbook {
   activeGroup: number;
@@ -35,6 +36,8 @@ interface ICheckNeedWords {
   isLoading: boolean;
   error: FetchBaseQueryError | SerializedError | undefined;
 }
+
+const { Title } = Typography;
 
 const checkNeedWords = (props: INeedWords): ICheckNeedWords => {
   if (props.storageData) {
@@ -123,6 +126,15 @@ const Textbook: FC<ITextbook> = ({ activeGroup }) => {
               />
             </>
           )}
+          <div className={styles.gamesContainer}>
+            <Title level={3}>Перейти к играм:</Title>
+            <NavLink to={'/audition-game'} className={styles.gameLink}>
+              Аудиовызов
+            </NavLink>
+            <NavLink to={'/sprint-game'} className={styles.gameLink}>
+              Спринт
+            </NavLink>
+          </div>
         </section>
       )}
     </>

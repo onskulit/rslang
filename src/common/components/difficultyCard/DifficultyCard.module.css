@@ -1,9 +1,11 @@
 .card {
-  /* background-color: red; */
   border-radius: var(--border-radius);
   border-width: 2px;
   transition: background-color var(--transition);
   min-width: 120px;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .difficultyA1 {
@@ -24,6 +26,9 @@
 .difficultyC2 {
   border-color: var(--difficultyC2) !important;
 }
+.difficultyHARD {
+  border-color: var(--difficultyHard) !important;
+}
 
 .isActive.difficultyA1 {
   background-color: var(--difficultyA1) !important;
@@ -42,6 +47,10 @@
 }
 .isActive.difficultyC2 {
   background-color: var(--difficultyC2) !important;
+}
+
+.isActive.difficultyHARD {
+  background-color: var(--difficultyHard) !important;
 }
 
 .title {

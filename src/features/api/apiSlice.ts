@@ -14,8 +14,8 @@ import {
 const groupChecker = (group: DifficultyLevel) => {
   if (group < DifficultyLevel.LEVEL_0) {
     return DifficultyLevel.LEVEL_0;
-  } else if (group > DifficultyLevel.LEVEL_5) {
-    return DifficultyLevel.LEVEL_5;
+  } else if (group > DifficultyLevel.LEVEL_6) {
+    return DifficultyLevel.LEVEL_6;
   }
   return group;
 };
