@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { Line } from 'react-chartjs-2';
 import { IUserStatisticsResponse } from '../../../common/types/interfaces';
 import { Space } from 'antd';
 import { getCurrentDate } from '../../../common/utils/getCurrentDate';

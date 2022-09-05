@@ -3,8 +3,8 @@ import {
   IUserAggregatedWordData,
   IUserAggregatedWordsArray,
   IUserAggregatedWordsData,
-} from '../../../../app/services/UserService';
-import { IWord } from '../../../../common/types/interfaces';
+} from '../../api/userSlice';
+import { IWord } from '../../../common/types/interfaces';
 import './WordItem.css';
 
 interface IWordItemProps {

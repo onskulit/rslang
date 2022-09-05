@@ -5,11 +5,11 @@ import {
   IUserAggregatedWordData,
   IUserAggregatedWordsArray,
   IUserAggregatedWordsData,
-} from '../../../../app/services/UserService';
-import ErrorMessage from '../../../../common/components/ErrorMessage';
-import Loader from '../../../../common/components/Loader';
-import { IWord } from '../../../../common/types/interfaces';
-import WordItem from '../wordItem/wordItem';
+} from '../../../../api/userSlice';
+import ErrorMessage from '../../../../../common/components/ErrorMessage';
+import Loader from '../../../../../common/components/Loader';
+import { IWord } from '../../../../../common/types/interfaces';
+import WordItem from '../../../wordItem/wordItem';
 import styles from './GroupWords.module.css';
 
 interface IGroupWordsProps {

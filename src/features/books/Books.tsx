@@ -9,7 +9,12 @@ const { Title, Text } = Typography;
 import './Book.css';
 import { difficultyChanged } from '../difficulty/difficultySlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { TitleLevel3 } from '../../common/components/typography/Titles';
 
+enum BOOK {
+  textbook = 'textbook',
+  dictionary = 'dictionary',
+}
 function Books() {
   const { value: difficulty } = useAppSelector((state) => state.difficulty);
   const dispatch = useAppDispatch();

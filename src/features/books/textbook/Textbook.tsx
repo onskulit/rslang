@@ -8,17 +8,15 @@ import { IWord } from '../../../common/types/interfaces';
 import { apiSlice } from '../../api/apiSlice';
 
 import styles from './Textbook.module.css';
-import CurrentWord from '../components/currentWord/CurrentWord';
-import GroupWords from '../components/groupWords/GroupWords';
-import { useAppSelector } from '../../../app/hooks';
+import CurrentWord from './components/currentWord/CurrentWord';
+import GroupWords from './components/groupWords/GroupWords';
 import { storage } from '../../../common/utils/localStorage';
 import { STORAGE_KEY } from '../../../common/constants/localStorage';
 import {
   IUserAggregatedWordData,
   IUserAggregatedWordsArray,
-  IUserAggregatedWordsData,
   useGetAggregatedWordsQuery,
-} from '../../../app/services/UserService';
+} from '../../api/userSlice';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { SerializedError } from '@reduxjs/toolkit';
 
@@ -119,7 +117,7 @@ const Textbook: FC<ITextbook> = ({ activeGroup }) => {
                 defaultCurrent={activePage + 1}
                 total={PAGINATION_MAX_PAGE}
                 current={activePage + 1}
-                onChange={(page, PageSize) => {
+                onChange={(page) => {
                   setActivePage(page - 1);
                 }}
               />

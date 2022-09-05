@@ -3,17 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { IUserAuthData, IUserInputData } from '../../common/types/user';
 import { storage } from '../../common/utils/localStorage';
 import { STORAGE_KEY } from '../../common/constants/localStorage';
-import { IWord } from '../../common/types/interfaces';
-
-export interface IUserWord {
-  difficulty?: string;
-  optional: {
-    learningProgress?: number;
-    percentCorrectAnswers?: number;
-    isNew?: boolean;
-    isLearned: boolean;
-  };
-}
+import { IWord, IUserWord } from '../../common/types/interfaces';
 
 export interface IUserWordResponse extends IUserWord {
   id: string;

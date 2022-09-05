@@ -2,13 +2,13 @@ import React, { FC, useEffect } from 'react';
 import { Space } from 'antd';
 import { SoundOutlined } from '@ant-design/icons';
 import styles from './CurrentWord.module.css';
-import { IWord } from '../../../../common/types/interfaces';
-import { BASE_URL } from '../../../../common/constants/api';
+import { IWord } from '../../../../../common/types/interfaces';
+import { BASE_URL } from '../../../../../common/constants/api';
 import {
   TitleLevel2,
   TitleLevel3,
-} from '../../../../common/components/typography/Titles';
-import { useAppSelector } from '../../../../app/hooks';
+} from '../../../../../common/components/typography/Titles';
+import { useAppSelector } from '../../../../../app/hooks';
 import {
   IUserAggregatedWordData,
   IUserAggregatedWordsData,
@@ -17,8 +17,8 @@ import {
   useGetUserWordQuery,
   usePostUserWordMutation,
   usePutUserWordMutation,
-} from '../../../../app/services/UserService';
-import { IPostPutWord } from '../../../authorization/common';
+} from '../../../../api/userSlice';
+import { IPostPutWord } from '../../../../authorization/common';
 
 type NeedWord = IWord | IUserAggregatedWordData | string;
 type NeedKnownWord = IWord | IUserAggregatedWordData;
