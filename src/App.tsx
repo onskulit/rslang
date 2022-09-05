@@ -48,11 +48,11 @@ function App() {
   const authResponse = checkAuth();
   const dispatch = useAppDispatch();
 
-  const { isRunning } = useAppSelector((state: RootState) => state.gameStatus);
-
   useEffect(() => {
     dispatch(changeValidation(authResponse.isSuccess));
   }, [authResponse.isSuccess]);
+
+  /* const { isRunning } = useAppSelector((state: RootState) => state.gameStatus); */
 
   return (
     <>
@@ -62,7 +62,7 @@ function App() {
         </div>
       ) : (
         <Layout>
-          {!isRunning && <Header />}
+          <Header />
           <Content>
             <Routes>
               <Route path="/" element={<MainPage />} />

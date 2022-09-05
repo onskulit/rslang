@@ -10,12 +10,12 @@ import gameStatusReducer from '../features/gameStatus/gameStatusSlice';
 export const store = configureStore({
   reducer: {
     difficulty: difficultyReducer,
+    gameStatus: gameStatusReducer,
     user: userReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
     [userAPI.reducerPath]: userAPI.reducer,
     [statisticsAPI.reducerPath]: statisticsAPI.reducer,
     sprint: sprintReducer,
-    gameStatus: gameStatusReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
