@@ -29,7 +29,8 @@ function DifficultyCard({ difficulty }: IDifficultyCardProps) {
       })}
     >
       <Title level={4} className={styles.title}>
-        {difficulty !== 'HARD' ? difficulty : 'Сложные слова'}
+        {/* {difficulty !== 'HARD' ? difficulty : 'Сложные слова'} */}
+        {difficulty}
       </Title>
       <Text className={styles.text}>{WordsCount[difficulty]}</Text>
     </Card>

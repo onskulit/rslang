@@ -74,9 +74,9 @@ function Books() {
         <Radio.Button value={5}>
           <DifficultyCard difficulty={LanguageLevels.C2} />
         </Radio.Button>
-        <Radio.Button value={5}>
+        {/* <Radio.Button value={6}>
           <DifficultyCard difficulty={LanguageLevels.HARD} />
-        </Radio.Button>
+        </Radio.Button> */}
       </Radio.Group>
       {displayActiveBook(activeBook)}
     </div>
