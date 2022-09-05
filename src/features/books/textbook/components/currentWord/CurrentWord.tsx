@@ -1,9 +1,13 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import { Space } from 'antd';
 import { SoundOutlined } from '@ant-design/icons';
 import styles from './CurrentWord.module.css';
 import { IWord } from '../../../../../common/types/interfaces';
 import { BASE_URL } from '../../../../../common/constants/api';
+import {
+  TitleLevel2,
+  TitleLevel3,
+} from '../../../../../common/components/typography/Titles';
 import { useAppSelector } from '../../../../../app/hooks';
 import {
   IUserAggregatedWordData,
@@ -149,7 +153,22 @@ const returnId = (
     : (word as IWord).id;
 };
 
+const initialLearnedButtonText = '+ в изученое слово';
+const isLearnedButtonText = 'Слово изучено';
+const initialDifficultButtonText = '+ в сложное слово';
+const isDifficultButtonText = 'Сложное слово';
+
 const CurrentWord: FC<ICurrentWord> = ({ word, isStorageData }) => {
+  const [learnedButtonText, setLearnedButtonText] = useState(
+    initialLearnedButtonText
+  );
+  const [difficultyButtonText, setDifficultyButtonText] = useState(
+    initialDifficultButtonText
+  );
+  const [buttonClickedType, setButtonClickedType] = useState(
+    ButtonType.initial
+  );
+
   const validation = useAppSelector((state) => state.user.validate);
   const { data: wordProps, isSuccess: isWord } = useGetUserWordQuery(
     returnId(isStorageData, word)
@@ -169,6 +188,46 @@ const CurrentWord: FC<ICurrentWord> = ({ word, isStorageData }) => {
       ? (word as IUserAggregatedWordData)._id
       : (word as IWord).id,
   };
+
+  const toggleButtonText = useMemo(
+    () => (buttonType: ButtonType) => {
+      switch (buttonType) {
+        case ButtonType.difficulty:
+          setDifficultyButtonText(
+            difficultyButtonText === initialDifficultButtonText
+              ? isDifficultButtonText
+              : initialDifficultButtonText
+          );
+          break;
+        case ButtonType.learned:
+          setLearnedButtonText(
+            learnedButtonText === initialLearnedButtonText
+              ? isLearnedButtonText
+              : initialLearnedButtonText
+          );
+      }
+    },
+    []
+  );
+
+  useEffect(() => {
+    if (isPostSuccess || isPutSuccess) {
+      toggleButtonText(buttonClickedType);
+    }
+  }, [isPostSuccess, isPutSuccess]);
+
+  useEffect(() => {
+    setDifficultyButtonText(initialDifficultButtonText);
+    setLearnedButtonText(initialLearnedButtonText);
+    if (wordProps) {
+      if (wordProps.difficulty === 'true') {
+        setDifficultyButtonText(isDifficultButtonText);
+      }
+      if (wordProps.optional.isLearned === true) {
+        setLearnedButtonText(isLearnedButtonText);
+      }
+    }
+  }, [word, wordProps]);
 
   return (
     <div className={styles.currentWord}>
@@ -200,11 +259,21 @@ const CurrentWord: FC<ICurrentWord> = ({ word, isStorageData }) => {
         </Space>
         {validation ? (
           <Space className="buttons">
-            <button onClick={() => addToLearned(props)}>
-              + в изученое слово
+            <button
+              onClick={() => {
+                setButtonClickedType(ButtonType.learned);
+                addToLearned(props);
+              }}
+            >
+              {learnedButtonText}
             </button>
-            <button onClick={() => addToDifficulte(props)}>
-              + в сложное слово
+            <button
+              onClick={() => {
+                setButtonClickedType(ButtonType.difficulty);
+                addToDifficulte(props);
+              }}
+            >
+              {difficultyButtonText}
             </button>
           </Space>
         ) : (
