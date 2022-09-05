@@ -9,10 +9,13 @@ import { getCurrentDate } from '../../../common/utils/getCurrentDate';
 import { getPercentOfRightAnswers } from '../../../common/utils/getPercentOfRightAnswers';
 import styles from './DailyStatistics.module.css';
 
+const cardStyles = { width: 500, height: 220 };
+
 interface DailyStatisticsGameProps {
   game: GamesType;
   statistics: IUserStatisticsResponse;
 }
+
 function DailyStatisticsGame({ game, statistics }: DailyStatisticsGameProps) {
   const gameInfo = gamesInfo[game];
 
@@ -21,7 +24,7 @@ function DailyStatisticsGame({ game, statistics }: DailyStatisticsGameProps) {
     [statistics]
   );
   return (
-    <StatisticsCard>
+    <StatisticsCard style={cardStyles}>
       <Row justify="center">
         <TitleLevel4>{gameInfo.name}</TitleLevel4>
       </Row>
