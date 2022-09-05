@@ -15,6 +15,7 @@ import {
   IUserWordResponse,
   // useGetAggregatedWordsQuery,
   useGetUserWordQuery,
+  useLazyGetUserWordQuery,
   usePostUserWordMutation,
   usePutUserWordMutation,
 } from '../../../../api/userSlice';
@@ -165,14 +166,12 @@ const CurrentWord: FC<ICurrentWord> = ({ word, isStorageData }) => {
   const [difficultyButtonText, setDifficultyButtonText] = useState(
     initialDifficultButtonText
   );
-  const [buttonClickedType, setButtonClickedType] = useState(
-    ButtonType.initial
-  );
 
   const validation = useAppSelector((state) => state.user.validate);
   const { data: wordProps, isSuccess: isWord } = useGetUserWordQuery(
     returnId(isStorageData, word)
   );
+  const [getWord] = useLazyGetUserWordQuery();
 
   const [postWord, { isSuccess: isPostSuccess, data: postData }] =
     usePostUserWordMutation();
@@ -189,22 +188,18 @@ const CurrentWord: FC<ICurrentWord> = ({ word, isStorageData }) => {
       : (word as IWord).id,
   };
 
-  const toggleButtonText = useMemo(
-    () => (buttonType: ButtonType) => {
-      switch (buttonType) {
-        case ButtonType.difficulty:
-          setDifficultyButtonText(
-            difficultyButtonText === initialDifficultButtonText
-              ? isDifficultButtonText
-              : initialDifficultButtonText
-          );
-          break;
-        case ButtonType.learned:
-          setLearnedButtonText(
-            learnedButtonText === initialLearnedButtonText
-              ? isLearnedButtonText
-              : initialLearnedButtonText
-          );
+  const getNewWordInfo = useMemo(
+    () => async () => {
+      const response = await getWord(returnId(isStorageData, word));
+      if (response.data) {
+        setDifficultyButtonText(initialDifficultButtonText);
+        setLearnedButtonText(initialLearnedButtonText);
+        if (response.data.difficulty === 'true') {
+          setDifficultyButtonText(isDifficultButtonText);
+        }
+        if (response.data.optional.isLearned === true) {
+          setLearnedButtonText(isLearnedButtonText);
+        }
       }
     },
     []
@@ -212,7 +207,7 @@ const CurrentWord: FC<ICurrentWord> = ({ word, isStorageData }) => {
 
   useEffect(() => {
     if (isPostSuccess || isPutSuccess) {
-      toggleButtonText(buttonClickedType);
+      getNewWordInfo();
     }
   }, [isPostSuccess, isPutSuccess]);
 
@@ -261,7 +256,6 @@ const CurrentWord: FC<ICurrentWord> = ({ word, isStorageData }) => {
           <Space className="buttons">
             <button
               onClick={() => {
-                setButtonClickedType(ButtonType.learned);
                 addToLearned(props);
               }}
             >
@@ -269,7 +263,6 @@ const CurrentWord: FC<ICurrentWord> = ({ word, isStorageData }) => {
             </button>
             <button
               onClick={() => {
-                setButtonClickedType(ButtonType.difficulty);
                 addToDifficulte(props);
               }}
             >
