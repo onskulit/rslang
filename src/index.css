@@ -82,6 +82,12 @@ a {
   flex: 1 1 auto;
 }
 
+.mainLoader {
+  height: 100%;
+  display: grid;
+  place-content: center;
+}
+
 h2.ant-typography {
   font-size: 32px;
 }
