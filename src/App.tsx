@@ -52,8 +52,6 @@ function App() {
     dispatch(changeValidation(authResponse.isSuccess));
   }, [authResponse.isSuccess]);
 
-  /* const { isRunning } = useAppSelector((state: RootState) => state.gameStatus); */
-
   return (
     <>
       {authResponse.isFetching ? (
