@@ -56,7 +56,9 @@ function App() {
   return (
     <>
       {authResponse.isFetching ? (
-        <Loader />
+        <div className="mainLoader">
+          <Loader />
+        </div>
       ) : (
         <Layout>
           {!isRunning && <Header />}

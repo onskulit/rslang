@@ -1,0 +1,9 @@
+.buttons {
+  padding-top: 20px;
+}
+
+@media (max-width: 767px) {
+  .buttons {
+    flex-direction: column;
+  }
+}

@@ -3,6 +3,7 @@ import React from 'react';
 
 interface ButtonProps {
   onClick?: () => void;
+  onKeyDown?: (event: React.KeyboardEvent) => void;
   tabIndex?: number;
   style?: React.CSSProperties;
   children: React.ReactNode;

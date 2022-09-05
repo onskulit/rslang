@@ -1,6 +1,6 @@
 import styles from './Audition.module.css';
 import { Row, Space, Progress, Image } from 'antd';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useGetWordsForGroupQuery } from '../api/apiSlice';
 import {
   INITIAL_VALUE,
@@ -30,7 +30,8 @@ import { updateGameStatus } from '../gameStatus/gameStatusSlice';
 
 const NUMBER_OF_WORDS = 10;
 const NUMBER_OF_OPTIONS = 5;
-const PROGRESSBAR_RED = 'red';
+const PROGRESSBAR_BG = '#5855f2';
+const PROGRESSBAR_RED = '#fc3f1d';
 const IMAGE_WIDTH = 300;
 const BUTTON_TEXT_HELP = 'Не знаю';
 
@@ -147,6 +148,7 @@ function Audition(): JSX.Element {
   }, [words]);
 
   function onEnterClick(event: KeyboardEvent) {
+    event.preventDefault();
     if (event.key === Keyboard.ENTER) {
       if (answer) {
         onNextClick();
@@ -154,6 +156,10 @@ function Audition(): JSX.Element {
         onHelpClick();
       }
     }
+  }
+
+  function onKeyDownHandler(event: React.KeyboardEvent) {
+    event.preventDefault();
   }
 
   useEffect(() => {
@@ -168,68 +174,92 @@ function Audition(): JSX.Element {
   }, [streak]);
 
   return (
-    <>
-      <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-        {isLoading && <Loader />}
-        {isSuccess && (
-          <>
-            <Progress
-              percent={progress}
-              showInfo={false}
-              strokeColor={gameOver ? PROGRESSBAR_RED : ''}
-              className={`${styles.progressBar} ${
-                gameOver && styles.progressBarGameOver
-              }`}
+    <div className={styles.audition}>
+      {isSuccess && (
+        <Progress
+          percent={progress}
+          showInfo={false}
+          strokeColor={gameOver ? PROGRESSBAR_RED : PROGRESSBAR_BG}
+          className={`${styles.progressBar} ${
+            gameOver && styles.progressBarGameOver
+          }`}
+        />
+      )}
+      <div className={styles.auditionMain}>
+        <div className={`container ${styles.container}`}>
+          {isLoading && (
+            <div className={styles.paddingTop}>
+              <Loader />
+            </div>
+          )}
+
+          {!results && (
+            <Space
+              direction="vertical"
+              size="middle"
+              style={{ display: 'flex', width: '100%' }}
+              className={styles.paddingTop}
+            >
+              {isSuccess && (
+                <>
+                  <GameCloser />
+                  <Row justify="center">
+                    {currentWord && !end && (
+                      <AudioButton
+                        audioFile={currentWord?.audio}
+                        mute={gameOver}
+                      />
+                    )}
+                  </Row>
+                  <Row justify="center">
+                    {!!currentWords.length && !end && (
+                      <AuditionOptions
+                        options={currentOptions}
+                        correctOption={currentWord}
+                        setAnswer={onAnswerClick}
+                        help={help}
+                      />
+                    )}
+                  </Row>
+                  <Row justify="center">
+                    <ButtonRounded
+                      tabIndex={DISABLED_TABINDEX}
+                      onClick={answer ? onNextClick : onHelpClick}
+                      onKeyDown={(event) => {
+                        onKeyDownHandler(event);
+                      }}
+                    >
+                      {answer ? <ArrowRightOutlined /> : BUTTON_TEXT_HELP}
+                    </ButtonRounded>
+                  </Row>
+                </>
+              )}
+              {currentWord && answer && !end && (
+                <>
+                  <Row justify="center">
+                    <Image
+                      preview={false}
+                      width={IMAGE_WIDTH}
+                      className={styles.image}
+                      rootClassName={styles.imageContainer}
+                      src={`${BASE_URL}/${currentWord.image}`}
+                    />
+                  </Row>
+                </>
+              )}
+            </Space>
+          )}
+          {results && (
+            <GameResult
+              game={GamesType.audition}
+              correctWords={correctAnswers}
+              wrongWords={wrongAnswers}
+              maxStreak={maxStreak}
             />
-            {!results && <GameCloser />}
-            <Row justify="center">
-              {currentWord && !end && (
-                <AudioButton audioFile={currentWord?.audio} mute={gameOver} />
-              )}
-            </Row>
-            <Row justify="center">
-              {!!currentWords.length && !end && (
-                <AuditionOptions
-                  options={currentOptions}
-                  correctOption={currentWord}
-                  setAnswer={onAnswerClick}
-                  help={help}
-                />
-              )}
-            </Row>
-            {!results && (
-              <Row justify="center">
-                <ButtonRounded
-                  tabIndex={DISABLED_TABINDEX}
-                  onClick={answer ? onNextClick : onHelpClick}
-                >
-                  {answer ? <ArrowRightOutlined /> : BUTTON_TEXT_HELP}
-                </ButtonRounded>
-              </Row>
-            )}
-          </>
-        )}
-        {currentWord && answer && !end && (
-          <>
-            <Row justify="center">
-              <Image
-                preview={false}
-                width={IMAGE_WIDTH}
-                src={`${BASE_URL}/${currentWord.image}`}
-              />
-            </Row>
-          </>
-        )}
-        {results && (
-          <GameResult
-            game={GamesType.audition}
-            correctWords={correctAnswers}
-            wrongWords={wrongAnswers}
-            maxStreak={maxStreak}
-          />
-        )}
-      </Space>
-    </>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
 

@@ -1,0 +1,25 @@
+.ant-progress-inner {
+  border-radius: 0;
+  background-color: #cdccff;
+}
+
+.ant-progress-bg {
+  border-radius: 0;
+  background: #5855f2;
+}
+
+.ant-progress-line {
+  font-size: 0;
+}
+
+.ant-progress-status-success .ant-progress-bg {
+  background-color: var(--success) !important;
+}
+
+.ant-progress-circle-trail {
+  stroke: #cdccff !important;
+}
+
+.ant-progress-circle-path {
+  stroke: #5855f2;
+}
