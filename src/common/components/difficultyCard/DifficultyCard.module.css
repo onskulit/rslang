@@ -1,0 +1,62 @@
+.card {
+  /* background-color: red; */
+  border-radius: var(--border-radius);
+  border-width: 2px;
+  transition: background-color var(--transition);
+  min-width: 120px;
+}
+
+.difficultyA1 {
+  border-color: var(--difficultyA1) !important;
+}
+.difficultyA2 {
+  border-color: var(--difficultyA2) !important;
+}
+.difficultyB1 {
+  border-color: var(--difficultyB1) !important;
+}
+.difficultyB2 {
+  border-color: var(--difficultyB2) !important;
+}
+.difficultyC1 {
+  border-color: var(--difficultyC1) !important;
+}
+.difficultyC2 {
+  border-color: var(--difficultyC2) !important;
+}
+
+.isActive.difficultyA1 {
+  background-color: var(--difficultyA1) !important;
+}
+.isActive.difficultyA2 {
+  background-color: var(--difficultyA2) !important;
+}
+.isActive.difficultyB1 {
+  background-color: var(--difficultyB1) !important;
+}
+.isActive.difficultyB2 {
+  background-color: var(--difficultyB2) !important;
+}
+.isActive.difficultyC1 {
+  background-color: var(--difficultyC1) !important;
+}
+.isActive.difficultyC2 {
+  background-color: var(--difficultyC2) !important;
+}
+
+.title {
+  margin-bottom: 0 !important;
+}
+
+.title,
+.text {
+  font-weight: 700 !important;
+}
+
+.isActive .title {
+  color: var(--default-white);
+}
+
+.isActive .text {
+  color: var(--default-white);
+}

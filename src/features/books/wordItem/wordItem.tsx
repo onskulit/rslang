@@ -50,8 +50,8 @@ const WordItem: FC<IWordItemProps> = ({
       className={toggleActiveStyle(index)}
       onClick={() => toggleActiveWord(index)}
     >
-      <span className={'styles.word'}>{word.word}</span>
-      <span className={'styles.wordTranslate'}>{word.wordTranslate}</span>
+      <span className={'word'}>{word.word}</span>
+      <span className={'wordTranslate'}>{word.wordTranslate}</span>
     </button>
     // <div>sdf</div>
   );

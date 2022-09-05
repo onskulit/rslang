@@ -126,8 +126,6 @@ const Textbook: FC<ITextbook> = ({ activeGroup }) => {
         </section>
       )}
     </>
-
-    // <div>fdg</div>
   );
 };
 

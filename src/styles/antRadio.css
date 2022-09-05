@@ -1,3 +1,24 @@
 .ant-radio-button-wrapper-disabled {
   pointer-events: none;
 }
+
+.books .ant-radio-button-wrapper {
+  padding: 0;
+  border: none;
+  height: auto;
+  width: auto;
+  background-color: transparent !important;
+  border-radius: var(--border-radius);
+}
+
+.books .ant-radio-button-wrapper:not(:first-child)::before {
+  display: none;
+}
+
+.books .ant-card-body {
+  padding: 10px 20px;
+}
+
+.books .ant-typography.title {
+  margin: 0;
+}

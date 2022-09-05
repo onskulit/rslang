@@ -1,19 +1,20 @@
 .word-item {
-  padding: 20px 60px 70px 20px;
+  padding: 1.5rem 1rem;
   display: flex;
   flex-direction: column;
-  background-color: #f3f4f8;
-  border: none;
+  background-color: transparent;
+  border: 1px solid var(--blue);
   border-radius: 10px;
   cursor: pointer;
+  transition: background-color var(--transition);
 }
 
 .word-item:hover {
-  background-color: #ecf4fb;
+  background-color: #ffd35c;
 }
 
 .word-item.active {
-  background-color: #0b65b3;
+  background-color: var(--blue);
 }
 
 .word-item span:not(:last-child) {

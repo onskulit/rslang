@@ -12,6 +12,15 @@ export enum LanguageLevels {
   C2 = 'C2',
 }
 
+export enum WordsCount {
+  A1 = '1-600',
+  A2 = '601-1200',
+  B1 = '1201-1800',
+  B2 = '1801-2400',
+  C1 = '2401-3000',
+  C2 = '3001-3600',
+}
+
 export enum DifficultyLevel {
   LEVEL_0,
   LEVEL_1,
