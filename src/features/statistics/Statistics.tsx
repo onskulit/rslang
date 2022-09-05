@@ -1,4 +1,7 @@
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { Row, Space } from 'antd';
+import { useEffect, useState } from 'react';
+import ErrorMessage from '../../common/components/ErrorMessage';
 import { TitleLevel3 } from '../../common/components/typography/Titles';
 import { STORAGE_KEY } from '../../common/constants/localStorage';
 import { GamesType } from '../../common/types/enums';
@@ -9,28 +12,38 @@ import DailyStatisticsGame from './dailyStatistics/DailyStatisticsGame';
 import DailyStatisticsWords from './dailyStatistics/DailyStatisticsWords';
 
 function Statistics() {
+  const [errorMessage, setErrorMessage] = useState('');
   const userData = JSON.parse(storage.get(STORAGE_KEY.userAuthData));
-  const { data, isError, isSuccess } = statisticsAPI.useGetDailyStatisticsQuery(
-    {
+  const { data, isError, error, isSuccess } =
+    statisticsAPI.useGetDailyStatisticsQuery({
       userId: userData ? userData.userId : '',
       token: userData ? userData.token : '',
-    }
-  );
+    });
 
+  useEffect(() => {
+    if (error) {
+      const typedError = error as FetchBaseQueryError;
+      const status = typedError.status;
+      if (status === 'PARSING_ERROR') {
+        if (typedError.originalStatus === 404) {
+          setErrorMessage(
+            'У вас пока нет статистики. Сыграйте в какую-нибудь игру!'
+          );
+        }
+      } else {
+        setErrorMessage(
+          'К сожалению, мы не смогли получить вашу статистику. Вероятно, вы не авторизованы'
+        );
+      }
+    }
+  }, [error]);
   return (
     <Space
       direction="vertical"
       size="middle"
       style={{ display: 'flex', alignItems: 'center', paddingTop: 20 }}
     >
-      {!!isError && (
-        <>
-          <Row justify="center">
-            К сожалению, мы не смогли получить вашу статистику.
-          </Row>
-          <Row justify="center">Вероятно, вы не авторизованы.</Row>
-        </>
-      )}
+      {!!isError && <ErrorMessage error={errorMessage} />}
       {isSuccess && (
         <>
           <TitleLevel3>Статистика (сегодня)</TitleLevel3>
