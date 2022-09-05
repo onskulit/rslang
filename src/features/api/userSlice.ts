@@ -76,6 +76,16 @@ export const userAPI = createApi({
       }),
     }),
 
+    getUserWords: builder.query<IUserWordResponse[], void>({
+      query: () => ({
+        url: `${API.users}/${authData.userId}/words`,
+        headers: {
+          Authorization: HEADERS.authorization(authData.token),
+          Accept: HEADERS.accept,
+          'Content-Type': HEADERS.contentType,
+        },
+      }),
+    }),
     getUserWord: builder.query<IUserWordResponse, string>({
       query: (wordId) => ({
         url: `${API.users}/${authData.userId}/words/${wordId}`,
@@ -135,6 +145,7 @@ export const {
   useGetUserByIdQuery,
   usePostUserWordMutation,
   useGetAggregatedWordsQuery,
+  useGetUserWordsQuery,
   useGetUserWordQuery,
   useLazyGetUserWordQuery,
   usePutUserWordMutation,

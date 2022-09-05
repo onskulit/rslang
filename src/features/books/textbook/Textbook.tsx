@@ -10,6 +10,7 @@ import { apiSlice } from '../../api/apiSlice';
 import styles from './Textbook.module.css';
 import CurrentWord from './components/currentWord/CurrentWord';
 import GroupWords from './components/groupWords/GroupWords';
+import GroupDifficultWords from './components/groupWords/GroupDifficultWords';
 import { storage } from '../../../common/utils/localStorage';
 import { STORAGE_KEY } from '../../../common/constants/localStorage';
 import {
@@ -102,7 +103,7 @@ const Textbook: FC<ITextbook> = ({ activeGroup }) => {
 
   return (
     <>
-      {words && (
+      {words && activeGroup < 6 && (
         <section className={styles.words}>
           <GroupWords
             groupWordsData={groupWordsData}
@@ -137,6 +138,22 @@ const Textbook: FC<ITextbook> = ({ activeGroup }) => {
           </div>
         </section>
       )}
+      {/* {words && activeGroup === 6 && (
+        <section className={styles.words}>
+          <GroupDifficultWords
+            groupWordsData={groupWordsData}
+            isStorageData={isStorageData}
+          />
+          {!isLoading && (
+            <>
+              <CurrentWord
+                word={activeWord || currentWord()}
+                isStorageData={isStorageData}
+              />
+            </>
+          )}
+        </section>
+      )} */}
     </>
   );
 };
