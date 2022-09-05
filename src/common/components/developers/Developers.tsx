@@ -29,12 +29,14 @@ function Developers() {
                   about={DEVELOPERS.DIMA.about}
                   photo={DEVELOPERS.DIMA.photo}
                   goal={DEVELOPERS.DIMA.goal}
+                  github={DEVELOPERS.DIMA.github}
                 />
                 <Developer
                   name={DEVELOPERS.EGOR.name}
                   about={DEVELOPERS.EGOR.about}
                   photo={DEVELOPERS.EGOR.photo}
                   goal={DEVELOPERS.EGOR.goal}
+                  github={DEVELOPERS.EGOR.github}
                   classList={['cardGreen']}
                 />
                 <Developer
@@ -42,6 +44,7 @@ function Developers() {
                   about={DEVELOPERS.ANDREY.about}
                   photo={DEVELOPERS.ANDREY.photo}
                   goal={DEVELOPERS.ANDREY.goal}
+                  github={DEVELOPERS.ANDREY.github}
                   classList={['cardYellow']}
                 />
               </div>
