@@ -27,6 +27,7 @@ import { GamesType, Keyboard } from '../../common/types/enums';
 import GameCloser from '../../common/components/games/GameCloser';
 import Loader from '../../common/components/Loader';
 import { updateGameStatus } from '../gameStatus/gameStatusSlice';
+import { useNavigate, useNavigationType } from 'react-router-dom';
 
 const NUMBER_OF_WORDS = 10;
 const NUMBER_OF_OPTIONS = 5;
@@ -50,6 +51,9 @@ function Audition(): JSX.Element {
   const [end, setEnd] = useState<boolean>(false);
   const [results, setResults] = useState<boolean>(false);
   const [gameOver, setGameOver] = useState<boolean>(false);
+
+  const navigate = useNavigate();
+  const navigateType = useNavigationType();
 
   const dispatch = useAppDispatch();
   const difficulty = useAppSelector(
@@ -172,6 +176,12 @@ function Audition(): JSX.Element {
   useEffect(() => {
     if (streak > maxStreak) setMaxStreak(streak);
   }, [streak]);
+
+  useEffect(() => {
+    if (navigateType === 'POP') {
+      navigate('../audition', { replace: true });
+    }
+  }, []);
 
   return (
     <div className={styles.audition}>
