@@ -5,7 +5,7 @@ interface ErrorMessageProps {
 }
 
 function ErrorMessage({ error }: ErrorMessageProps) {
-  return <Row justify="center">Возникла ошибка! {error}</Row>;
+  return <Row justify="center">{error}</Row>;
 }
 
 export default ErrorMessage;
