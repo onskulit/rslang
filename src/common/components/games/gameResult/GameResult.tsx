@@ -9,7 +9,7 @@ import {
 } from '../../../../features/api/statisticsSlice';
 import { updateGameStatus } from '../../../../features/gameStatus/gameStatusSlice';
 import { getCurrentDate } from '../../../utils/getCurrentDate';
-import { storage } from '../../../../utils/localStorage';
+import { storage } from '../../../utils/localStorage';
 import {
   initialDailyStatistics,
   initialStatistics,
@@ -131,7 +131,7 @@ function GameResult({
         isNew: false,
         isLearned: false,
       };
-      const response = await getUserWord({ wordId: id });
+      const response = await getUserWord(id);
 
       if (response.error) {
         const typedError = response.error as FetchBaseQueryError;

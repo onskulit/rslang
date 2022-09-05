@@ -5,13 +5,14 @@ import Textbook from './features/textbook/Textbook';
 import Statistics from './features/statistics/Statistics';
 import { Layout } from 'antd';
 import AppFooter from './pages/footer/Footer';
+import Books from './features/books/Books';
 import GameMenu from './common/components/games/GameMenu';
 import { GamesType } from './common/types/enums';
 import Sprint from './features/sprint/Sprint';
 import Audition from './features/audition/Audition';
 import gamesInfo from './common/constants/gamesInfo';
 import Authorization from './features/authorization/authorization';
-import { storage } from './utils/localStorage';
+import { storage } from './common/utils/localStorage';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from './app/hooks';
 import { useGetUserByIdQuery } from './features/api/userSlice';
@@ -65,7 +66,7 @@ function App() {
           <Content>
             <Routes>
               <Route path="/" element={<MainPage />} />
-              <Route path="/textbook" element={<Textbook />} />
+              <Route path="/books" element={<Books />} />
               <Route
                 path="/sprint"
                 element={<GameMenu game={GamesType.sprint} />}

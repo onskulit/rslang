@@ -1,0 +1,50 @@
+.ant-pagination-item {
+  border-radius: 5px;
+  border-color: var(--blue);
+  transition: border-color var(--transition);
+}
+
+.ant-pagination-item svg {
+  transition: color var(--transition);
+}
+
+.ant-pagination-prev .ant-pagination-item-link,
+.ant-pagination-next .ant-pagination-item-link {
+  border-radius: 5px;
+  border-color: var(--blue);
+}
+
+.ant-pagination-item a {
+  color: var(--default-black);
+  transition: color var(--transition);
+}
+
+.ant-pagination-item:hover a {
+  color: var(--blue--dark);
+}
+
+.ant-pagination-item:hover {
+  border-color: var(--blue--dark);
+}
+
+.ant-pagination-prev .ant-pagination-item-link:hover,
+.ant-pagination-next .ant-pagination-item-link:hover {
+  border-color: var(--blue--dark);
+}
+
+.ant-pagination-prev .ant-pagination-item-link:hover svg,
+.ant-pagination-next .ant-pagination-item-link:hover {
+  color: var(--blue--dark);
+}
+
+.ant-pagination-item-active {
+  background-color: var(--blue--dark);
+}
+
+.ant-pagination-item-active a {
+  color: var(--default-white);
+}
+
+.ant-pagination-item-active:hover a {
+  color: var(--default-white);
+}

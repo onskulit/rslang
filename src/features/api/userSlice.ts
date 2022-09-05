@@ -1,31 +1,31 @@
 import { API, BASE_URL, HEADERS, METHODS } from '../../common/constants/api';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { IUserAuthData, IUserInputData } from '../../common/types/user';
-import { storage } from '../../utils/localStorage';
+import { storage } from '../../common/utils/localStorage';
 import { STORAGE_KEY } from '../../common/constants/localStorage';
-import { IUserWord, IWord } from '../../common/types/interfaces';
+import { IWord, IUserWord } from '../../common/types/interfaces';
 
 export interface IUserWordResponse extends IUserWord {
   id: string;
   wordId: string;
 }
 
-interface IUserWordQuery {
+export interface IUserWordQuery {
   wordId: string;
   body?: IUserWord;
 }
 
-interface IUserAggregatedWordData extends IWord {
+export interface IUserAggregatedWordData extends IWord {
   _id: string;
   userWord: IUserWord;
 }
 
-interface IUserAggregatedWordsData {
+export interface IUserAggregatedWordsData {
   paginatedResults: IUserAggregatedWordData[];
   totalCount: { count: number }[];
 }
 
-type IUserAggregatedWordsArray = IUserAggregatedWordsData[];
+export type IUserAggregatedWordsArray = IUserAggregatedWordsData[];
 
 interface IUserAggregatedWordsQuery {
   filter: string;
@@ -76,8 +76,18 @@ export const userAPI = createApi({
       }),
     }),
 
-    getUserWord: builder.query<IUserWordResponse, IUserWordQuery>({
-      query: ({ wordId }) => ({
+    getUserWords: builder.query<IUserWordResponse[], void>({
+      query: () => ({
+        url: `${API.users}/${authData.userId}/words`,
+        headers: {
+          Authorization: HEADERS.authorization(authData.token),
+          Accept: HEADERS.accept,
+          'Content-Type': HEADERS.contentType,
+        },
+      }),
+    }),
+    getUserWord: builder.query<IUserWordResponse, string>({
+      query: (wordId) => ({
         url: `${API.users}/${authData.userId}/words/${wordId}`,
         headers: {
           Authorization: HEADERS.authorization(authData.token),
@@ -135,6 +145,7 @@ export const {
   useGetUserByIdQuery,
   usePostUserWordMutation,
   useGetAggregatedWordsQuery,
+  useGetUserWordsQuery,
   useGetUserWordQuery,
   useLazyGetUserWordQuery,
   usePutUserWordMutation,

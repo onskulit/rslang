@@ -27,6 +27,7 @@
   --difficultyB2: #55a630;
   --difficultyC1: #7678ed;
   --difficultyC2: #3d348b;
+  --difficultyHard: #3d0839;
 
   --border-radius: 15px;
   --transition: 0.3s ease;
@@ -42,6 +43,7 @@
 @import url('./styles/antModal.css');
 @import url('./styles/antProgress.css');
 @import url('./styles/antSpace.css');
+@import url('./styles/antPagination.css');
 
 body {
   margin: 0;

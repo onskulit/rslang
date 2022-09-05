@@ -2,7 +2,7 @@ import { DownOutlined } from '@ant-design/icons';
 import { NavLink } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { changeValidation } from '../../../features/user/userSlice';
-import { storage } from '../../../utils/localStorage';
+import { storage } from '../../../common/utils/localStorage';
 import { STORAGE_KEY } from '../../../common/constants/localStorage';
 import { Dropdown, Menu, Space, Grid, Button } from 'antd';
 import styles from './Nav.module.css';
@@ -43,7 +43,7 @@ function Nav() {
     <nav className={styles.nav}>
       <div className={`${styles.wrapper} ${!screens.md && styles.hidden}`}>
         <NavLink to="/">Главная</NavLink>
-        <NavLink to="/textbook">Учебник</NavLink>
+        <NavLink to="/books">Учебник</NavLink>
         <Dropdown overlay={menu}>
           <a onClick={dropdownMenuClickHandler}>
             <Space>

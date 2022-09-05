@@ -2,7 +2,7 @@ import { Row, Space } from 'antd';
 import { TitleLevel3 } from '../../common/components/typography/Titles';
 import { STORAGE_KEY } from '../../common/constants/localStorage';
 import { GamesType } from '../../common/types/enums';
-import { storage } from '../../utils/localStorage';
+import { storage } from '../../common/utils/localStorage';
 import { statisticsAPI } from '../api/statisticsSlice';
 import AllTimeStatistics from './allTimeStatistics/AllTimeStatistics';
 import DailyStatisticsGame from './dailyStatistics/DailyStatisticsGame';

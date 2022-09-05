@@ -1,0 +1,37 @@
+.word-item {
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  border: 1px solid var(--blue);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color var(--transition);
+}
+
+.word-item:hover {
+  background-color: #ffd35c;
+}
+
+.word-item.active {
+  background-color: var(--blue);
+}
+
+.word-item span:not(:last-child) {
+  margin-bottom: 5px;
+}
+
+.word {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  line-height: 1;
+  color: var(--main-text-color);
+}
+
+.wordTranslate {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1;
+  text-align: left;
+}

@@ -1,4 +1,4 @@
-import { STORAGE_KEY } from './../common/constants/localStorage';
+import { STORAGE_KEY } from '../constants/localStorage';
 export interface IStorage {
   set: (key: STORAGE_KEY, value: string) => void;
   remove: (key: STORAGE_KEY) => void;
