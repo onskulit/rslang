@@ -1,0 +1,11 @@
+.list {
+  background-color: var(--default-white);
+  border-radius: var(--border-radius);
+  max-width: 768px;
+  margin: 0 auto;
+}
+
+.divider::after,
+.divider::before {
+  border-color: #ffd35c !important;
+}

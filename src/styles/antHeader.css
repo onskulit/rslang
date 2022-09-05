@@ -1,0 +1,87 @@
+.ant-page-header {
+  position: relative;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.ant-page-header::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-image: linear-gradient(
+    to right,
+    #e94e99,
+    #fd5e82,
+    #ff766d,
+    #ff925e,
+    #ffad58,
+    #ffb16a,
+    #ffb57b,
+    #ffba8b,
+    #ffb4ad,
+    #ffb6d1,
+    #eec0ef,
+    #cdccff
+  );
+}
+
+.ant-page-header-heading {
+  width: min(100% - 3rem, 1600px);
+  margin-inline: auto;
+}
+
+.ant-page-header-heading-left {
+  position: relative;
+}
+
+.ant-page-header-back {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.ant-page-header-back::after {
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.ant-page-header-back-button {
+  height: 100%;
+  width: 100%;
+  color: transparent;
+}
+
+.ant-page-header-back-button:hover {
+  color: transparent;
+}
+
+.ant-page-header-heading-extra {
+  display: flex;
+  align-items: center;
+}
+
+.ant-page-header-heading-title {
+  /* background: -webkit-linear-gradient(
+    #e94e99,
+    #fd5e82,
+    #ff766d,
+    #ff925e,
+    #ffad58,
+    #ffb16a,
+    #ffb57b,
+    #ffba8b,
+    #ffb4ad,
+    #ffb6d1,
+    #eec0ef,
+    #cdccff
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; */
+  font-size: 2rem;
+  min-height: 40px;
+}

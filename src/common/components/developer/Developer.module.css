@@ -1,0 +1,113 @@
+.card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  max-width: 750px;
+  width: 100%;
+  height: 100%;
+  background-color: var(--main-bg-color-transparent);
+  box-shadow: none;
+  border: 1px solid var(--blue);
+  border-radius: 15px;
+  gap: 30px;
+}
+
+.card:nth-child(2n) {
+  align-self: flex-end;
+  justify-self: flex-end;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.cardGreen,
+.cardGreen .divider,
+.cardGreen .photo img {
+  border-color: var(--green);
+}
+
+.cardBlue,
+.cardBlue .divider,
+.cardBlue .photo img {
+  border-color: var(--blue);
+}
+
+.cardYellow,
+.cardYellow .divider,
+.cardYellow .photo img {
+  border-color: var(--yellow);
+}
+
+.cardPink,
+.cardPink .divider,
+.cardPink .photo img {
+  border-color: var(--pink-light);
+}
+
+.divider {
+  border-color: var(--blue);
+}
+
+.name {
+  margin-bottom: 0 !important;
+}
+
+.photo img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: center;
+  border: 1px solid var(--blue);
+}
+
+.text {
+  line-height: 1.3em;
+}
+
+.goal {
+  font-weight: 700;
+}
+
+@media (max-width: 767px) {
+  .card {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .name {
+    text-align: center;
+  }
+
+  .photo img {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+.link {
+  margin-left: 0.5rem;
+  background-color: transparent;
+  border: none;
+  margin-top: 3px;
+}
+
+.link svg {
+  color: var(--default-black);
+  transition: color var(--transition);
+  width: 100%;
+  height: 20px;
+}
+
+.link:hover svg {
+  color: var(--blue--dark);
+}
+
+.link:hover,
+.link:focus {
+  background-color: transparent;
+}

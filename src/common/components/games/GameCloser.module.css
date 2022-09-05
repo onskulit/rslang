@@ -1,0 +1,22 @@
+.icon {
+  font-size: 36px;
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  cursor: pointer;
+  color: #5855f2;
+  transform: rotate(45deg);
+  transition: transform var(--transition);
+}
+
+.icon:hover {
+  transform: scale(1.1) rotate(45deg);
+}
+
+@media (max-width: 767px) {
+  .icon {
+    font-size: 24px;
+    top: 20px;
+    right: 20px;
+  }
+}

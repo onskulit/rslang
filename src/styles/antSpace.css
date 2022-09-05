@@ -1,0 +1,5 @@
+@media (max-width: 767px) {
+  .auditionOptions .ant-space-item {
+    width: 100%;
+  }
+}

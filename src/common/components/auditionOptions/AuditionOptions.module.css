@@ -1,0 +1,32 @@
+.option {
+  border-radius: 25px !important;
+  border-color: var(--pink-light) !important;
+  border-width: 1px !important;
+}
+
+.option:hover {
+  color: var(--blue--dark);
+}
+
+.optionIncorrect {
+  color: var(--red) !important;
+  border-color: var(--red) !important;
+  background-color: var(--default-white) !important;
+}
+
+.optionCorrect {
+  color: var(--success) !important;
+  border-color: var(--success) !important;
+  background-color: var(--default-white) !important;
+}
+
+@media (max-width: 767px) {
+  .list {
+    flex-direction: column;
+  }
+
+  .option {
+    width: 100%;
+    text-align: center;
+  }
+}
