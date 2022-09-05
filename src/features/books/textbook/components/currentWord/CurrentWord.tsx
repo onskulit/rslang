@@ -322,6 +322,10 @@ const CurrentWord: FC<ICurrentWord> = ({ word, isStorageData }) => {
             </p>
           </Space>
         </div>
+        <TitleLevel3>
+          Прогресс изучения:
+          {` ${wordProps?.optional.learningProgress}`}
+        </TitleLevel3>
         {/* <div className="statistic">
           <TitleLevel3>Ответы в играх:</TitleLevel3>
           <div className={styles.gamesBox}>
