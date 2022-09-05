@@ -254,7 +254,7 @@ const CurrentWord: FC<ICurrentWord> = ({ word, isStorageData }) => {
         </Space>
         {validation ? (
           <Space className="buttons">
-            <button
+            {/*             <button
               onClick={() => {
                 addToLearned(props);
               }}
@@ -267,7 +267,7 @@ const CurrentWord: FC<ICurrentWord> = ({ word, isStorageData }) => {
               }}
             >
               {difficultyButtonText}
-            </button>
+            </button> */}
           </Space>
         ) : (
           ''
@@ -322,10 +322,10 @@ const CurrentWord: FC<ICurrentWord> = ({ word, isStorageData }) => {
             </p>
           </Space>
         </div>
-        <TitleLevel3>
+        <Title level={3} className={styles.title}>
           Прогресс изучения:
           {` ${wordProps?.optional.learningProgress}`}
-        </TitleLevel3>
+        </Title>
         {/* <div className="statistic">
           <TitleLevel3>Ответы в играх:</TitleLevel3>
           <div className={styles.gamesBox}>

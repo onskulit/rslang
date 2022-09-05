@@ -10,7 +10,6 @@ import { apiSlice } from '../../api/apiSlice';
 import styles from './Textbook.module.css';
 import CurrentWord from './components/currentWord/CurrentWord';
 import GroupWords from './components/groupWords/GroupWords';
-import GroupDifficultWords from './components/groupWords/GroupDifficultWords';
 import { storage } from '../../../common/utils/localStorage';
 import { STORAGE_KEY } from '../../../common/constants/localStorage';
 import {
