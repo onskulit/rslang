@@ -102,7 +102,7 @@ const Textbook: FC<ITextbook> = ({ activeGroup }) => {
 
   return (
     <>
-      {words && (
+      {words && activeGroup < 6 && (
         <section className={styles.words}>
           <GroupWords
             groupWordsData={groupWordsData}
@@ -137,6 +137,22 @@ const Textbook: FC<ITextbook> = ({ activeGroup }) => {
           </div>
         </section>
       )}
+      {/* {words && activeGroup === 6 && (
+        <section className={styles.words}>
+          <GroupDifficultWords
+            groupWordsData={groupWordsData}
+            isStorageData={isStorageData}
+          />
+          {!isLoading && (
+            <>
+              <CurrentWord
+                word={activeWord || currentWord()}
+                isStorageData={isStorageData}
+              />
+            </>
+          )}
+        </section>
+      )} */}
     </>
   );
 };

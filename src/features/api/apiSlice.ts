@@ -73,4 +73,5 @@ export const {
   useGetWordsForPageQuery,
   useGetWordsForGroupQuery,
   useGetWordQuery,
+  useLazyGetWordQuery,
 } = apiSlice;
