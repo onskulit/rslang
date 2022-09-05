@@ -3,8 +3,23 @@
   display: grid;
   grid-template-columns: 1fr 400px;
   grid-template-areas:
-    "words-group current-word"
-    "pagination pagination";
+    'words-group current-word'
+    'pagination pagination';
   row-gap: 25px;
-  column-gap: 15px;
+  column-gap: 2rem;
+}
+
+.gamesContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.gameLink {
+  color: var(--blue--dark);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.gameLink:hover {
+  color: var(--difficultyC2);
 }

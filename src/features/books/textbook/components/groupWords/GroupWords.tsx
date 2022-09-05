@@ -44,7 +44,7 @@ const GroupWords: FC<IGroupWordsData> = ({ groupWordsData, isStorageData }) => {
   return (
     <div className={styles.wordsGroup}>
       {groupWordsData.isLoading && <Loader />}
-      {groupWordsData.error && <ErrorMessage error="Непредвидимая ошибка" />}
+      {groupWordsData.error && <ErrorMessage error="Непредвиденная ошибка" />}
       {words &&
         words.map((word: INeedWord, index: number) => {
           const currentWord = returnNeedWord(isStorageData, word);

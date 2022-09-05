@@ -1,20 +1,20 @@
 import { NavLink } from 'react-router-dom';
-import { DifficultyLevel } from '../../common/constants/numbers';
-import { SettingOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import Textbook from './textbook/Textbook';
 import Dictionary from './dictionary/Dictionary';
-import { Radio, Space, Typography } from 'antd';
-const { Title, Text } = Typography;
-import './Book.css';
+import { Radio, Typography } from 'antd';
+const { Title } = Typography;
+import styles from './Book.module.css';
 import { difficultyChanged } from '../difficulty/difficultySlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { TitleLevel3 } from '../../common/components/typography/Titles';
+import DifficultyCard from '../../common/components/difficultyCard/DifficultyCard';
+import { LanguageLevels } from '../../common/types/enums';
 
-enum BOOK {
-  textbook = 'textbook',
-  dictionary = 'dictionary',
-}
+// enum BOOK {
+//   textbook = 'textbook',
+//   dictionary = 'dictionary',
+// }
+
 function Books() {
   const { value: difficulty } = useAppSelector((state) => state.difficulty);
   const dispatch = useAppDispatch();
@@ -29,9 +29,9 @@ function Books() {
   };
 
   return (
-    <div>
+    <div className={`container books ${styles.container}`}>
       <header>
-        <Space>
+        {/* <Space>
           <nav>
             <button onClick={() => setActiveBook(BOOK.textbook)}>
               Учебник
@@ -43,90 +43,40 @@ function Books() {
           <button>
             <SettingOutlined />
           </button>
-        </Space>
-        <p>Уровни сложности слов</p>
+        </Space> */}
+        <Title className={styles.title} level={3}>
+          Уровни сложности слов:
+        </Title>
       </header>
       <Radio.Group
-        defaultValue={DifficultyLevel.LEVEL_0}
+        defaultValue={difficulty}
         size="large"
         onChange={(event) => {
           dispatch(difficultyChanged(event.target.value));
         }}
-        className={'levels'}
+        className={styles.difficultyList}
       >
-        <Radio.Button value={0} className={'button'}>
-          <Space className={'wraper'}>
-            <Title className={'title'} level={3}>
-              Easy
-            </Title>
-            <Text className={'word-amount'}>1-600</Text>
-          </Space>
-          <Space className="level">
-            <TitleLevel3>A1</TitleLevel3>
-          </Space>
+        <Radio.Button value={0}>
+          <DifficultyCard difficulty={LanguageLevels.A1} />
         </Radio.Button>
-        <Radio.Button value={1} className={'button'}>
-          <Space className={'wraper'}>
-            <Title className={'title'} level={3}>
-              Easy
-            </Title>
-            <Text className={'word-amount'}>601-1200</Text>
-          </Space>
-          <Space className="level">
-            <TitleLevel3>A2</TitleLevel3>
-          </Space>
+        <Radio.Button value={1}>
+          <DifficultyCard difficulty={LanguageLevels.A2} />
         </Radio.Button>
-        <Radio.Button value={2} className={'button'}>
-          <Space className={'wraper'}>
-            <Title className={'title'} level={3}>
-              Medium
-            </Title>
-            <Text className={'word-amount'}>1201-1800</Text>
-          </Space>
-          <Space className="level">
-            <TitleLevel3>B1</TitleLevel3>
-          </Space>
+        <Radio.Button value={2}>
+          <DifficultyCard difficulty={LanguageLevels.B1} />
         </Radio.Button>
-        <Radio.Button value={3} className={'button'}>
-          <Space className={'wraper'}>
-            <Title className={'title'} level={3}>
-              Medium
-            </Title>
-            <Text className={'word-amount'}>1801-2400</Text>
-          </Space>
-          <Space className="level">
-            <TitleLevel3>B2</TitleLevel3>
-          </Space>
+        <Radio.Button value={3}>
+          <DifficultyCard difficulty={LanguageLevels.B2} />
         </Radio.Button>
-        <Radio.Button value={4} className={'button'}>
-          <Space className={'wraper'}>
-            <Title className={'title'} level={3}>
-              Hard
-            </Title>
-            <Text className={'word-amount'}>2401-3000</Text>
-          </Space>
-          <Space className="level">
-            <TitleLevel3>C1</TitleLevel3>
-          </Space>
+        <Radio.Button value={4}>
+          <DifficultyCard difficulty={LanguageLevels.C1} />
         </Radio.Button>
-        <Radio.Button value={5} className={'button'}>
-          <Space className={'wraper'}>
-            <Title className={'title'} level={3}>
-              Hard
-            </Title>
-            <Text className={'word-amount'}>3001-3600</Text>
-          </Space>
-          <Space className="level">
-            <Title level={3}>C1</Title>
-          </Space>
+        <Radio.Button value={5}>
+          <DifficultyCard difficulty={LanguageLevels.C2} />
         </Radio.Button>
-        <Radio.Button value={6} className={'button'}>
-          <Space className={'wraper'}>
-            <Title className={'title'} level={3}>
-              Сложные слова
-            </Title>
-          </Space>
-        </Radio.Button>
+        {/* <Radio.Button value={6}>
+          <DifficultyCard difficulty={LanguageLevels.HARD} />
+        </Radio.Button> */}
       </Radio.Group>
       {displayActiveBook(activeBook)}
     </div>

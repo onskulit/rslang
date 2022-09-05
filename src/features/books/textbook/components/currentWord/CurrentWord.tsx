@@ -1,24 +1,21 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { Space } from 'antd';
 import { SoundOutlined } from '@ant-design/icons';
 import styles from './CurrentWord.module.css';
 import { IWord } from '../../../../../common/types/interfaces';
 import { BASE_URL } from '../../../../../common/constants/api';
-import {
-  TitleLevel2,
-  TitleLevel3,
-} from '../../../../../common/components/typography/Titles';
 import { useAppSelector } from '../../../../../app/hooks';
 import {
   IUserAggregatedWordData,
-  IUserAggregatedWordsData,
+  // IUserAggregatedWordsData,
   IUserWordResponse,
-  useGetAggregatedWordsQuery,
+  // useGetAggregatedWordsQuery,
   useGetUserWordQuery,
   usePostUserWordMutation,
   usePutUserWordMutation,
 } from '../../../../api/userSlice';
 import { IPostPutWord } from '../../../../authorization/common';
+import Title from 'antd/lib/typography/Title';
 
 type NeedWord = IWord | IUserAggregatedWordData | string;
 type NeedKnownWord = IWord | IUserAggregatedWordData;
@@ -42,7 +39,7 @@ const playAudio = (audioPath: string): void => {
 };
 
 const wordPutLearnProcess = (word: IUserWordResponse, put: IPostPutWord) => {
-  const { difficulty, optional, wordId } = word;
+  const { optional, wordId } = word;
   if (word.optional.isLearned) {
     put({
       wordId,
@@ -183,7 +180,9 @@ const CurrentWord: FC<ICurrentWord> = ({ word, isStorageData }) => {
       </div>
       <div className={styles.information}>
         <div className={styles.soundBox}>
-          <TitleLevel2>{(word as NeedKnownWord)?.word}</TitleLevel2>
+          <Title level={2} className={styles.title}>
+            {(word as NeedKnownWord)?.word}
+          </Title>
           <button
             className={styles.soundButton}
             onClick={() => playAudio((word as NeedKnownWord)?.audio as string)}
@@ -192,7 +191,9 @@ const CurrentWord: FC<ICurrentWord> = ({ word, isStorageData }) => {
           </button>
         </div>
         <Space className={styles.transcriptionBox}>
-          <TitleLevel3>{(word as NeedKnownWord)?.wordTranslate}</TitleLevel3>
+          <Title level={3} className={styles.title}>
+            {(word as NeedKnownWord)?.wordTranslate}
+          </Title>
           <p className={styles.transcription}>
             {(word as NeedKnownWord)?.transcription}
           </p>
@@ -211,8 +212,10 @@ const CurrentWord: FC<ICurrentWord> = ({ word, isStorageData }) => {
         )}
         <div className={'description'}>
           <Space direction="vertical">
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <TitleLevel3>Значение</TitleLevel3>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <Title level={3} className={styles.title}>
+                Значение
+              </Title>
               <button
                 className={styles.soundButton}
                 onClick={() =>
@@ -233,8 +236,10 @@ const CurrentWord: FC<ICurrentWord> = ({ word, isStorageData }) => {
             </p>
           </Space>
           <Space direction="vertical">
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <TitleLevel3>Пример</TitleLevel3>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <Title level={3} className={styles.title}>
+                Пример
+              </Title>
               <button
                 className={styles.soundButton}
                 onClick={() =>
@@ -255,7 +260,7 @@ const CurrentWord: FC<ICurrentWord> = ({ word, isStorageData }) => {
             </p>
           </Space>
         </div>
-        <div className="statistic">
+        {/* <div className="statistic">
           <TitleLevel3>Ответы в играх:</TitleLevel3>
           <div className={styles.gamesBox}>
             <div className={styles.gameBox}>
@@ -267,7 +272,7 @@ const CurrentWord: FC<ICurrentWord> = ({ word, isStorageData }) => {
               <span>0</span>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
