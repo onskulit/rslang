@@ -120,6 +120,13 @@ function Books() {
             <Title level={3}>C1</Title>
           </Space>
         </Radio.Button>
+        <Radio.Button value={6} className={'button'}>
+          <Space className={'wraper'}>
+            <Title className={'title'} level={3}>
+              Сложные слова
+            </Title>
+          </Space>
+        </Radio.Button>
       </Radio.Group>
       {displayActiveBook(activeBook)}
     </div>
