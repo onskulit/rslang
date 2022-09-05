@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/rslang/static/css/main.366a2b27.css",
-    "main.js": "/rslang/static/js/main.07c19411.js",
+    "main.css": "/rslang/static/css/main.af2b1d4a.css",
+    "main.js": "/rslang/static/js/main.bdbc817f.js",
     "static/media/egor-photo.png": "/rslang/static/media/egor-photo.cb5d42b57ca22d915c44.png",
     "static/media/dima-photo.jpg": "/rslang/static/media/dima-photo.d17cf9f65b0152b5c35c.jpg",
-    "static/media/hero.svg": "/rslang/static/media/hero.5956292ecb83023b74168fdc8b66201b.svg",
+    "static/media/hero.svg": "/rslang/static/media/hero.d5feb3b5d89255fdcd8fdbcbbb68cbd3.svg",
     "static/media/andrey-photo.jpg": "/rslang/static/media/andrey-photo.f71f3518829d3442ce59.jpg",
     "static/media/trophy.svg": "/rslang/static/media/trophy.9b951b9d9b001a142e733bb6008a62b4.svg",
     "static/media/notebook.svg": "/rslang/static/media/notebook.5cb3f4c0a9ce52009b21a05d35ca842e.svg",
     "static/media/dictionary.svg": "/rslang/static/media/dictionary.1bcddefbf7916e9f35338a84f5314246.svg",
     "static/media/whiteboard.svg": "/rslang/static/media/whiteboard.6145499c1ec0bb0d8de8fd643ec278f7.svg",
     "index.html": "/rslang/index.html",
-    "main.366a2b27.css.map": "/rslang/static/css/main.366a2b27.css.map",
-    "main.07c19411.js.map": "/rslang/static/js/main.07c19411.js.map"
+    "main.af2b1d4a.css.map": "/rslang/static/css/main.af2b1d4a.css.map",
+    "main.bdbc817f.js.map": "/rslang/static/js/main.bdbc817f.js.map"
   },
   "entrypoints": [
-    "static/css/main.366a2b27.css",
-    "static/js/main.07c19411.js"
+    "static/css/main.af2b1d4a.css",
+    "static/js/main.bdbc817f.js"
   ]
 }
