@@ -12,7 +12,9 @@ import DailyStatisticsGame from './dailyStatistics/DailyStatisticsGame';
 import DailyStatisticsWords from './dailyStatistics/DailyStatisticsWords';
 
 function Statistics() {
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState(
+    'К сожалению, мы не смогли получить вашу статистику. Вероятно, вы не авторизованы'
+  );
   const userData = JSON.parse(storage.get(STORAGE_KEY.userAuthData));
   const { data, isError, error, isSuccess } =
     statisticsAPI.useGetDailyStatisticsQuery({
@@ -30,10 +32,6 @@ function Statistics() {
             'У вас пока нет статистики. Сыграйте в какую-нибудь игру!'
           );
         }
-      } else {
-        setErrorMessage(
-          'К сожалению, мы не смогли получить вашу статистику. Вероятно, вы не авторизованы'
-        );
       }
     }
   }, [error]);
