@@ -5,7 +5,7 @@ export const HEADER_LINKS = {
   },
   textbook: {
     name: 'Учебник',
-    path: '/textbook',
+    path: '/books',
   },
   sprint: {
     name: 'Спринт',
